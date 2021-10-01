@@ -1,0 +1,88 @@
+<input class="form-control custom-rap" type="number" name="" style="float: left; display: inline-block;">
+<a class="btn btn-info create" style="margin-left:10px">Update Rap Value</a>
+
+
+<script type="text/javascript">
+  var weight_attr = $('input[id$="_weight"]').last();
+  var weightName = weight_attr.attr('name');
+  var weightId = weight_attr.attr('id');
+  var rapName = weightName.replace('weight', 'rap');
+  var rapId = weightId.replace('weight', 'rap');
+  var shapeName = weightName.replace('weight', 'shape');
+  var shapeId = weightId.replace('weight', 'shape');
+  var colorName = weightName.replace('weight', 'color');
+  var colorId = weightId.replace('weight', 'color');
+  var clarityName = weightName.replace('weight', 'clarity');
+  var clarityId = weightId.replace('weight', 'clarity');
+  var caratName = weightName.replace('weight', 'carat');
+  var caratId = weightId.replace('weight', 'carat');
+  var amountName = weightName.replace('weight', 'amount');
+  var amountId = weightId.replace('weight', 'amount');
+  var custom_error_id = weightId.replace('weight', 'custom_error');
+  var update_amount_id = weightId.replace('weight', 'update_amount');
+
+  $('.custom-rap').last().attr('name', rapName);
+  $('.custom-rap').last().attr('id', rapId);
+  $('.custom-shape').last().attr('name', shapeName);
+  $('.custom-shape').last().attr('id', shapeId);
+  $('.custom-color').last().attr('name', colorName);
+  $('.custom-color').last().attr('id', colorId);
+  $('.custom-clarity').last().attr('name', clarityName);
+  $('.custom-clarity').last().attr('id', clarityId);
+  $('.custom-carat').last().attr('name', caratName);
+  $('.custom-carat').last().attr('id', caratId);
+  $('.custom-amount').last().attr('name', amountName);
+  $('.custom-amount').last().attr('id', amountId);
+  $('.update-amount').last().attr('id', update_amount_id);
+  $('.custom-error').last().attr('id', custom_error_id);
+
+  $('[id$="_stock_id"]').on('change', function() {
+    var attr_id = $(this).attr('id');
+    var stock_id = this.value;
+    $.ajax({
+      type: 'GET',
+      url: '/stock_details/'+stock_id,
+      data: {},
+      dataType: "json",
+      success: function (data) {
+        shape_attr_id = attr_id.replace('stock_id', 'shape')
+        color_attr_id = attr_id.replace('stock_id', 'color')
+        clarity_attr_id = attr_id.replace('stock_id', 'clarity')
+        carat_attr_id = attr_id.replace('stock_id', 'carat')
+        $('#' + shape_attr_id).val(data['shape']);
+        $('#' + color_attr_id).val(data['color']);
+        $('#' + clarity_attr_id).val(data['clarity']);
+        $('#' + carat_attr_id).val(data['carat']);
+      },
+      error: function (data) {
+      }
+    });
+  });
+
+  var discount_percentage_attr = $('input[id$="_discount_percentage"]').last();
+  var additional_disc_1_attr = $('input[id$="_additional_disc_1"]').last();
+  var additional_disc_2_attr = $('input[id$="_additional_disc_2"]').last();
+  var additional_disc_3_attr = $('input[id$="_additional_disc_3"]').last();
+
+  $('#' + update_amount_id).on('click', function() {
+    var rap_value = $('#' + rapId).val();
+    var dollar_rate = $('#sale_dollar_rate').val();
+    var discount_percent = discount_percentage_attr.val();
+    var disc_1 = additional_disc_1_attr.val();
+    var disc_2 = additional_disc_2_attr.val();
+    var disc_3 = additional_disc_3_attr.val();
+    $.ajax({
+      type: 'GET',
+      url: '/sell_item_amount/',
+      data: { 'rap_value': rap_value, 'discount_percent': discount_percent, 'disc_1': disc_1, 'disc_2': disc_2, 'disc_3': disc_3, 'dollar_rate': dollar_rate},
+      dataType: "json",
+      success: function (data) {
+        $('#' + custom_error_id).html('');
+        $('#' + amountId).val(data['amount']);
+      },
+      error: function (data) {
+        $('#' + custom_error_id).html('Dollar Rate or Rap Value is missing. Please check!');
+      }
+    });
+  })
+</script>

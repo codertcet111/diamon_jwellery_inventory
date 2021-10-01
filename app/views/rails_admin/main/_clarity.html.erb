@@ -1,0 +1,3 @@
+<div class="input-group filtering-select" style="width: 21%">
+  <%= select_tag :clarity, options_for_select(Stock.clarities.to_a), include_blank: true, class: 'custom-clarity form-control', style: 'float: left; display: inline-block;' %>
+</div>

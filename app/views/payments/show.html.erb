@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Payment mode:</strong>
+  <%= @payment.payment_mode %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @payment.date %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @payment.amount %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @payment.notes %>
+</p>
+
+<p>
+  <strong>Party come:</strong>
+  <%= @payment.party_come %>
+</p>
+
+<p>
+  <strong>Pc acc name:</strong>
+  <%= @payment.pc_acc_name %>
+</p>
+
+<p>
+  <strong>Party paid:</strong>
+  <%= @payment.party_paid %>
+</p>
+
+<p>
+  <strong>Pp acc name:</strong>
+  <%= @payment.pp_acc_name %>
+</p>
+
+<p>
+  <strong>Party:</strong>
+  <%= @payment.party %>
+</p>
+
+<p>
+  <strong>Purchase:</strong>
+  <%= @payment.purchase %>
+</p>
+
+<%= link_to 'Edit', edit_payment_path(@payment) %> |
+<%= link_to 'Back', payments_path %>

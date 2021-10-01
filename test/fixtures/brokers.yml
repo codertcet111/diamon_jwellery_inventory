@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  mobile: MyString
+  qbc: MyString
+  address: MyText
+  refrence_1: MyString
+  refrence_2: MyString
+  refrence_3: MyString
+  gst_no: MyString
+  pan_no: MyString
+  adhaar_no: MyString
+  mobile_2: MyString
+
+two:
+  name: MyString
+  mobile: MyString
+  qbc: MyString
+  address: MyText
+  refrence_1: MyString
+  refrence_2: MyString
+  refrence_3: MyString
+  gst_no: MyString
+  pan_no: MyString
+  adhaar_no: MyString
+  mobile_2: MyString

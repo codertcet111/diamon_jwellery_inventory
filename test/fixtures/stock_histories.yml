@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  to_state: 1
+  from_state: 1
+  on_date: 2020-12-07 17:03:35
+
+two:
+  to_state: 1
+  from_state: 1
+  on_date: 2020-12-07 17:03:35

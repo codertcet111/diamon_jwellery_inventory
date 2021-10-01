@@ -1,0 +1,5 @@
+<ul>
+<% stock.stock_histories.each do |stock_history| %>
+<li><%= stock_history.notes.html_safe %></li>
+<% end %>
+</ul>

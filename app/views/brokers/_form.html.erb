@@ -1,0 +1,72 @@
+<%= form_with(model: broker, local: true) do |form| %>
+  <% if broker.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(broker.errors.count, "error") %> prohibited this broker from being saved:</h2>
+
+      <ul>
+      <% broker.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :mobile %>
+    <%= form.text_field :mobile %>
+  </div>
+
+  <div class="field">
+    <%= form.label :qbc %>
+    <%= form.text_field :qbc %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address %>
+    <%= form.text_area :address %>
+  </div>
+
+  <div class="field">
+    <%= form.label :refrence_1 %>
+    <%= form.text_field :refrence_1 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :refrence_2 %>
+    <%= form.text_field :refrence_2 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :refrence_3 %>
+    <%= form.text_field :refrence_3 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :gst_no %>
+    <%= form.text_field :gst_no %>
+  </div>
+
+  <div class="field">
+    <%= form.label :pan_no %>
+    <%= form.text_field :pan_no %>
+  </div>
+
+  <div class="field">
+    <%= form.label :adhaar_no %>
+    <%= form.text_field :adhaar_no %>
+  </div>
+
+  <div class="field">
+    <%= form.label :mobile_2 %>
+    <%= form.text_field :mobile_2 %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

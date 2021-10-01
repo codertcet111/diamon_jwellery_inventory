@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  stockId: MyString
+  shape: MyString
+  color: MyString
+  clarity: MyString
+  carat: 1.5
+  weight: 1.5
+  Rap: 1.5
+  discount_percentage: 1.5
+  additional_disc_1: 1.5
+  additional_disc_2: 1.5
+  additional_disc_3: 1.5
+  state: 1
+
+two:
+  stockId: MyString
+  shape: MyString
+  color: MyString
+  clarity: MyString
+  carat: 1.5
+  weight: 1.5
+  Rap: 1.5
+  discount_percentage: 1.5
+  additional_disc_1: 1.5
+  additional_disc_2: 1.5
+  additional_disc_3: 1.5
+  state: 1

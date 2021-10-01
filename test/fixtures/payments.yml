@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  payment_mode: 1
+  date: 2020-12-07 16:50:56
+  amount: 1.5
+  notes: MyText
+  party_come: MyString
+  pc_acc_name: MyString
+  party_paid: MyString
+  pp_acc_name: MyString
+  party: 
+  purchase: 
+
+two:
+  payment_mode: 1
+  date: 2020-12-07 16:50:56
+  amount: 1.5
+  notes: MyText
+  party_come: MyString
+  pc_acc_name: MyString
+  party_paid: MyString
+  pp_acc_name: MyString
+  party: 
+  purchase: 

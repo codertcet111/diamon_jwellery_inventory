@@ -1,0 +1,48 @@
+<style>
+table {
+  margin-top: 10px;
+  margin-bottom: 7px;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+  padding: 5px;
+}
+</style>
+<% need_to_pay = purchase.stocks.sum(:amount) %>
+<b>Sum of all stocks amount, Rs. <%= need_to_pay %></b>
+<br>
+<% total = 0 %>
+<table>
+  <thead>
+    <tr>
+      <th>Payment Mode</th>
+      <th>Amount</th>
+      <th>On date</th>
+      <th>Party Come</th>
+      <th>Party Come Acc come</th>
+      <th>Party Paid</th>
+      <th>Party Account Name</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% purchase.payments.each do |payment| %>
+    <tr>
+      <td><%= payment.payment_mode.capitalize %></td>
+      <td><b>Rs <%= payment.amount.to_s %></b></td>
+      <td><%= payment.date&.strftime('%d %b %Y %l:%M %p')%></td>
+      <td><%= payment.party_come %></td>
+      <td><%= payment.pc_acc_name %></td>
+      <td><%= payment.party_paid %></td>
+      <td><%= payment.pp_acc_name %></td>
+      <td><%= payment.notes %></td>
+    </tr>
+    <% total += payment.amount.to_d %>
+    <% end %>
+    <tr><td colspan='8'><b>Total Paid: Rs. <%= total.to_s %></b></td></tr>
+    <tr><td colspan='8'><b>Pending (Outstanding) Payment: Rs. <%= (purchase.pending_amount).to_s %></b></td></tr>
+  </tbody>
+</table>
+<br>

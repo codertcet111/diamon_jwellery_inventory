@@ -1,0 +1,3 @@
+<div class="input-group filtering-select" style="width: 21%">
+  <%= select_tag :shape, options_for_select(Stock.shapes.to_a), include_blank: true, class: 'custom-shape form-control', style: 'float: left; display: inline-block;' %>
+</div>

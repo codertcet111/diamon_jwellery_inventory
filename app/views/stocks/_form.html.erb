@@ -1,0 +1,77 @@
+<%= form_with(model: stock, local: true) do |form| %>
+  <% if stock.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(stock.errors.count, "error") %> prohibited this stock from being saved:</h2>
+
+      <ul>
+      <% stock.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :stockId %>
+    <%= form.text_field :stockId %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shape %>
+    <%= form.text_field :shape %>
+  </div>
+
+  <div class="field">
+    <%= form.label :color %>
+    <%= form.text_field :color %>
+  </div>
+
+  <div class="field">
+    <%= form.label :clarity %>
+    <%= form.text_field :clarity %>
+  </div>
+
+  <div class="field">
+    <%= form.label :carat %>
+    <%= form.text_field :carat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :weight %>
+    <%= form.text_field :weight %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Rap %>
+    <%= form.text_field :Rap %>
+  </div>
+
+  <div class="field">
+    <%= form.label :discount_percentage %>
+    <%= form.text_field :discount_percentage %>
+  </div>
+
+  <div class="field">
+    <%= form.label :additional_disc_1 %>
+    <%= form.text_field :additional_disc_1 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :additional_disc_2 %>
+    <%= form.text_field :additional_disc_2 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :additional_disc_3 %>
+    <%= form.text_field :additional_disc_3 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :state %>
+    <%= form.number_field :state %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

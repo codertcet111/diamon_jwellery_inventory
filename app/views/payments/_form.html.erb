@@ -1,0 +1,67 @@
+<%= form_with(model: payment, local: true) do |form| %>
+  <% if payment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(payment.errors.count, "error") %> prohibited this payment from being saved:</h2>
+
+      <ul>
+      <% payment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :payment_mode %>
+    <%= form.number_field :payment_mode %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.datetime_select :date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :amount %>
+    <%= form.text_field :amount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :notes %>
+    <%= form.text_area :notes %>
+  </div>
+
+  <div class="field">
+    <%= form.label :party_come %>
+    <%= form.text_field :party_come %>
+  </div>
+
+  <div class="field">
+    <%= form.label :pc_acc_name %>
+    <%= form.text_field :pc_acc_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :party_paid %>
+    <%= form.text_field :party_paid %>
+  </div>
+
+  <div class="field">
+    <%= form.label :pp_acc_name %>
+    <%= form.text_field :pp_acc_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :party %>
+    <%= form.text_field :party %>
+  </div>
+
+  <div class="field">
+    <%= form.label :purchase %>
+    <%= form.text_field :purchase %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

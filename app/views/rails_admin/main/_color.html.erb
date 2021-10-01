@@ -1,0 +1,3 @@
+<div class="input-group filtering-select" style="width: 21%">
+  <%= select_tag :color, options_for_select(Stock.colors.to_a), include_blank: true, class: 'custom-color form-control', style: 'float: left; display: inline-block;' %>
+</div>

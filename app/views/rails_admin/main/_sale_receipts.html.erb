@@ -1,0 +1,48 @@
+<style>
+table {
+  margin-top: 10px;
+  margin-bottom: 7px;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+  padding: 5px;
+}
+</style>
+<% sold_stocks = sale.sale_items.sum(:amount) %>
+<b>Sum of all Sale Items amount, Rs. <%= sold_stocks %></b>
+<br>
+<% total = 0 %>
+<table>
+  <thead>
+    <tr>
+      <th>Receipt Mode</th>
+      <th>Amount</th>
+      <th>On date</th>
+      <th>Party Come</th>
+      <th>Party Come Acc come</th>
+      <th>Party Paid</th>
+      <th>Party Account Name</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% sale.receipts.each do |receipt| %>
+    <tr>
+      <td><%= receipt.receipt_mode.capitalize %></td>
+      <td><b>Rs <%= receipt.amount.to_s %></b></td>
+      <td><%= receipt.date&.strftime('%d %b %Y %l:%M %p')%></td>
+      <td><%= receipt.party_come %></td>
+      <td><%= receipt.pc_acc_name %></td>
+      <td><%= receipt.party_paid %></td>
+      <td><%= receipt.pp_acc_name %></td>
+      <td><%= receipt.notes %></td>
+    </tr>
+    <% total += receipt.amount.to_d %>
+    <% end %>
+    <tr><td colspan='8'><b>Total Received: Rs. <%= total.to_s %></b></td></tr>
+    <tr><td colspan='8'><b>Pending (Outstanding) Receipt Amount: Rs. <%= (sale.pending_amount).to_s %></b></td></tr>
+  </tbody>
+</table>
+<br>

@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Stock primary:</strong>
+  <%= @purchase.stock_primary_id %>
+</p>
+
+<p>
+  <strong>Purchase date:</strong>
+  <%= @purchase.purchase_date %>
+</p>
+
+<p>
+  <strong>Days:</strong>
+  <%= @purchase.days %>
+</p>
+
+<p>
+  <strong>Dollar rate:</strong>
+  <%= @purchase.dollar_rate %>
+</p>
+
+<p>
+  <strong>Bill present:</strong>
+  <%= @purchase.bill_present %>
+</p>
+
+<p>
+  <strong>Pending amount:</strong>
+  <%= @purchase.pending_amount %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @purchase.amount %>
+</p>
+
+<%= link_to 'Edit', edit_purchase_path(@purchase) %> |
+<%= link_to 'Back', purchases_path %>
