@@ -29,27 +29,27 @@ class Stock < ApplicationRecord
       label 'Stock ID'
     end
     edit do
-      field :shape do
-        required true
-      end
-      field :color do
-        required true
-      end
-      field :clarity do
-        required true
-      end
-      field :carat do
-        required true
-      end
-      field :weight do
-        required true
-      end
-      field :rap do
-        required true
-      end
-      field :amount do
-        required true
-      end
+      # field :shape do
+      #   required true
+      # end
+      # field :color do
+      #   required true
+      # end
+      # field :clarity do
+      #   required true
+      # end
+      # field :carat do
+      #   required true
+      # end
+      # field :weight do
+      #   required true
+      # end
+      # field :rap do
+      #   required true
+      # end
+      # field :amount do
+      #   required true
+      # end
       exclude_fields :stock_key
       exclude_fields :purchase
       exclude_fields :stock_histories

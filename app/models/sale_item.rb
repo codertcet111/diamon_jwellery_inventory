@@ -10,27 +10,27 @@ class SaleItem < ApplicationRecord
 
   rails_admin do
     edit do
-      field :shape do
-        required true
-      end
-      field :color do
-        required true
-      end
-      field :clarity do
-        required true
-      end
-      field :carat do
-        required true
-      end
-      field :weight do
-        required true
-      end
-      field :rap do
-        required true
-      end
-      field :amount do
-        required true
-      end
+      # field :shape do
+      #   required true
+      # end
+      # field :color do
+      #   required true
+      # end
+      # field :clarity do
+      #   required true
+      # end
+      # field :carat do
+      #   required true
+      # end
+      # field :weight do
+      #   required true
+      # end
+      # field :rap do
+      #   required true
+      # end
+      # field :amount do
+      #   required true
+      # end
       include_all_fields
       field :additional_disc_1 do
         label 'Additional Discount 1 (%)'

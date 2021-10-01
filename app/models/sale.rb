@@ -13,12 +13,12 @@ class Sale < ApplicationRecord
       field :sale_date do
         required true
       end
-      field :terms do
-        required true
-      end
-      field :dollar_rate do
-        required true
-      end
+      # field :terms do
+      #   required true
+      # end
+      # field :dollar_rate do
+      #   required true
+      # end
       include_all_fields
       field :party do
         required true
