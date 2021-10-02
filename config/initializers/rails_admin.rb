@@ -60,6 +60,9 @@ RailsAdmin.config do |config|
     end
   end
   config.model 'Stock' do
+    list do
+      scopes [nil, :in_stock_all, :in_stock_loose_diamond, :in_stock_cut_polish_diamond, :in_stock_jewellary]
+    end
     show do
       # render do
       #   bindings[:view].render :partial => "rails_admin/main/_stock_detail", :locals => {:self => self}

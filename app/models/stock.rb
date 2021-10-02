@@ -37,6 +37,12 @@ class Stock < ApplicationRecord
 
   accepts_nested_attributes_for :expenses
 
+  scope :in_stock_all, -> { where("state not in (?)",Stock.states[:sold_out]) }
+  scope :in_stock_loose_diamond, -> { in_stock_all.where(stock_sub_type_id: StockSubType.loose_diamond_id)}
+  scope :in_stock_cut_polish_diamond, -> { in_stock_all.where(stock_sub_type_id: StockSubType.cut_and_polish_diamond_id)}
+  scope :in_stock_jewellary, -> { in_stock_all.where("stock_sub_type_id IN (?)", StockSubType.jewellary_ids)}
+
+
   def create_stock_history
     if self.persisted? && state_changed?
       stock_history = self.stock_histories.new
