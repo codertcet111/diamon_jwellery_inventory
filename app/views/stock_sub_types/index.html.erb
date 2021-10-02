@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Stock Sub Types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Weight unit</th>
+      <th>Stock type</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @stock_sub_types.each do |stock_sub_type| %>
+      <tr>
+        <td><%= stock_sub_type.name %></td>
+        <td><%= stock_sub_type.weight_unit %></td>
+        <td><%= stock_sub_type.stock_type %></td>
+        <td><%= link_to 'Show', stock_sub_type %></td>
+        <td><%= link_to 'Edit', edit_stock_sub_type_path(stock_sub_type) %></td>
+        <td><%= link_to 'Destroy', stock_sub_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Stock Sub Type', new_stock_sub_type_path %>

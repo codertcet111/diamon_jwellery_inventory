@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_12_135145) do
+ActiveRecord::Schema.define(version: 2021_10_02_050033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -150,6 +150,21 @@ ActiveRecord::Schema.define(version: 2020_12_12_135145) do
     t.index ["stock_id"], name: "index_stock_histories_on_stock_id"
   end
 
+  create_table "stock_sub_types", force: :cascade do |t|
+    t.string "name"
+    t.string "weight_unit"
+    t.bigint "stock_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["stock_type_id"], name: "index_stock_sub_types_on_stock_type_id"
+  end
+
+  create_table "stock_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "stocks", force: :cascade do |t|
     t.string "stock_key"
     t.integer "shape", null: false
@@ -167,7 +182,51 @@ ActiveRecord::Schema.define(version: 2020_12_12_135145) do
     t.bigint "purchase_id", null: false
     t.integer "state"
     t.decimal "amount", precision: 15, scale: 4, null: false
+    t.bigint "stock_sub_type_id"
+    t.integer "color_shades"
+    t.integer "fancy_color"
+    t.integer "color_intensity"
+    t.integer "color_overtone"
+    t.integer "flouresence"
+    t.integer "lab"
+    t.integer "cut"
+    t.integer "polish"
+    t.integer "symmetry"
+    t.integer "black_table_inclusion"
+    t.integer "black_crown_inclusion"
+    t.integer "white_table_inclusion"
+    t.integer "white_crown_inclusion"
+    t.integer "milky_inclusion"
+    t.integer "open_table_inclusion"
+    t.integer "open_crown_inclusion"
+    t.integer "open_pavilion_inclusion"
+    t.integer "eye_clean_inclusion"
+    t.integer "rough_origin"
+    t.integer "heart_and_arrow"
+    t.string "rapnet_id"
+    t.string "rapnet_dollar"
+    t.string "rapnet_discount_percentage"
+    t.string "rapnet_price_after_disc"
+    t.string "rapnet_amount_dollar_after_disc"
+    t.string "max"
+    t.string "min"
+    t.string "hgt_height"
+    t.string "tbl_table"
+    t.string "td_percentage"
+    t.string "hAndA"
+    t.string "BIC"
+    t.string "BIS"
+    t.string "WIC"
+    t.string "col_tinge"
+    t.float "loose_total_caret"
+    t.float "loose_selection_carat"
+    t.float "loose_rejection_carat"
+    t.float "loose_rate_per_caret"
+    t.float "loose_total_amount"
+    t.float "loose_selected_amount"
+    t.float "loose_rejected_amount"
     t.index ["purchase_id"], name: "index_stocks_on_purchase_id"
+    t.index ["stock_sub_type_id"], name: "index_stocks_on_stock_sub_type_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -196,5 +255,6 @@ ActiveRecord::Schema.define(version: 2020_12_12_135145) do
   add_foreign_key "sales", "brokers"
   add_foreign_key "sales", "parties"
   add_foreign_key "stock_histories", "stocks"
+  add_foreign_key "stock_sub_types", "stock_types"
   add_foreign_key "stocks", "purchases"
 end
