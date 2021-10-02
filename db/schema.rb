@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_02_050033) do
+ActiveRecord::Schema.define(version: 2021_10_02_094637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,10 @@ ActiveRecord::Schema.define(version: 2021_10_02_050033) do
     t.string "mobile_2"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "bank_account_no"
+    t.string "pin_code"
+    t.string "state"
+    t.string "country"
   end
 
   create_table "expenses", force: :cascade do |t|
@@ -39,6 +43,31 @@ ActiveRecord::Schema.define(version: 2021_10_02_050033) do
     t.bigint "stock_id", null: false
     t.float "weight_loss"
     t.index ["stock_id"], name: "index_expenses_on_stock_id"
+  end
+
+  create_table "ledger_expenses", force: :cascade do |t|
+    t.string "title"
+    t.bigint "ledger_id"
+    t.float "amount"
+    t.text "notes"
+    t.text "payment_notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ledger_id"], name: "index_ledger_expenses_on_ledger_id"
+  end
+
+  create_table "ledger_groups", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "ledgers", force: :cascade do |t|
+    t.string "name"
+    t.bigint "ledger_group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ledger_group_id"], name: "index_ledgers_on_ledger_group_id"
   end
 
   create_table "parties", force: :cascade do |t|
@@ -55,6 +84,10 @@ ActiveRecord::Schema.define(version: 2021_10_02_050033) do
     t.string "mobile_2"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "bank_account_no"
+    t.string "pin_code"
+    t.string "state"
+    t.string "country"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -70,6 +103,7 @@ ActiveRecord::Schema.define(version: 2021_10_02_050033) do
     t.datetime "updated_at", null: false
     t.bigint "party_id", null: false
     t.bigint "purchase_id", null: false
+    t.string "cheque_number"
     t.index ["party_id"], name: "index_payments_on_party_id"
     t.index ["purchase_id"], name: "index_payments_on_purchase_id"
   end
@@ -84,6 +118,8 @@ ActiveRecord::Schema.define(version: 2021_10_02_050033) do
     t.bigint "party_id", null: false
     t.bigint "broker_id"
     t.decimal "pending_amount", precision: 15, scale: 4, default: "0.0"
+    t.string "invoice_number"
+    t.datetime "invoice_date"
     t.index ["broker_id"], name: "index_purchases_on_broker_id"
     t.index ["party_id"], name: "index_purchases_on_party_id"
   end
@@ -101,6 +137,7 @@ ActiveRecord::Schema.define(version: 2021_10_02_050033) do
     t.datetime "updated_at", null: false
     t.bigint "party_id", null: false
     t.bigint "sale_id", null: false
+    t.string "cheque_number"
     t.index ["party_id"], name: "index_receipts_on_party_id"
     t.index ["sale_id"], name: "index_receipts_on_sale_id"
   end
@@ -138,6 +175,8 @@ ActiveRecord::Schema.define(version: 2021_10_02_050033) do
     t.bigint "party_id", null: false
     t.bigint "broker_id"
     t.decimal "pending_amount", precision: 15, scale: 4, default: "0.0"
+    t.string "invoice_number"
+    t.datetime "invoice_date"
     t.index ["broker_id"], name: "index_sales_on_broker_id"
     t.index ["party_id"], name: "index_sales_on_party_id"
   end
@@ -244,6 +283,8 @@ ActiveRecord::Schema.define(version: 2021_10_02_050033) do
   end
 
   add_foreign_key "expenses", "stocks"
+  add_foreign_key "ledger_expenses", "ledgers"
+  add_foreign_key "ledgers", "ledger_groups"
   add_foreign_key "payments", "parties"
   add_foreign_key "payments", "purchases"
   add_foreign_key "purchases", "brokers"

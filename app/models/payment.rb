@@ -1,7 +1,7 @@
 class Payment < ApplicationRecord
   belongs_to :purchase, optional: true, inverse_of: :payments
   belongs_to :party
-  enum payment_mode: [:cash,:cheque,:angadia]
+  enum payment_mode: [:cash,:cheque,:angadia,:rtgs_neft, :other]
 
   after_commit :update_pending_amount
 

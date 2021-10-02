@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :ledger_expenses
+  resources :ledgers
+  resources :ledger_groups
   resources :stock_sub_types
   resources :stock_types
   get '/stock_details/:stock_id' => 'info#stock_details'

@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Ledger Groups</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ledger_groups.each do |ledger_group| %>
+      <tr>
+        <td><%= ledger_group.name %></td>
+        <td><%= link_to 'Show', ledger_group %></td>
+        <td><%= link_to 'Edit', edit_ledger_group_path(ledger_group) %></td>
+        <td><%= link_to 'Destroy', ledger_group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ledger Group', new_ledger_group_path %>

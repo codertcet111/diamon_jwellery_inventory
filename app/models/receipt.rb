@@ -3,7 +3,7 @@ class Receipt < ApplicationRecord
   belongs_to :party, inverse_of: :receipts
   belongs_to :sale, inverse_of: :receipts
 
-  enum receipt_mode: [:cash,:cheque,:angadia]
+  enum receipt_mode: [:cash,:cheque,:angadia,:rtgs_neft, :other]
 
   after_commit :update_pending_amount
 

@@ -15,6 +15,5 @@ class Expense < ApplicationRecord
       inline_add false
       inline_edit false
     end
-    navigation_label Proc.new { "Expenses" }
   end
 end

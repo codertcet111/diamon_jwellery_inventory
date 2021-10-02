@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Ledger Expenses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Ledger</th>
+      <th>Amount</th>
+      <th>Notes</th>
+      <th>Payment notes</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ledger_expenses.each do |ledger_expense| %>
+      <tr>
+        <td><%= ledger_expense.title %></td>
+        <td><%= ledger_expense.ledger %></td>
+        <td><%= ledger_expense.amount %></td>
+        <td><%= ledger_expense.notes %></td>
+        <td><%= ledger_expense.payment_notes %></td>
+        <td><%= link_to 'Show', ledger_expense %></td>
+        <td><%= link_to 'Edit', edit_ledger_expense_path(ledger_expense) %></td>
+        <td><%= link_to 'Destroy', ledger_expense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ledger Expense', new_ledger_expense_path %>
