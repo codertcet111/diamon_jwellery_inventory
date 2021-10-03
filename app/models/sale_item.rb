@@ -41,6 +41,9 @@ class SaleItem < ApplicationRecord
       field :additional_disc_3 do
         label 'Additional Discount 3 (%)'
       end
+      field :amount do
+        label "Total Amount (Rs.) (* Final Amount)"
+      end
       field :stock do
         required true
         associated_collection_scope do

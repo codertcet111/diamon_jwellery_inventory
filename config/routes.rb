@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :taxes
+  resources :company_details
   resources :ledger_expenses
   resources :ledgers
   resources :ledger_groups

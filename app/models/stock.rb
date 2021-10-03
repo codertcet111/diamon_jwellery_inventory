@@ -28,7 +28,7 @@ class Stock < ApplicationRecord
   enum rough_origin: DIAMOND_ROUGH_ORIGIN
   enum heart_and_arrow: DIAMOND_HEAR_AND_ARROW
 
-  after_create :assign_stock_key
+  after_create :assign_stock_key, :set_defaults
 
   enum state: { available: 0, in_lab: 1, in_factory: 2, out_of_memo: 3, business_process: 4, sold_out: 5 }
   # when state is changed from in factory to any then need to add weight loss
@@ -48,6 +48,12 @@ class Stock < ApplicationRecord
       stock_history = self.stock_histories.new
       stock_history.notes = "State changed from <b>#{self.state_was.titleize}</b> to <b>#{self.state.titleize}</b> on <b>#{Time.now.strftime('%d %b %Y %l:%M %p')}</b>"
       stock_history.save
+    end
+  end
+
+  def set_defaults
+    unless self.state
+      self.update_attributes(state: Stock.states[:available])
     end
   end
 
@@ -75,14 +81,59 @@ class Stock < ApplicationRecord
       # field :rap do
       #   required true
       # end
-      # field :amount do
-      #   required true
-      # end
+      field :amount do
+        required true
+      end
       exclude_fields :stock_key
       exclude_fields :purchase
       exclude_fields :stock_histories
       exclude_fields :sale_item
       exclude_fields :expenses
+      field :weight do
+        label "Weight (Gram)"
+      end
+      field :title do
+        label "Stock Description"
+      end
+      field :loose_total_caret do
+        label "Loose diamond Total Carats"
+      end
+      field :loose_selection_carat do
+        label "Loose diamond Selected Carats"
+      end
+      field :loose_rejection_carat do
+        label "Loose diamond Rejected Carats"
+      end
+      field :loose_rate_per_caret do
+        label "Loose diamond Rate/Carat"
+      end
+      field :loose_total_amount do
+        label "Loose diamond Total Amount (Rs.)"
+      end
+      field :loose_selected_amount do
+        label "Loose diamond Selected carats Amount (Rs.)"
+      end
+      field :loose_rejected_amount do
+        label "Loose diamond Rejected carats Amount (Rs.)"
+      end
+      field :discount_percentage do
+        label "Discount %"
+      end
+      field :additional_disc_1 do
+        label "Additional Discount 1 %"
+      end
+      field :additional_disc_2 do
+        label "Additional Discount 2 %"
+      end
+      field :additional_disc_3 do
+        label "Additional Discount 3 %"
+      end
+      field :amount do
+        label "Total Amount to Pay (Rs.) (* Final Amount)"
+      end
+      field :carat do
+        label "Total Carat (Final)"
+      end
     end
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_02_094637) do
+ActiveRecord::Schema.define(version: 2021_10_03_112013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,18 @@ ActiveRecord::Schema.define(version: 2021_10_02_094637) do
     t.string "pin_code"
     t.string "state"
     t.string "country"
+  end
+
+  create_table "company_details", force: :cascade do |t|
+    t.string "name"
+    t.string "gst"
+    t.text "address"
+    t.string "pan_card"
+    t.string "adhaar"
+    t.string "mobile_number"
+    t.string "qbc_no"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "expenses", force: :cascade do |t|
@@ -120,8 +132,12 @@ ActiveRecord::Schema.define(version: 2021_10_02_094637) do
     t.decimal "pending_amount", precision: 15, scale: 4, default: "0.0"
     t.string "invoice_number"
     t.datetime "invoice_date"
+    t.float "tax_amount"
+    t.float "total_amount"
+    t.bigint "tax_id"
     t.index ["broker_id"], name: "index_purchases_on_broker_id"
     t.index ["party_id"], name: "index_purchases_on_party_id"
+    t.index ["tax_id"], name: "index_purchases_on_tax_id"
   end
 
   create_table "receipts", force: :cascade do |t|
@@ -177,8 +193,13 @@ ActiveRecord::Schema.define(version: 2021_10_02_094637) do
     t.decimal "pending_amount", precision: 15, scale: 4, default: "0.0"
     t.string "invoice_number"
     t.datetime "invoice_date"
+    t.integer "sale_type"
+    t.float "tax_amount"
+    t.float "total_amount"
+    t.bigint "tax_id"
     t.index ["broker_id"], name: "index_sales_on_broker_id"
     t.index ["party_id"], name: "index_sales_on_party_id"
+    t.index ["tax_id"], name: "index_sales_on_tax_id"
   end
 
   create_table "stock_histories", force: :cascade do |t|
@@ -264,8 +285,16 @@ ActiveRecord::Schema.define(version: 2021_10_02_094637) do
     t.float "loose_total_amount"
     t.float "loose_selected_amount"
     t.float "loose_rejected_amount"
+    t.string "title"
     t.index ["purchase_id"], name: "index_stocks_on_purchase_id"
     t.index ["stock_sub_type_id"], name: "index_stocks_on_stock_sub_type_id"
+  end
+
+  create_table "taxes", force: :cascade do |t|
+    t.string "name"
+    t.float "tax_percentage"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -289,12 +318,14 @@ ActiveRecord::Schema.define(version: 2021_10_02_094637) do
   add_foreign_key "payments", "purchases"
   add_foreign_key "purchases", "brokers"
   add_foreign_key "purchases", "parties"
+  add_foreign_key "purchases", "taxes"
   add_foreign_key "receipts", "parties"
   add_foreign_key "receipts", "sales"
   add_foreign_key "sale_items", "sales"
   add_foreign_key "sale_items", "stocks"
   add_foreign_key "sales", "brokers"
   add_foreign_key "sales", "parties"
+  add_foreign_key "sales", "taxes"
   add_foreign_key "stock_histories", "stocks"
   add_foreign_key "stock_sub_types", "stock_types"
   add_foreign_key "stocks", "purchases"

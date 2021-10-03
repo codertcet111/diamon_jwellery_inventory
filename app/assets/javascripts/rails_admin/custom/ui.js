@@ -15,6 +15,7 @@ $(document).ready(function() {
       $('#payment_pp_acc_name_field').fadeOut("slow");
     }
   });
+
   $(document.body).on('change', '#receipt_receipt_mode', function() {
     var selected = $('#receipt_receipt_mode option:selected').html();
     if (selected.toLowerCase().includes('angadia')) {
@@ -29,4 +30,14 @@ $(document).ready(function() {
       $('#receipt_pp_acc_name_field').fadeOut("slow");
     }
   });
+
+  // const stock_type_dropdowns = document.querySelectorAll('[id$="_stock_sub_type_id"]')
+  // for (const stock_type_dropdown of stock_type_dropdowns) {
+  //   stock_type_dropdown.addEventListener('change', function(event) {
+  //     console.log(self)      
+  //   })
+  // }
+
+
+  
 });
