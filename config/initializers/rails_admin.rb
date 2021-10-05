@@ -34,6 +34,14 @@ RailsAdmin.config do |config|
     show
     edit
     delete
+    member :download_sales_invoice do
+      only ['Sales']
+      i18n_key :show
+    end
+    member :download_purchase_invoice do
+      only ['Purchase']
+      i18n_key :show
+    end
 
     ## With an audit adapter, you can add:
     # history_index
