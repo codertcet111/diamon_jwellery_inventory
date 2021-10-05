@@ -61,6 +61,24 @@ class PurchasesController < ApplicationController
     end
   end
 
+  # def download_invoice
+  #   request.format = :pdf
+  #   respond_to  do |format|
+  #     format.pdf do
+  #       pdf = render_to_string :pdf => "Purchase_Invocie#{@object.id}",
+  #                        layout: 'pdf.html.erb',
+  #                        template: 'download_purchase_invoice.pdf.slim',
+  #                        header: { :right => '[page] of [topage]'},
+  #                        margin: {top: 0,
+  #                                 bottom: 0,
+  #                                 left: 0,
+  #                                 right: 0},
+  #                        outline: {outline: true,
+  #                                  outline_depth: 2}
+  #     end
+  #   end
+  # end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_purchase

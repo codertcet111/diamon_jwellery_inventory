@@ -43,6 +43,7 @@ RailsAdmin.config do |config|
       only ['Purchase']
       i18n_key :Invoice
       link_icon 'icon-download'
+      action_name 'download_purchase_invoice'
     end
 
     ## With an audit adapter, you can add:
