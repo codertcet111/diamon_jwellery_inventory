@@ -37,10 +37,12 @@ RailsAdmin.config do |config|
     member :download_sales_invoice do
       only ['Sales']
       i18n_key :Invoice
+      link_icon 'icon-download'
     end
     member :download_purchase_invoice do
       only ['Purchase']
       i18n_key :Invoice
+      link_icon 'icon-download'
     end
 
     ## With an audit adapter, you can add:
