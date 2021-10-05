@@ -16,8 +16,8 @@ ActiveRecord::Schema.define(version: 2021_10_03_112013) do
   enable_extension "plpgsql"
 
   create_table "brokers", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "mobile", null: false
+    t.string "name"
+    t.string "mobile"
     t.string "qbc"
     t.text "address"
     t.string "reference_1"
@@ -48,11 +48,11 @@ ActiveRecord::Schema.define(version: 2021_10_03_112013) do
   end
 
   create_table "expenses", force: :cascade do |t|
-    t.integer "expense_type", null: false
-    t.float "amount", null: false
+    t.integer "expense_type"
+    t.float "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "stock_id", null: false
+    t.bigint "stock_id"
     t.float "weight_loss"
     t.index ["stock_id"], name: "index_expenses_on_stock_id"
   end
@@ -83,15 +83,15 @@ ActiveRecord::Schema.define(version: 2021_10_03_112013) do
   end
 
   create_table "parties", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "mobile", null: false
+    t.string "name"
+    t.string "mobile"
     t.string "qbc"
-    t.text "address", null: false
+    t.text "address"
     t.string "reference_1"
     t.string "reference_2"
     t.string "reference_3"
-    t.string "gst_no", null: false
-    t.string "pan_no", null: false
+    t.string "gst_no"
+    t.string "pan_no"
     t.string "adhaar_no"
     t.string "mobile_2"
     t.datetime "created_at", null: false
@@ -103,9 +103,9 @@ ActiveRecord::Schema.define(version: 2021_10_03_112013) do
   end
 
   create_table "payments", force: :cascade do |t|
-    t.integer "payment_mode", null: false
-    t.datetime "date", null: false
-    t.decimal "amount", precision: 15, scale: 4, null: false
+    t.integer "payment_mode"
+    t.datetime "date"
+    t.decimal "amount", precision: 15, scale: 4
     t.text "notes"
     t.string "party_come"
     t.string "pc_acc_name"
@@ -121,13 +121,13 @@ ActiveRecord::Schema.define(version: 2021_10_03_112013) do
   end
 
   create_table "purchases", force: :cascade do |t|
-    t.datetime "purchase_date", null: false
-    t.integer "terms", null: false
-    t.float "dollar_rate", null: false
-    t.boolean "bill_present", default: false, null: false
+    t.datetime "purchase_date"
+    t.integer "terms"
+    t.float "dollar_rate"
+    t.boolean "bill_present", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "party_id", null: false
+    t.bigint "party_id"
     t.bigint "broker_id"
     t.decimal "pending_amount", precision: 15, scale: 4, default: "0.0"
     t.string "invoice_number"
@@ -141,9 +141,9 @@ ActiveRecord::Schema.define(version: 2021_10_03_112013) do
   end
 
   create_table "receipts", force: :cascade do |t|
-    t.integer "receipt_mode", null: false
-    t.datetime "date", null: false
-    t.decimal "amount", null: false
+    t.integer "receipt_mode"
+    t.datetime "date"
+    t.decimal "amount"
     t.text "notes"
     t.string "party_come"
     t.string "pc_acc_name"
@@ -159,17 +159,17 @@ ActiveRecord::Schema.define(version: 2021_10_03_112013) do
   end
 
   create_table "sale_items", force: :cascade do |t|
-    t.integer "shape", null: false
-    t.integer "color", null: false
-    t.integer "clarity", null: false
-    t.float "carat", null: false
-    t.float "weight", null: false
-    t.float "rap", null: false
+    t.integer "shape"
+    t.integer "color"
+    t.integer "clarity"
+    t.float "carat"
+    t.float "weight"
+    t.float "rap"
     t.float "discount_percentage"
     t.float "additional_disc_1"
     t.float "additional_disc_2"
     t.float "additional_disc_3"
-    t.decimal "amount", null: false
+    t.decimal "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "stock_id", null: false
@@ -179,13 +179,13 @@ ActiveRecord::Schema.define(version: 2021_10_03_112013) do
   end
 
   create_table "sales", force: :cascade do |t|
-    t.datetime "sale_date", null: false
-    t.integer "terms", null: false
+    t.datetime "sale_date"
+    t.integer "terms"
     t.float "broker_percentage"
     t.decimal "broker_amount"
     t.string "invoice_no"
-    t.boolean "bill_present", default: false, null: false
-    t.float "dollar_rate", null: false
+    t.boolean "bill_present", default: false
+    t.float "dollar_rate"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "party_id", null: false
@@ -227,12 +227,12 @@ ActiveRecord::Schema.define(version: 2021_10_03_112013) do
 
   create_table "stocks", force: :cascade do |t|
     t.string "stock_key"
-    t.integer "shape", null: false
-    t.integer "color", null: false
-    t.integer "clarity", null: false
-    t.float "carat", null: false
-    t.float "weight", null: false
-    t.float "rap", null: false
+    t.integer "shape"
+    t.integer "color"
+    t.integer "clarity"
+    t.float "carat"
+    t.float "weight"
+    t.float "rap"
     t.float "discount_percentage"
     t.float "additional_disc_1"
     t.float "additional_disc_2"
@@ -240,8 +240,8 @@ ActiveRecord::Schema.define(version: 2021_10_03_112013) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "purchase_id", null: false
-    t.integer "state"
-    t.decimal "amount", precision: 15, scale: 4, null: false
+    t.integer "state", default: 0
+    t.decimal "amount", precision: 15, scale: 4
     t.bigint "stock_sub_type_id"
     t.integer "color_shades"
     t.integer "fancy_color"

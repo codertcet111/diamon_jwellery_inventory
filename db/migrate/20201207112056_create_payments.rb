@@ -1,9 +1,9 @@
 class CreatePayments < ActiveRecord::Migration[5.2]
   def change
     create_table :payments do |t|
-      t.integer :payment_mode, null: false
-      t.datetime :date, null: false
-      t.float :amount, null: false
+      t.integer :payment_mode
+      t.datetime :date
+      t.float :amount
       t.text :notes
       t.string :party_come
       t.string :pc_acc_name
