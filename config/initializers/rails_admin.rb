@@ -36,11 +36,11 @@ RailsAdmin.config do |config|
     delete
     member :download_sales_invoice do
       only ['Sales']
-      i18n_key :show
+      i18n_key :Invoice
     end
     member :download_purchase_invoice do
       only ['Purchase']
-      i18n_key :show
+      i18n_key :Invoice
     end
 
     ## With an audit adapter, you can add:

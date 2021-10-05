@@ -31,3 +31,9 @@
 
 en:
   hello: "Hello world"
+  admin:
+    actions:
+      Invoice:
+        menu: 'Download Invoice'
+        title: 'Download Invoice'
+        breadcrumb: 'Download Invoice'
