@@ -1,0 +1,5 @@
+<p>
+  <strong>Invoice:</strong>
+  <%= @object %>
+</p>
+<%= link_to 'Download Invoice', "/purchase/#{@object.id}/download_purchase_invoice", method: :pdf %>

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :ledger_groups
   resources :stock_sub_types
   resources :stock_types
+  post '/purchase/:id/download_purchase_invoice' => 'purchases#download_purchase_invoice'
   get '/stock_details/:stock_id' => 'info#stock_details'
   get '/sell_item_amount' => 'info#sell_item_amount'
   root 'rails_admin/main#dashboard'
