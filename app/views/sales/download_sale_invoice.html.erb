@@ -5,7 +5,7 @@
   <h1>SALE INVOICE 0<%= @sale.id %></h1>
   <!-- Right hand side -->
   <div class="clearfix" id="company">
-    <div><span>INVOICE NO: </span>LS/000<%= @sale.id %>/<%= @sale.current_financial_year %></div>
+    <div><span>INVOICE: </span>LS/000<%= @sale.id %>/<%= @sale.current_financial_year %></div>
     <div><span>Date: </span><%= @sale.sale_date.to_date %></div>
     <div><span>Payment Terms: </span><%= @sale.terms %></div>
 	<div><span>Other Ref: </span></div>
@@ -13,9 +13,8 @@
   <!-- Left hand side (Party detail) -->
   <div id="project">
     <div>
-      <bold>To,</bold>
-      <br>
-      <p style="margin-left: 10px"><%= @sale.party.address.to_s.gsub(/\n/, '<br/>').html_safe %></p>
+      <p style="margin-left: 20px"><bold>To,</bold></p>
+      <p style="margin-left: 20px"><%= @sale.party.address.to_s.gsub(/\n/, '<br/>').html_safe %></p>
     </div>
     <br>
     <div>
@@ -35,7 +34,7 @@
       <%= @sale.party.pan_no%>
     </div>
     <div>
-      <span>Place of Supply</span>
+      <span>Place of Supply:</span>
       <%= @sale.party.place_of_supply%>
     </div>
   </div>
@@ -147,13 +146,13 @@ a {
 
 body {
   position: relative;
-  width: 21cm;  
-  height: 29.7cm; 
+  /*width: 21cm;  
+  height: 29.7cm; */
   margin: 0 auto; 
   color: #001028;
   background: #FFFFFF; 
   font-family: Arial, sans-serif; 
-  font-size: 12px; 
+  font-size: 15px; 
   font-family: Arial;
 }
 
@@ -190,10 +189,9 @@ h1 {
 #project span, #project_1 span {
   color: #5D6975;
   text-align: right;
-  width: 52px;
+  width: 82px;
   margin-right: 10px;
   display: inline-block;
-  font-size: 0.8em;
 }
 
 #company span, #company_1 span {
@@ -202,7 +200,6 @@ h1 {
   width: 80px;
   margin-right: 10px;
   display: inline-block;
-  font-size: 0.8em;
 }
 
 #company,#company_1  {
