@@ -28,9 +28,9 @@ class SaleItem < ApplicationRecord
       # field :rap do
       #   required true
       # end
-      # field :amount do
-      #   required true
-      # end
+      field :amount do
+        required true
+      end
       include_all_fields
       field :additional_disc_1 do
         label 'Additional Discount 1 (%)'

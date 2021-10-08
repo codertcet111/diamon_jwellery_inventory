@@ -8,7 +8,7 @@ class Receipt < ApplicationRecord
   after_commit :update_pending_amount
 
   def update_pending_amount
-    sum_amount = sale.total_amount
+    sum_amount = sale.final_amount
     total_paid = sale.receipts.sum(:amount)
     pending_amount = [(sum_amount.to_d - total_paid.to_d), 0].max
     sale.update_column(:pending_amount, pending_amount)

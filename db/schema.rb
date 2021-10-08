@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_08_091836) do
+ActiveRecord::Schema.define(version: 2021_10_08_103816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -203,6 +203,8 @@ ActiveRecord::Schema.define(version: 2021_10_08_091836) do
     t.float "tax_amount"
     t.float "total_amount"
     t.bigint "tax_id"
+    t.float "discount_amount"
+    t.float "final_amount"
     t.index ["broker_id"], name: "index_sales_on_broker_id"
     t.index ["party_id"], name: "index_sales_on_party_id"
     t.index ["tax_id"], name: "index_sales_on_tax_id"

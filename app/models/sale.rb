@@ -8,7 +8,10 @@ class Sale < ApplicationRecord
   has_many :taxes, through: :sales_taxes
   enum sale_type: ['LCR', 'Export']
   # enum gst_type: ['CGST & SGST','ISGT']
-
+  # total_amount : amount without any calculation
+  # discount_amount : Discount amount
+  # tax amount : tax amount on (total_amount - discount_amount)
+  # final amount : after applying all disc, tax
   accepts_nested_attributes_for :sale_items
   accepts_nested_attributes_for :receipts
   accepts_nested_attributes_for :sales_taxes
@@ -39,6 +42,7 @@ class Sale < ApplicationRecord
       exclude_fields :total_amount
       exclude_fields :tax
       exclude_fields :sales_taxes
+      exclude_fields :final_amount
     end
     include_all_fields
     field :terms do
@@ -50,21 +54,27 @@ class Sale < ApplicationRecord
     # first calculate total amount
     sum_amount = sale_items.sum(:amount)
     self.update_column(:total_amount, sum_amount)
-    self.update_pending_amount
     # then do tax calculation
+    amount_eligible_for_tax = sum_amount.to_f - discount_amount.to_f
     i_tax_amount = 0.0
     self.taxes.each do |i_tax|
       tax_per = i_tax.tax_percentage rescue 0
-      i_tax_amount += sum_amount * ( tax_per.to_f / 100.0)
+      i_tax_amount += amount_eligible_for_tax * ( tax_per.to_f / 100.0)
     end
-    tax_per = self.taxes.tax_percentage rescue 0
     self.update_column(:tax_amount, i_tax_amount)
+    i_final_amount = (sum_amount - discount_amount) + i_tax_amount
+    self.update_column(:final_amount, i_final_amount)
+    self.update_pending_amount
   end
 
   def update_pending_amount
     total_paid = self.receipts.sum(:amount) rescue 0.0
-    pending_amount = [(total_amount.to_d - total_paid.to_d), 0].max
+    pending_amount = [(final_amount.to_d - total_paid.to_d), 0].max
     self.update_column(:pending_amount, pending_amount)
+  end
+
+  def amount_taxable
+    self.total_amount.to_f - discount_amount.to_f
   end
 
   def current_financial_year

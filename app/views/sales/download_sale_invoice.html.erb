@@ -48,38 +48,72 @@
         <th class="desc">DESCRIPTION OF GOODS</th>
         <th>HSN CODE</th>
         <th>QTY</th>
-        <th>Rate pr Cts (Rs.)</th>
+        <th>Rate pr <%= @sale.sale_items.first.stock.stock_sub_type.name.downcase.include?('diamond') ? 'Cts' : 'Gram' %> (Rs.)</th>
         <th>Amount (Rs.)</th>
       </tr>
     </thead>
     <tbody>
     	<% @sale.sale_items.each.with_index(1) do |sale_item, i_index| %>
-    		<tr>
-    			<!-- In Future handle it with the stock_sub_type -->
-		        <td class=""><%= i_index %></td>
-		        <td class="desc"><%= sale_item.stock.stock_sub_type.name %></td>
-		        <td class="unit"><%= "71023910" %></td>
-		        <td class="qty"><%= sale_item.carat %></td>
-		        <td class="qty"><%= sale_item.stock.loose_rate_per_caret %></td>
-		        <td class="total"><%= sale_item.amount %></td>
-		    </tr>
+    		<% if sale_item.stock.stock_sub_type.name.downcase.include?('polish') %>
+	    		<tr>
+			        <td class=""><%= i_index %></td>
+			        <td class="desc"><%= sale_item.stock.stock_sub_type.name %></td>
+			        <td class="unit"><%= "71023910" %></td>
+			        <td class="qty"><%= sale_item.carat %></td>
+			        <td class="qty"><%= sale_item.stock.loose_rate_per_caret %></td>
+			        <td class="total"><%= sale_item.amount %></td>
+			    </tr>
+		    <% elsif sale_item.stock.stock_sub_type.name.downcase.include?('loose') %>
+			    <tr>
+			        <td class=""><%= i_index %></td>
+			        <td class="desc"><%= sale_item.stock.stock_sub_type.name %></td>
+			        <td class="unit"><%= "71023910" %></td>
+			        <td class="qty"><%= sale_item.carat %></td>
+			        <td class="qty"><%= sale_item.stock.loose_rate_per_caret %></td>
+			        <td class="total"><%= sale_item.amount %></td>
+			    </tr>
+		    <% else %>
+		    <!-- This is for jewellary -->
+			    <tr>
+			        <td class=""><%= i_index %></td>
+			        <td class="desc"><%= sale_item.stock.stock_sub_type.name %></td>
+			        <td class="unit"><%= "71023910" %></td>
+			        <td class="qty"><%= sale_item.weight (gram) %></td>
+			        <td class="qty"><%= sale_item.stock.loose_rate_per_caret %></td>
+			        <td class="total"><%= sale_item.amount %></td>
+			    </tr>
+		    <% end %>
     	<% end %>
       <tr>
-        <td colspan="4">SUBTOTAL</td>
-        <td class="total">$5,200.00</td>
+        <td colspan="5">Total Value</td>
+        <td class="total">Rs. <%= @sale.total_amount %></td>
       </tr>
       <tr>
-        <td colspan="4">TAX 25%</td>
-        <td class="total">$1,300.00</td>
+        <td colspan="5">Less: Discount / Abatement</td>
+        <td class="total">Rs. <%= @sale.discount_amount %></td>
       </tr>
+      <% @sale.taxes.each do |tax| %>
+      	<tr>
+	      <td colspan="5"><%= tax.name %> @ <%= tax.tax_percentage %>%</td>
+	      <td class="total">Rs. <%= (@sale.amount_taxable * ( tax.tax_percentage.to_f / 100.0)) %></td>
+	    </tr>
+      <% end %>
       <tr>
-        <td class="grand total" colspan="4">GRAND TOTAL</td>
-        <td class="grand total">$6,500.00</td>
+        <td colspan="5">TOTAL Amount After Tax</td>
+        <td class="total">Rs. <%= @sale.final_amount %></td>
+      </tr>
+      <br>
+      <tr>
+        <td colspan="5">Total Amount of Invoice</td>
+        <td class="total">Rs. <%= @sale.final_amount %></td>
       </tr>
     </tbody>
   </table>
   <div id="notices">
   	<div class="clearfix" id="project_1">
+  		<p>Our Bank Details: <%= @company.bank_address_detail.to_s.gsub(/\n/, '<br/>').html_safe %></p>
+  		<p>Bank Acc No: <%= @company.bank_account_number %></p>
+  		<p>RTGS No: <%= @company.rtgs_code %></p>
   		<p>GSTIN: <%= @company.gst %></p>
   		<p>PAN: <%= @company.pan_card %></p>
   		<p>Terms And Conditions</p>
