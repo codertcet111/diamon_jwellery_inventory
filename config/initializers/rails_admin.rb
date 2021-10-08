@@ -34,10 +34,11 @@ RailsAdmin.config do |config|
     show
     edit
     delete
-    member :download_sales_invoice do
-      only ['Sales']
+    member :download_sale_invoice_btn do
+      only ['Sale']
       i18n_key :Invoice
       link_icon 'icon-download'
+      action_name 'download_sale_invoice_btn'
     end
     member :download_purchase_invoice_btn do
       only ['Purchase']

@@ -1,20 +1,20 @@
 class SalesController < ApplicationController
-  def download_invoice
-    @sales = Sales.find_by(id: params[:sales_id])
+  before_action :set_purchase, only: [:download_sale_invoice]
+
+  def download_sale_invoice
+    request.format = :pdf
     respond_to  do |format|
       format.html
       format.pdf do
-        pdf = render_to_string :pdf => "Sales_invocie_#{@sales.id}",
-                         layout: 'pdf.html.erb',
-                         template: 'invoice.pdf.slim',
-                         header: { :right => '[page] of [topage]'},
-                         margin: {top: 0,
-                                  bottom: 0,
-                                  left: 0,
-                                  right: 0},
-                         outline: {outline: true,
-                                   outline_depth: 2}
-        end
-     end
-	end
+        render template: 'sales/download_sale_invoice.html.erb',
+        pdf: "Sale_Invoice_#{@sale.id}"
+      end
+    end
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_purchase
+      @sale = Sale.find(params[:id])
+    end
 end

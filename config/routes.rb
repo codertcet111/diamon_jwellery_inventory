@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :stock_sub_types
   resources :stock_types
   post '/purchase/:id/download_purchase_invoice' => 'purchases#download_purchase_invoice'
+  post '/sale/:id/download_sale_invoice' => 'sales#download_sale_invoice'
   get '/stock_details/:stock_id' => 'info#stock_details'
   get '/sell_item_amount' => 'info#sell_item_amount'
   root 'rails_admin/main#dashboard'

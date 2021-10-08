@@ -67,7 +67,7 @@ class PurchasesController < ApplicationController
       format.html
       format.pdf do
         render template: 'purchases/download_purchase_invoice.html.erb',
-        pdf: "Purchase_Invocie_#{@purchase.id}"
+        pdf: "Purchase_Invoice_#{@purchase.id}"
       end
     end
   end
