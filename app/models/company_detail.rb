@@ -1,6 +1,7 @@
 class CompanyDetail < ApplicationRecord
   
   rails_admin do
+    label 'My Company Detail'
     include_all_fields
     field :gst do
       label 'GST Number'

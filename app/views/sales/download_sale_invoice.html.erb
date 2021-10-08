@@ -2,12 +2,12 @@
   <!-- <div id="logo">
     <img src="logo.png"/>
   </div> -->
-  <h1>SALE INVOICE 0<%= @sale.id %></h1>
+  <h1>SALE INVOICE 00<%= @sale.id %></h1>
   <!-- Right hand side -->
   <div class="clearfix" id="company">
     <div><span>INVOICE: </span>LS/000<%= @sale.id %>/<%= @sale.current_financial_year %></div>
     <div><span>Date: </span><%= @sale.sale_date.to_date %></div>
-    <div><span>Payment Terms: </span><%= @sale.terms %></div>
+    <div><span>Payment Terms: </span><%= @sale.terms || 'No' %> Days</div>
 	<div><span>Other Ref: </span></div>
   </div>
   <!-- Left hand side (Party detail) -->
