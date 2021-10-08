@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_03_112013) do
+ActiveRecord::Schema.define(version: 2021_10_08_091836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,11 @@ ActiveRecord::Schema.define(version: 2021_10_03_112013) do
     t.string "qbc_no"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "bank_address_detail"
+    t.string "bank_account_number"
+    t.string "rtgs_code"
+    t.text "terms_and_condition"
+    t.string "proprietor_name"
   end
 
   create_table "expenses", force: :cascade do |t|
@@ -100,6 +105,7 @@ ActiveRecord::Schema.define(version: 2021_10_03_112013) do
     t.string "pin_code"
     t.string "state"
     t.string "country"
+    t.string "place_of_supply"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -200,6 +206,15 @@ ActiveRecord::Schema.define(version: 2021_10_03_112013) do
     t.index ["broker_id"], name: "index_sales_on_broker_id"
     t.index ["party_id"], name: "index_sales_on_party_id"
     t.index ["tax_id"], name: "index_sales_on_tax_id"
+  end
+
+  create_table "sales_taxes", force: :cascade do |t|
+    t.bigint "sale_id"
+    t.bigint "tax_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sale_id"], name: "index_sales_taxes_on_sale_id"
+    t.index ["tax_id"], name: "index_sales_taxes_on_tax_id"
   end
 
   create_table "stock_histories", force: :cascade do |t|
@@ -326,6 +341,8 @@ ActiveRecord::Schema.define(version: 2021_10_03_112013) do
   add_foreign_key "sales", "brokers"
   add_foreign_key "sales", "parties"
   add_foreign_key "sales", "taxes"
+  add_foreign_key "sales_taxes", "sales"
+  add_foreign_key "sales_taxes", "taxes"
   add_foreign_key "stock_histories", "stocks"
   add_foreign_key "stock_sub_types", "stock_types"
   add_foreign_key "stocks", "purchases"

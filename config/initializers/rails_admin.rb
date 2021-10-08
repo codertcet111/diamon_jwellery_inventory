@@ -113,12 +113,13 @@ RailsAdmin.config do |config|
       field :carat do
         partial 'carat'
       end
-      field :rap do
-        partial 'rap'
-      end
+      # field :rap do
+      #   partial 'rap'
+      # end
       include_all_fields
       field :amount do
         partial 'amount'
+        required true
       end
     end
   end

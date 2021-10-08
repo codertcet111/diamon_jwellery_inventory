@@ -1,4 +1,250 @@
-<p>
-  <strong>Invoice:</strong>
-  <%= @sale %>
-</p>
+  <header class="clearfix">
+  <!-- <div id="logo">
+    <img src="logo.png"/>
+  </div> -->
+  <h1>SALE INVOICE 0<%= @sale.id %></h1>
+  <!-- Right hand side -->
+  <div class="clearfix" id="company">
+    <div><span>INVOICE NO: </span>LS/000<%= @sale.id %>/<%= @sale.current_financial_year %></div>
+    <div><span>Date: </span><%= @sale.sale_date.to_date %></div>
+    <div><span>Payment Terms: </span><%= @sale.terms %></div>
+	<div><span>Other Ref: </span></div>
+  </div>
+  <!-- Left hand side (Party detail) -->
+  <div id="project">
+    <div>
+      <bold>To,</bold>
+      <br>
+      <p style="margin-left: 10px"><%= @sale.party.address.to_s.gsub(/\n/, '<br/>').html_safe %></p>
+    </div>
+    <br>
+    <div>
+      <span>State:</span>
+      <%= @sale.party.state %>
+    </div>
+    <div>
+      <span>Country:</span>
+      <%= @sale.party.country %>
+    </div>
+    <div>
+      <span>GST No:</span>
+      <%= @sale.party.gst_no%>
+    </div>
+    <div>
+      <span>PAN No:</span>
+      <%= @sale.party.pan_no%>
+    </div>
+    <div>
+      <span>Place of Supply</span>
+      <%= @sale.party.place_of_supply%>
+    </div>
+  </div>
+</header>
+<main>
+  <table>
+    <thead>
+      <tr>
+        <th class="service">Number</th>
+        <th class="desc">DESCRIPTION OF GOODS</th>
+        <th>HSN CODE</th>
+        <th>QTY</th>
+        <th>Rate pr Cts (Rs.)</th>
+        <th>Amount (Rs.)</th>
+      </tr>
+    </thead>
+    <tbody>
+    	<% @sale.sale_items.each.with_index(1) do |sale_item, i_index| %>
+    		<tr>
+    			<!-- In Future handle it with the stock_sub_type -->
+		        <td class=""><%= i_index %></td>
+		        <td class="desc"><%= sale_item.stock.stock_sub_type.name %></td>
+		        <td class="unit"><%= "71023910" %></td>
+		        <td class="qty"><%= sale_item.carat %></td>
+		        <td class="qty"><%= sale_item.stock.loose_rate_per_caret %></td>
+		        <td class="total"><%= sale_item.amount %></td>
+		    </tr>
+    	<% end %>
+      <tr>
+        <td colspan="4">SUBTOTAL</td>
+        <td class="total">$5,200.00</td>
+      </tr>
+      <tr>
+        <td colspan="4">TAX 25%</td>
+        <td class="total">$1,300.00</td>
+      </tr>
+      <tr>
+        <td class="grand total" colspan="4">GRAND TOTAL</td>
+        <td class="grand total">$6,500.00</td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="notices">
+  	<div class="clearfix" id="project_1">
+  		<p>GSTIN: <%= @company.gst %></p>
+  		<p>PAN: <%= @company.pan_card %></p>
+  		<p>Terms And Conditions</p>
+  		<%= @company.terms_and_condition.html_safe %>
+  	</div>
+  	<div id="company_1">
+  		<p>For Rio Diam</p>
+  		<br>
+  		<br>
+  		<p>PROPRIETOR.</p>
+  		<p><%= @company.proprietor_name %></p>
+  	</div>
+  </div>
+</main>
+<footer>
+  Rio Diam
+</footer>
+
+<style type="text/css"> 
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+a {
+  color: #5D6975;
+  text-decoration: underline;
+}
+
+body {
+  position: relative;
+  width: 21cm;  
+  height: 29.7cm; 
+  margin: 0 auto; 
+  color: #001028;
+  background: #FFFFFF; 
+  font-family: Arial, sans-serif; 
+  font-size: 12px; 
+  font-family: Arial;
+}
+
+header {
+  padding: 10px 0;
+  margin-bottom: 30px;
+}
+
+#logo {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#logo img {
+  width: 90px;
+}
+
+h1 {
+  border-top: 1px solid  #5D6975;
+  border-bottom: 1px solid  #5D6975;
+  color: #5D6975;
+  font-size: 2.4em;
+  line-height: 1.4em;
+  font-weight: normal;
+  text-align: center;
+  margin: 0 0 20px 0;
+  background: url(dimension.png);
+}
+
+#project, #project_1 {
+  float: left;
+}
+
+#project span, #project_1 span {
+  color: #5D6975;
+  text-align: right;
+  width: 52px;
+  margin-right: 10px;
+  display: inline-block;
+  font-size: 0.8em;
+}
+
+#company span, #company_1 span {
+  color: #5D6975;
+  text-align: right;
+  width: 80px;
+  margin-right: 10px;
+  display: inline-block;
+  font-size: 0.8em;
+}
+
+#company,#company_1  {
+  float: right;
+  text-align: right;
+}
+
+#project div,
+#company div, #project_1 div,
+#company_1 div,  {
+  white-space: nowrap;        
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 20px;
+}
+
+table tr:nth-child(2n-1) td {
+  background: #F5F5F5;
+}
+
+table th,
+table td {
+  text-align: center;
+}
+
+table th {
+  padding: 5px 20px;
+  color: #5D6975;
+  border-bottom: 1px solid #C1CED9;
+  white-space: nowrap;        
+  font-weight: normal;
+}
+
+table .service,
+table .desc {
+  text-align: left;
+}
+
+table td {
+  padding: 20px;
+  text-align: right;
+}
+
+table td.service,
+table td.desc {
+  vertical-align: top;
+}
+
+table td.unit,
+table td.qty,
+table td.total {
+  font-size: 1.2em;
+}
+
+table td.grand {
+  border-top: 1px solid #5D6975;;
+}
+
+#notices .notice {
+  color: #5D6975;
+  font-size: 1.2em;
+}
+
+footer {
+  color: #5D6975;
+  width: 100%;
+  height: 30px;
+  position: absolute;
+  bottom: 0;
+  border-top: 1px solid #C1CED9;
+  padding: 8px 0;
+  text-align: center;
+}
+
+</style> 
