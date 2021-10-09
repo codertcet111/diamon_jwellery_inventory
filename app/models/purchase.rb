@@ -27,6 +27,9 @@ class Purchase < ApplicationRecord
     end
     exclude_fields :pending_amount
     exclude_fields :payments
+    exclude_fields :tax_amount
+    exclude_fields :total_amount
+    exclude_fields :tax
    end
   end
 

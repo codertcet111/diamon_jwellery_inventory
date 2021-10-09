@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_08_103816) do
+ActiveRecord::Schema.define(version: 2021_10_09_074726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,6 +84,17 @@ ActiveRecord::Schema.define(version: 2021_10_08_103816) do
     t.bigint "ledger_group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "mobile_number"
+    t.string "qbc"
+    t.text "address"
+    t.string "gst_number"
+    t.string "pan_number"
+    t.string "adhaar_number"
+    t.string "bank_account_number"
+    t.string "pin_code"
+    t.string "state"
+    t.string "country"
+    t.string "city"
     t.index ["ledger_group_id"], name: "index_ledgers_on_ledger_group_id"
   end
 
@@ -106,6 +117,7 @@ ActiveRecord::Schema.define(version: 2021_10_08_103816) do
     t.string "state"
     t.string "country"
     t.string "place_of_supply"
+    t.integer "party_type"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -189,7 +201,6 @@ ActiveRecord::Schema.define(version: 2021_10_08_103816) do
     t.integer "terms"
     t.float "broker_percentage"
     t.decimal "broker_amount"
-    t.string "invoice_no"
     t.boolean "bill_present", default: false
     t.float "dollar_rate"
     t.datetime "created_at", null: false
@@ -202,12 +213,10 @@ ActiveRecord::Schema.define(version: 2021_10_08_103816) do
     t.integer "sale_type"
     t.float "tax_amount"
     t.float "total_amount"
-    t.bigint "tax_id"
     t.float "discount_amount"
     t.float "final_amount"
     t.index ["broker_id"], name: "index_sales_on_broker_id"
     t.index ["party_id"], name: "index_sales_on_party_id"
-    t.index ["tax_id"], name: "index_sales_on_tax_id"
   end
 
   create_table "sales_taxes", force: :cascade do |t|
@@ -298,7 +307,7 @@ ActiveRecord::Schema.define(version: 2021_10_08_103816) do
     t.float "loose_total_caret"
     t.float "loose_selection_carat"
     t.float "loose_rejection_carat"
-    t.float "loose_rate_per_caret"
+    t.float "rate_per_caret"
     t.float "loose_total_amount"
     t.float "loose_selected_amount"
     t.float "loose_rejected_amount"
@@ -335,14 +344,12 @@ ActiveRecord::Schema.define(version: 2021_10_08_103816) do
   add_foreign_key "payments", "purchases"
   add_foreign_key "purchases", "brokers"
   add_foreign_key "purchases", "parties"
-  add_foreign_key "purchases", "taxes"
   add_foreign_key "receipts", "parties"
   add_foreign_key "receipts", "sales"
   add_foreign_key "sale_items", "sales"
   add_foreign_key "sale_items", "stocks"
   add_foreign_key "sales", "brokers"
   add_foreign_key "sales", "parties"
-  add_foreign_key "sales", "taxes"
   add_foreign_key "sales_taxes", "sales"
   add_foreign_key "sales_taxes", "taxes"
   add_foreign_key "stock_histories", "stocks"

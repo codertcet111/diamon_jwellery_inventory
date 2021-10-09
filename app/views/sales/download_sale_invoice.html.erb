@@ -59,7 +59,7 @@
 			        <td class="desc"><%= sale_item.stock.stock_sub_type.name %></td>
 			        <td class="unit"><%= "71023910" %></td>
 			        <td class="qty"><%= sale_item.carat %></td>
-			        <td class="qty"><%= sale_item.stock.loose_rate_per_caret %></td>
+			        <td class="qty"><%= sale_item.stock.rate_per_caret %></td>
 			        <td class="total"><%= sale_item.amount %></td>
 			    </tr>
 		    <% elsif sale_item.stock.stock_sub_type.name.downcase.include?('loose') %>
@@ -68,7 +68,7 @@
 			        <td class="desc"><%= sale_item.stock.stock_sub_type.name %></td>
 			        <td class="unit"><%= "71023910" %></td>
 			        <td class="qty"><%= sale_item.carat %></td>
-			        <td class="qty"><%= sale_item.stock.loose_rate_per_caret %></td>
+			        <td class="qty"><%= sale_item.stock.rate_per_caret %></td>
 			        <td class="total"><%= sale_item.amount %></td>
 			    </tr>
 		    <% else %>
@@ -78,7 +78,7 @@
 			        <td class="desc"><%= sale_item.stock.stock_sub_type.name %></td>
 			        <td class="unit"><%= "71023910" %></td>
 			        <td class="qty"><%= sale_item.weight (gram) %></td>
-			        <td class="qty"><%= sale_item.stock.loose_rate_per_caret %></td>
+			        <td class="qty"><%= sale_item.stock.rate_per_caret %></td>
 			        <td class="total"><%= sale_item.amount %></td>
 			    </tr>
 		    <% end %>

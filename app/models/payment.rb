@@ -35,6 +35,10 @@ class Payment < ApplicationRecord
       inline_add false
       inline_edit false
     end
+    exclude_fields :party_come
+    exclude_fields :pc_acc_name
+    exclude_fields :party_paid
+    exclude_fields :pp_acc_name
   end
 
 end

@@ -4,6 +4,7 @@ class Tax < ApplicationRecord
 	has_many :sales, through: :sales_taxes
 
 	rails_admin do
+		navigation_label Proc.new { "Tax" }
 	    edit do
 	    	exclude_fields :purchases
 	    	exclude_fields :sales_taxes

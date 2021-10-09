@@ -43,6 +43,8 @@ class Sale < ApplicationRecord
       exclude_fields :tax
       exclude_fields :sales_taxes
       exclude_fields :final_amount
+      exclude_fields :invoice_number
+      exclude_fields :invoice_date
     end
     include_all_fields
     field :terms do

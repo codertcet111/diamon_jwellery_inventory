@@ -95,6 +95,9 @@ class Stock < ApplicationRecord
       field :title do
         label "Stock Description"
       end
+      field :rate_per_caret do
+        label "Diamond Rate/Carat (*)"
+      end
       field :loose_total_caret do
         label "Loose diamond Total Carats"
       end
@@ -103,10 +106,6 @@ class Stock < ApplicationRecord
       end
       field :loose_rejection_carat do
         label "Loose diamond Rejected Carats"
-      end
-      field :loose_rate_per_caret do
-        label "Diamond Rate/Carat (*)"
-        required true
       end
       field :loose_total_amount do
         label "Loose diamond Total Amount (Rs.)"
