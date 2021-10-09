@@ -43,7 +43,7 @@ class Purchase < ApplicationRecord
   end
 
   def purchase_terms
-    self.terms_type == Purchase.terms_types[:Days] ? "#{self.terms || 0} - Days" : self.terms_type
+    self.terms_type == 'Days' ? "#{self.terms || 0} - Days" : self.terms_type
   end
 
   def perform_calculations
