@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :contras
   resources :taxes
   resources :company_details
   resources :ledger_expenses

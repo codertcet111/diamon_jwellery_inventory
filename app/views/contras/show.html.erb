@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @contra.amount %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @contra.date %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @contra.notes %>
+</p>
+
+<%= link_to 'Edit', edit_contra_path(@contra) %> |
+<%= link_to 'Back', contras_path %>
