@@ -5,12 +5,21 @@ class Purchase < ApplicationRecord
   has_many :payments, inverse_of: :purchase, dependent: :destroy
   belongs_to :tax, optional: true
 
+  enum terms_type: ["Days","COD","Advance"]
   accepts_nested_attributes_for :stocks
   accepts_nested_attributes_for :payments
 
   after_create :perform_calculations
 
   rails_admin do
+    show do
+      exclude_fields :terms, :terms_type
+      field :purchase_terms
+    end
+    list do
+      exclude_fields :terms, :terms_type
+      field :purchase_terms
+    end
    edit do
     field :purchase_date do
       required true
@@ -31,6 +40,10 @@ class Purchase < ApplicationRecord
     exclude_fields :total_amount
     exclude_fields :tax
    end
+  end
+
+  def purchase_terms
+    self.terms_type == Purchase.terms_types[:Days] ? "#{self.terms || 0} - Days" : self.terms_type
   end
 
   def perform_calculations

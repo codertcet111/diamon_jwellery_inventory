@@ -7,7 +7,9 @@ class Sale < ApplicationRecord
   has_many :sales_taxes
   has_many :taxes, through: :sales_taxes
   enum sale_type: ['LCR', 'Export']
+  enum terms_type: ["Days","COD","Advance"]
   # enum gst_type: ['CGST & SGST','ISGT']
+  # NOTES: -> below
   # total_amount : amount without any calculation
   # discount_amount : Discount amount
   # tax amount : tax amount on (total_amount - discount_amount)
@@ -19,6 +21,14 @@ class Sale < ApplicationRecord
   after_create :perform_calculations
 
   rails_admin do
+    show do
+      exclude_fields :terms, :terms_type
+      field :sales_terms
+    end
+    list do
+      exclude_fields :terms, :terms_type
+      field :sales_terms
+    end
     edit do
       field :sale_date do
         required true
@@ -50,6 +60,10 @@ class Sale < ApplicationRecord
     field :terms do
       label 'Terms (In Days)'
     end
+  end
+
+  def sales_terms
+    self.terms_type == 'Days' ? "#{self.terms || 0} - Days" : self.terms_type
   end
 
   def perform_calculations

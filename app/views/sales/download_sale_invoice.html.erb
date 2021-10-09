@@ -2,12 +2,12 @@
   <!-- <div id="logo">
     <img src="logo.png"/>
   </div> -->
-  <h1>SALE INVOICE 00<%= @sale.id %></h1>
+  <h3><%= @company.name %> Sale Invoice 00<%= @sale.id %></h3>
   <!-- Right hand side -->
   <div class="clearfix" id="company">
     <div><span>INVOICE: </span>LS/000<%= @sale.id %>/<%= @sale.current_financial_year %></div>
     <div><span>Date: </span><%= @sale.sale_date.to_date %></div>
-    <div><span>Payment Terms: </span><%= @sale.terms || 'No' %> Days</div>
+    <div><span>Payment Terms: </span><%= @sale.sales_terms || '' %></div>
 	<div><span>Other Ref: </span></div>
   </div>
   <!-- Left hand side (Party detail) -->
@@ -110,7 +110,7 @@
   </table>
   <div id="notices">
   	<div class="clearfix" id="project_1">
-  		<p>Our Bank Details: <%= @company.bank_address_detail.to_s.gsub(/\n/, '<br/>').html_safe %></p>
+  		<p><h2>Our Details: </h2><%= @company.bank_address_detail.to_s.gsub(/\n/, '<br/>').html_safe %></p>
   		<p>Bank Acc No: <%= @company.bank_account_number %></p>
   		<p>RTGS No: <%= @company.rtgs_code %></p>
   		<p>GSTIN: <%= @company.gst %></p>
@@ -170,11 +170,11 @@ header {
   width: 90px;
 }
 
-h1 {
+h3 {
   border-top: 1px solid  #5D6975;
   border-bottom: 1px solid  #5D6975;
   color: #5D6975;
-  font-size: 2.4em;
+  font-size: 2.0em;
   line-height: 1.4em;
   font-weight: normal;
   text-align: center;
@@ -188,7 +188,7 @@ h1 {
 
 #project span, #project_1 span {
   color: #5D6975;
-  text-align: right;
+  text-align: left;
   width: 82px;
   margin-right: 10px;
   display: inline-block;
@@ -196,15 +196,15 @@ h1 {
 
 #company span, #company_1 span {
   color: #5D6975;
-  text-align: right;
-  width: 80px;
-  margin-right: 10px;
+  text-align: left;
+  width: 200px;
+  /*margin-right: 10px;*/
   display: inline-block;
 }
 
 #company,#company_1  {
   float: right;
-  text-align: right;
+  /*text-align: right;*/
 }
 
 #project div,
