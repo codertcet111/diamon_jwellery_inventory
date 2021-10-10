@@ -52,6 +52,10 @@ class Purchase < ApplicationRecord
     # Now Tax
     tax_per = self.tax.tax_percentage rescue 0
     self.update_column(:tax_amount, sum_amount * ( tax_per.to_f / 100.0))
+    #Update pending amount as well
+    total_paid = self.payments.sum(:amount)
+    pending_amount = [(total_amount.to_d - total_paid.to_d), 0].max
+    self.update_column(:pending_amount, pending_amount)
   end
 
 end

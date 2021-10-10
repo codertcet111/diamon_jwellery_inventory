@@ -35,7 +35,11 @@ class Stock < ApplicationRecord
 
   before_save :create_stock_history
 
+  before_create :stock_pre_calculation_before_create
+
   accepts_nested_attributes_for :expenses
+
+  after_update :recalculate_purchase_final_amount
 
   scope :in_stock_all, -> { where("state not in (?)",Stock.states[:sold_out]) }
   scope :in_stock_loose_diamond, -> { in_stock_all.where(stock_sub_type_id: StockSubType.loose_diamond_id)}
@@ -55,6 +59,31 @@ class Stock < ApplicationRecord
     unless self.state
       self.update_attributes(state: Stock.states[:available])
     end
+  end
+
+  def stock_pre_calculation_before_create
+    if self.stock_sub_type.name.downcase.include?('loose')
+      discounts = [self.discount_percentage, additional_disc_1, additional_disc_2, additional_disc_3]
+      i_rate_per_carat = self.rate_per_caret
+      # Now apply each discount on rate per carat
+      discounts.each do |disc|
+        i_rate_per_carat = i_rate_per_carat * (1 - (disc.to_f / 100)) if (disc && disc > 0)
+      end
+      self.amount = i_rate_per_carat * self.loose_selection_carat
+      self.carat = self.loose_selection_carat
+    elsif self.stock_sub_type.name.downcase.include?('polish')
+      discounts = [self.discount_percentage, additional_disc_1, additional_disc_2, additional_disc_3]
+      i_rate_per_carat = self.rate_per_caret
+      # Now apply each discount on rate per carat
+      discounts.each do |disc|
+        i_rate_per_carat = i_rate_per_carat * (1 - (disc.to_f / 100)) if (disc && disc > 0)
+      end
+      self.amount = i_rate_per_carat * self.carat
+    end
+  end
+
+  def recalculate_purchase_final_amount
+    self.purchase.perform_calculations if saved_change_to_amount?
   end
 
   rails_admin do
@@ -81,14 +110,17 @@ class Stock < ApplicationRecord
       # field :rap do
       #   required true
       # end
-      field :amount do
-        required true
-      end
+      # field :amount do
+      #   required true
+      # end
       exclude_fields :stock_key
       exclude_fields :purchase
       exclude_fields :stock_histories
       exclude_fields :sale_item
       exclude_fields :expenses
+      exclude_fields :loose_selected_amount
+      exclude_fields :loose_rejected_amount
+      exclude_fields :loose_total_amount
       field :weight do
         label "Weight (Gram)"
       end
@@ -135,6 +167,9 @@ class Stock < ApplicationRecord
         label "Total Carat (Final)"
       end
     end
+    exclude_fields :loose_selected_amount
+    exclude_fields :loose_rejected_amount
+    exclude_fields :loose_total_amount
   end
 
   def name
