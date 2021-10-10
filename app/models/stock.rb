@@ -118,9 +118,6 @@ class Stock < ApplicationRecord
       exclude_fields :stock_histories
       exclude_fields :sale_item
       exclude_fields :expenses
-      exclude_fields :loose_selected_amount
-      exclude_fields :loose_rejected_amount
-      exclude_fields :loose_total_amount
       field :weight do
         label "Weight (Gram)"
       end
@@ -138,15 +135,6 @@ class Stock < ApplicationRecord
       end
       field :loose_rejection_carat do
         label "Loose diamond Rejected Carats"
-      end
-      field :loose_total_amount do
-        label "Loose diamond Total Amount (Rs.)"
-      end
-      field :loose_selected_amount do
-        label "Loose diamond Selected carats Amount (Rs.)"
-      end
-      field :loose_rejected_amount do
-        label "Loose diamond Rejected carats Amount (Rs.)"
       end
       field :discount_percentage do
         label "Discount %"
@@ -167,9 +155,6 @@ class Stock < ApplicationRecord
         label "Total Carat (Final)"
       end
     end
-    exclude_fields :loose_selected_amount
-    exclude_fields :loose_rejected_amount
-    exclude_fields :loose_total_amount
   end
 
   def name

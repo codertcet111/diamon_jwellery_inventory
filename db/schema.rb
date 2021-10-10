@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_10_152019) do
+ActiveRecord::Schema.define(version: 2021_10_10_153633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -320,10 +320,10 @@ ActiveRecord::Schema.define(version: 2021_10_10_152019) do
     t.float "loose_selection_carat"
     t.float "loose_rejection_carat"
     t.float "rate_per_caret"
-    t.float "loose_total_amount"
-    t.float "loose_selected_amount"
-    t.float "loose_rejected_amount"
     t.string "title"
+    t.text "notes"
+    t.string "certificate_number"
+    t.text "image_url"
     t.index ["purchase_id"], name: "index_stocks_on_purchase_id"
     t.index ["stock_sub_type_id"], name: "index_stocks_on_stock_sub_type_id"
   end
