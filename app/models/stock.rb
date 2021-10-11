@@ -35,7 +35,7 @@ class Stock < ApplicationRecord
 
   before_save :create_stock_history
 
-  before_create :stock_pre_calculation_before_create
+  before_create :stock_entire_re_calculation
 
   accepts_nested_attributes_for :expenses
 
@@ -61,9 +61,10 @@ class Stock < ApplicationRecord
     end
   end
 
-  def stock_pre_calculation_before_create
+  # Do thise before Create / after each update to discount_percentage, additional_disc_1, additional_disc_2, additional_disc_3, rate_per_caret, loose_selection_carat, amount, carat
+  def stock_entire_re_calculation
     if self.stock_sub_type.name.downcase.include?('loose')
-      discounts = [self.discount_percentage, additional_disc_1, additional_disc_2, additional_disc_3]
+      discounts = [discount_percentage, additional_disc_1, additional_disc_2, additional_disc_3]
       i_rate_per_carat = self.rate_per_caret
       # Now apply each discount on rate per carat
       discounts.each do |disc|
@@ -79,11 +80,17 @@ class Stock < ApplicationRecord
         i_rate_per_carat = i_rate_per_carat * (1 - (disc.to_f / 100)) if (disc && disc > 0)
       end
       self.amount = i_rate_per_carat * self.carat
+    else
+      # Pending calculation for jewellary
     end
   end
 
   def recalculate_purchase_final_amount
-    self.purchase.perform_calculations if saved_change_to_amount?
+    if saved_change_to_amount? || saved_change_to_discount_percentage? || saved_change_to_additional_disc_1? || saved_change_to_additional_disc_2? || saved_change_to_additional_disc_3? || saved_change_to_rate_per_caret? || saved_change_to_loose_selection_carat? || saved_change_to_amount? || saved_change_to_carat?
+      self.stock_entire_re_calculation
+      self.save
+      self.purchase.perform_calculations
+    end
   end
 
   rails_admin do
