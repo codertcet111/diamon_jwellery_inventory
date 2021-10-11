@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_11_175229) do
+ActiveRecord::Schema.define(version: 2021_10_11_181752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -260,6 +260,14 @@ ActiveRecord::Schema.define(version: 2021_10_11_175229) do
     t.index ["stock_id"], name: "index_stock_histories_on_stock_id"
   end
 
+  create_table "stock_pc_ranges", force: :cascade do |t|
+    t.string "name"
+    t.float "min_value"
+    t.float "max_value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "stock_sub_types", force: :cascade do |t|
     t.string "name"
     t.string "weight_unit"
@@ -336,7 +344,9 @@ ActiveRecord::Schema.define(version: 2021_10_11_175229) do
     t.text "notes"
     t.string "certificate_number"
     t.text "image_url"
+    t.bigint "stock_pc_range_id"
     t.index ["purchase_id"], name: "index_stocks_on_purchase_id"
+    t.index ["stock_pc_range_id"], name: "index_stocks_on_stock_pc_range_id"
     t.index ["stock_sub_type_id"], name: "index_stocks_on_stock_sub_type_id"
   end
 
@@ -379,4 +389,5 @@ ActiveRecord::Schema.define(version: 2021_10_11_175229) do
   add_foreign_key "stock_histories", "stocks"
   add_foreign_key "stock_sub_types", "stock_types"
   add_foreign_key "stocks", "purchases"
+  add_foreign_key "stocks", "stock_pc_ranges"
 end

@@ -1,6 +1,7 @@
 class Stock < ApplicationRecord
   belongs_to :purchase, optional: true, inverse_of: :stocks
   belongs_to :stock_sub_type
+  belongs_to :stock_pc_range, optional: true
   has_many :expenses
   has_many :stock_histories
   has_one :sale_item, inverse_of: :stock

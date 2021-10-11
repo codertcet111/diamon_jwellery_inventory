@@ -1,0 +1,32 @@
+<%= form_with(model: stock_pc_range, local: true) do |form| %>
+  <% if stock_pc_range.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(stock_pc_range.errors.count, "error") %> prohibited this stock_pc_range from being saved:</h2>
+
+      <ul>
+      <% stock_pc_range.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :min_value %>
+    <%= form.text_field :min_value %>
+  </div>
+
+  <div class="field">
+    <%= form.label :max_value %>
+    <%= form.text_field :max_value %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
