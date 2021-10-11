@@ -4,6 +4,8 @@ class Party < ApplicationRecord
   has_many :sales
   has_many :receipts
   enum party_type: ["Sundry Debitor", "Sundry Creditor"]
+  has_many :to_journal_vouchers, :class_name => "JournalVoucher", :foreign_key => "party_1_id"
+  has_many :from_journal_vouchers, :class_name => "JournalVoucher", :foreign_key => "party_2_id"
 
   rails_admin do
    edit do

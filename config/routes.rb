@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :journal_vouchers
   resources :contras
   resources :taxes
   resources :company_details

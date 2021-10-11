@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  amount: 1.5
+  date: 2021-10-11 23:21:47
+  notes: MyText
+
+two:
+  amount: 1.5
+  date: 2021-10-11 23:21:47
+  notes: MyText

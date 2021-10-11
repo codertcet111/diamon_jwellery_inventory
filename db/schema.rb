@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_10_153633) do
+ActiveRecord::Schema.define(version: 2021_10_11_175229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,18 @@ ActiveRecord::Schema.define(version: 2021_10_10_153633) do
     t.bigint "stock_id"
     t.float "weight_loss"
     t.index ["stock_id"], name: "index_expenses_on_stock_id"
+  end
+
+  create_table "journal_vouchers", force: :cascade do |t|
+    t.float "amount"
+    t.datetime "date"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "ledger_1_id"
+    t.integer "party_1_id"
+    t.integer "ledger_2_id"
+    t.integer "party_2_id"
   end
 
   create_table "ledger_expenses", force: :cascade do |t|

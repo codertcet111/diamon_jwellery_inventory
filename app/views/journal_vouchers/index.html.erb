@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Journal Vouchers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Amount</th>
+      <th>Date</th>
+      <th>Notes</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @journal_vouchers.each do |journal_voucher| %>
+      <tr>
+        <td><%= journal_voucher.amount %></td>
+        <td><%= journal_voucher.date %></td>
+        <td><%= journal_voucher.notes %></td>
+        <td><%= link_to 'Show', journal_voucher %></td>
+        <td><%= link_to 'Edit', edit_journal_voucher_path(journal_voucher) %></td>
+        <td><%= link_to 'Destroy', journal_voucher, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Journal Voucher', new_journal_voucher_path %>
