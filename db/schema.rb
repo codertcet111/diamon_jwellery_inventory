@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_11_181752) do
+ActiveRecord::Schema.define(version: 2021_10_12_184707) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -174,11 +174,22 @@ ActiveRecord::Schema.define(version: 2021_10_11_181752) do
     t.datetime "invoice_date"
     t.float "tax_amount"
     t.float "total_amount"
-    t.bigint "tax_id"
     t.integer "terms_type"
+    t.float "final_amount"
+    t.float "discount_amount"
+    t.float "broker_percentage"
+    t.float "broker_amount"
     t.index ["broker_id"], name: "index_purchases_on_broker_id"
     t.index ["party_id"], name: "index_purchases_on_party_id"
-    t.index ["tax_id"], name: "index_purchases_on_tax_id"
+  end
+
+  create_table "purchases_taxes", force: :cascade do |t|
+    t.bigint "purchase_id"
+    t.bigint "tax_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["purchase_id"], name: "index_purchases_taxes_on_purchase_id"
+    t.index ["tax_id"], name: "index_purchases_taxes_on_tax_id"
   end
 
   create_table "receipts", force: :cascade do |t|
@@ -378,6 +389,8 @@ ActiveRecord::Schema.define(version: 2021_10_11_181752) do
   add_foreign_key "payments", "purchases"
   add_foreign_key "purchases", "brokers"
   add_foreign_key "purchases", "parties"
+  add_foreign_key "purchases_taxes", "purchases"
+  add_foreign_key "purchases_taxes", "taxes"
   add_foreign_key "receipts", "parties"
   add_foreign_key "receipts", "sales"
   add_foreign_key "sale_items", "sales"

@@ -19,6 +19,7 @@ class Sale < ApplicationRecord
   accepts_nested_attributes_for :sales_taxes
 
   after_create :perform_calculations
+  after_update :recalculate_pending_amount
 
   rails_admin do
     show do
@@ -52,7 +53,6 @@ class Sale < ApplicationRecord
       exclude_fields :total_amount
       exclude_fields :tax
       exclude_fields :sales_taxes
-      exclude_fields :final_amount
       exclude_fields :invoice_number
       exclude_fields :invoice_date
     end
@@ -81,12 +81,26 @@ class Sale < ApplicationRecord
     i_final_amount = (sum_amount - discount_amount) + i_tax_amount
     self.update_column(:final_amount, i_final_amount)
     self.update_pending_amount
+    self.calculate_brokerage
+  end
+
+  def calculate_brokerage
+    final_amount_including_tax = self.final_amount.to_f + self.tax_amount.to_f
+    brokerage_calculated = final_amount_including_tax * (broker_percentage.to_f / 100.0)
+    self.update_column(:broker_amount, brokerage_calculated)
   end
 
   def update_pending_amount
     total_paid = self.receipts.sum(:amount) rescue 0.0
     pending_amount = [(final_amount.to_d - total_paid.to_d), 0].max
     self.update_column(:pending_amount, pending_amount)
+  end
+
+  def recalculate_pending_amount
+    if saved_change_to_final_amount?
+      update_pending_amount
+      calculate_brokerage
+    end  
   end
 
   def amount_taxable
