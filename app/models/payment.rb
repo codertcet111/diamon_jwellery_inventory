@@ -10,10 +10,7 @@ class Payment < ApplicationRecord
   end
 
   def update_pending_amount
-    sum_amount = purchase.total_amount
-    total_paid = purchase.payments.sum(:amount)
-    pending_amount = [(sum_amount.to_d - total_paid.to_d), 0].max
-    purchase.update_column(:pending_amount, pending_amount)
+    self.purchase.update_pending_amount
   end
 
   rails_admin do

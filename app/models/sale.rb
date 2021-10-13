@@ -94,8 +94,10 @@ class Sale < ApplicationRecord
 
   def update_pending_amount
     total_paid = self.receipts.sum(:amount) rescue 0.0
-    pending_amount = [(final_amount.to_d - total_paid.to_d), 0].max
-    self.update_column(:pending_amount, pending_amount)
+    i_pending_amount = [(final_amount.to_d - total_paid.to_d), 0].max
+    self.pending_amount = i_pending_amount
+    self.is_payment_completed = i_pending_amount.to_f <= 0
+    self.save
   end
 
   def recalculate_pending_amount
