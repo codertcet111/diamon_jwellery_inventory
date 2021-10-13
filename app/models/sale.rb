@@ -6,6 +6,7 @@ class Sale < ApplicationRecord
   belongs_to :broker, optional: true
   has_many :sales_taxes
   has_many :taxes, through: :sales_taxes
+  has_many :brokerages
   enum sale_type: ['LCR', 'Export']
   enum terms_type: ["Days","COD","Advance"]
   # enum gst_type: ['CGST & SGST','ISGT']
@@ -55,6 +56,7 @@ class Sale < ApplicationRecord
       exclude_fields :sales_taxes
       exclude_fields :invoice_number
       exclude_fields :invoice_date
+      exclude_fields :brokerages
     end
     include_all_fields
     field :terms do
@@ -99,8 +101,10 @@ class Sale < ApplicationRecord
   def recalculate_pending_amount
     if saved_change_to_final_amount?
       update_pending_amount
+    end
+    if saved_change_to_broker_percentage?
       calculate_brokerage
-    end  
+    end
   end
 
   def amount_taxable

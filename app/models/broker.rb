@@ -1,6 +1,7 @@
 class Broker < ApplicationRecord
   has_many :purchases
   has_many :sales
+  has_many :brokerages
 
   rails_admin do
     show do
@@ -23,6 +24,7 @@ class Broker < ApplicationRecord
     include_all_fields
     exclude_fields :sales
     exclude_fields :purchases
+    exclude_fields :brokerages
    end
   end
 

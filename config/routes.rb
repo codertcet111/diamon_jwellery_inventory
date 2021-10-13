@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :brokerages
   resources :stock_pc_ranges
   resources :journal_vouchers
   resources :contras

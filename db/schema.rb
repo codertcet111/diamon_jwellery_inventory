@@ -10,10 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_13_075709) do
+ActiveRecord::Schema.define(version: 2021_10_13_133826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "brokerages", force: :cascade do |t|
+    t.float "amount"
+    t.integer "payment_mode"
+    t.string "cheque_number"
+    t.bigint "broker_id"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "purchase_id"
+    t.bigint "sale_id"
+    t.index ["broker_id"], name: "index_brokerages_on_broker_id"
+    t.index ["purchase_id"], name: "index_brokerages_on_purchase_id"
+    t.index ["sale_id"], name: "index_brokerages_on_sale_id"
+  end
 
   create_table "brokers", force: :cascade do |t|
     t.string "name"
@@ -92,6 +107,8 @@ ActiveRecord::Schema.define(version: 2021_10_13_075709) do
     t.text "payment_notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "payment_mode"
+    t.string "cheque_number"
     t.index ["ledger_id"], name: "index_ledger_expenses_on_ledger_id"
   end
 
@@ -392,6 +409,9 @@ ActiveRecord::Schema.define(version: 2021_10_13_075709) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "brokerages", "brokers"
+  add_foreign_key "brokerages", "purchases"
+  add_foreign_key "brokerages", "sales"
   add_foreign_key "expenses", "stocks"
   add_foreign_key "ledger_expenses", "ledgers"
   add_foreign_key "ledgers", "ledger_groups"

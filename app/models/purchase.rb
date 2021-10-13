@@ -10,6 +10,7 @@ class Purchase < ApplicationRecord
   has_many :payments, inverse_of: :purchase, dependent: :destroy
   has_many :purchases_taxes
   has_many :taxes, through: :purchases_taxes
+  has_many :brokerages
 
   enum terms_type: ["Days","COD","Advance"]
   accepts_nested_attributes_for :stocks
@@ -47,6 +48,7 @@ class Purchase < ApplicationRecord
     exclude_fields :tax_amount
     exclude_fields :purchases_taxes
     exclude_fields :total_amount
+    exclude_fields :brokerages
    end
   end
 
@@ -90,8 +92,10 @@ class Purchase < ApplicationRecord
   def recalculate_pending_amount
     if saved_change_to_final_amount?
       update_pending_amount
+    end
+    if saved_change_to_broker_percentage?
       calculate_brokerage
-    end  
+    end
   end
 
 end
