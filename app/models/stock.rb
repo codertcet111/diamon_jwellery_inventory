@@ -74,7 +74,7 @@ class Stock < ApplicationRecord
       self.amount = i_rate_per_carat * self.loose_selection_carat
       self.carat = self.loose_selection_carat
     elsif self.stock_sub_type.name.downcase.include?('polish')
-      discounts = [self.discount_percentage, additional_disc_1, additional_disc_2, additional_disc_3]
+      discounts = [discount_percentage, additional_disc_1, additional_disc_2, additional_disc_3]
       i_rate_per_carat = self.rate_per_caret
       # Now apply each discount on rate per carat
       discounts.each do |disc|

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_12_191343) do
+ActiveRecord::Schema.define(version: 2021_10_13_075709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -227,6 +227,8 @@ ActiveRecord::Schema.define(version: 2021_10_12_191343) do
     t.bigint "stock_id", null: false
     t.bigint "sale_id", null: false
     t.string "export_invoice_stock_description_name"
+    t.float "rate_per_carat"
+    t.text "notes"
     t.index ["sale_id"], name: "index_sale_items_on_sale_id"
     t.index ["stock_id"], name: "index_sale_items_on_stock_id"
   end
