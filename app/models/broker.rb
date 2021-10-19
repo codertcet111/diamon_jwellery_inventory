@@ -1,4 +1,5 @@
 class Broker < ApplicationRecord
+  include Transnable
   has_many :purchases
   has_many :sales
   has_many :brokerages
@@ -7,9 +8,11 @@ class Broker < ApplicationRecord
     show do
       exclude_fields :address
       field :broker_address
+      exclude_fields :transactions
     end
     list do
       exclude_fields :address
+      exclude_fields :transactions
       field :broker_address_short do
         label 'Broker Address'
       end
@@ -25,6 +28,7 @@ class Broker < ApplicationRecord
     exclude_fields :sales
     exclude_fields :purchases
     exclude_fields :brokerages
+    exclude_fields :transactions
    end
   end
 

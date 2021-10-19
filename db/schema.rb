@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_13_141317) do
+ActiveRecord::Schema.define(version: 2021_10_19_142239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(version: 2021_10_13_141317) do
     t.string "pin_code"
     t.string "state"
     t.string "country"
+    t.float "balance_amount"
+    t.float "opening_amount"
   end
 
   create_table "company_details", force: :cascade do |t|
@@ -134,6 +136,8 @@ ActiveRecord::Schema.define(version: 2021_10_13_141317) do
     t.string "state"
     t.string "country"
     t.string "city"
+    t.float "balance_amount"
+    t.float "opening_amount"
     t.index ["ledger_group_id"], name: "index_ledgers_on_ledger_group_id"
   end
 
@@ -157,6 +161,8 @@ ActiveRecord::Schema.define(version: 2021_10_13_141317) do
     t.string "country"
     t.string "place_of_supply"
     t.integer "party_type"
+    t.float "balance_amount"
+    t.float "opening_amount"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -395,6 +401,19 @@ ActiveRecord::Schema.define(version: 2021_10_13_141317) do
     t.float "tax_percentage"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.integer "transaction_type"
+    t.float "debit_amount"
+    t.float "credit_amount"
+    t.datetime "transaction_date"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "transnable_type"
+    t.bigint "transnable_id"
+    t.index ["transnable_type", "transnable_id"], name: "index_transactions_on_transnable_type_and_transnable_id"
   end
 
   create_table "users", force: :cascade do |t|

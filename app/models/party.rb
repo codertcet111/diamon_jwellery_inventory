@@ -1,4 +1,5 @@
 class Party < ApplicationRecord
+  include Transnable
   has_many :purchases
   has_many :payments
   has_many :sales
@@ -29,13 +30,22 @@ class Party < ApplicationRecord
     exclude_fields :receipts
     exclude_fields :purchases
     exclude_fields :payments
+    exclude_fields :transactions
+    exclude_fields :to_journal_vouchers
+    exclude_fields :from_journal_vouchers
    end
     show do
       exclude_fields :address
+      exclude_fields :transactions
       field :party_address
+      exclude_fields :to_journal_vouchers
+      exclude_fields :from_journal_vouchers
     end
     list do
       exclude_fields :address
+      exclude_fields :transactions
+      exclude_fields :to_journal_vouchers
+      exclude_fields :from_journal_vouchers
       field :party_address_short do
         label 'Party Address'
       end

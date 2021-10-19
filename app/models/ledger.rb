@@ -1,4 +1,5 @@
 class Ledger < ApplicationRecord
+  include Transnable
   belongs_to :ledger_group
   has_many :to_contras, :class_name => "Contra", :foreign_key => "ledger_1_id"
   has_many :from_contras, :class_name => "Contra", :foreign_key => "ledger_2_id"
@@ -10,12 +11,17 @@ class Ledger < ApplicationRecord
     show do
     	exclude_fields :address
     	field :ledger_address
+      exclude_fields :transactions
     end
     list do
     	exclude_fields :address
     	field :ledger_address_short do
 	      label 'Ledger Address'
 	    end
+      exclude_fields :transactions
+    end
+    edit do
+      exclude_fields :transactions
     end
   end
 
