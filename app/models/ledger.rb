@@ -5,6 +5,9 @@ class Ledger < ApplicationRecord
   has_many :from_contras, :class_name => "Contra", :foreign_key => "ledger_2_id"
   has_many :to_journal_vouchers, :class_name => "JournalVoucher", :foreign_key => "ledger_1_id"
   has_many :from_journal_vouchers, :class_name => "JournalVoucher", :foreign_key => "ledger_2_id"
+  has_many :payments
+  has_many :receipts
+  STOCK_LEDGER_NAME = "Stock Ledger"
 
   rails_admin do
     navigation_label Proc.new { "Ledger" }
@@ -12,6 +15,8 @@ class Ledger < ApplicationRecord
     	exclude_fields :address
     	field :ledger_address
       exclude_fields :transactions
+      exclude_fields :payments
+      exclude_fields :receipts
     end
     list do
     	exclude_fields :address
@@ -19,10 +24,18 @@ class Ledger < ApplicationRecord
 	      label 'Ledger Address'
 	    end
       exclude_fields :transactions
+      exclude_fields :payments
+      exclude_fields :receipts
     end
     edit do
       exclude_fields :transactions
+      exclude_fields :payments
+      exclude_fields :receipts
     end
+  end
+
+  def self.stock_ledger
+    Ledger.find_or_create_by_name(STOCK_LEDGER_NAME)
   end
 
   def ledger_address_short

@@ -9,4 +9,8 @@ class Transaction < ApplicationRecord
       include_all_fields
     end
   end
+
+  def amount
+    self.transaction_type == Transaction.transaction_type["Debit"] ? self.debit_amount : self.credit_amount
+  end
 end

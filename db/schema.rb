@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_19_142239) do
+ActiveRecord::Schema.define(version: 2021_10_19_170813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,10 @@ ActiveRecord::Schema.define(version: 2021_10_19_142239) do
     t.datetime "updated_at", null: false
     t.bigint "purchase_id"
     t.bigint "sale_id"
+    t.bigint "ledger_id"
+    t.datetime "payment_date"
     t.index ["broker_id"], name: "index_brokerages_on_broker_id"
+    t.index ["ledger_id"], name: "index_brokerages_on_ledger_id"
     t.index ["purchase_id"], name: "index_brokerages_on_purchase_id"
     t.index ["sale_id"], name: "index_brokerages_on_sale_id"
   end
@@ -179,6 +182,8 @@ ActiveRecord::Schema.define(version: 2021_10_19_142239) do
     t.bigint "party_id", null: false
     t.bigint "purchase_id", null: false
     t.string "cheque_number"
+    t.bigint "ledger_id"
+    t.index ["ledger_id"], name: "index_payments_on_ledger_id"
     t.index ["party_id"], name: "index_payments_on_party_id"
     t.index ["purchase_id"], name: "index_payments_on_purchase_id"
   end
@@ -230,6 +235,8 @@ ActiveRecord::Schema.define(version: 2021_10_19_142239) do
     t.bigint "party_id", null: false
     t.bigint "sale_id"
     t.string "cheque_number"
+    t.bigint "ledger_id"
+    t.index ["ledger_id"], name: "index_receipts_on_ledger_id"
     t.index ["party_id"], name: "index_receipts_on_party_id"
     t.index ["sale_id"], name: "index_receipts_on_sale_id"
   end
@@ -413,6 +420,7 @@ ActiveRecord::Schema.define(version: 2021_10_19_142239) do
     t.datetime "updated_at", null: false
     t.string "transnable_type"
     t.bigint "transnable_id"
+    t.string "invoice_number"
     t.index ["transnable_type", "transnable_id"], name: "index_transactions_on_transnable_type_and_transnable_id"
   end
 
@@ -431,17 +439,20 @@ ActiveRecord::Schema.define(version: 2021_10_19_142239) do
   end
 
   add_foreign_key "brokerages", "brokers"
+  add_foreign_key "brokerages", "ledgers"
   add_foreign_key "brokerages", "purchases"
   add_foreign_key "brokerages", "sales"
   add_foreign_key "expenses", "stocks"
   add_foreign_key "ledger_expenses", "ledgers"
   add_foreign_key "ledgers", "ledger_groups"
+  add_foreign_key "payments", "ledgers"
   add_foreign_key "payments", "parties"
   add_foreign_key "payments", "purchases"
   add_foreign_key "purchases", "brokers"
   add_foreign_key "purchases", "parties"
   add_foreign_key "purchases_taxes", "purchases"
   add_foreign_key "purchases_taxes", "taxes"
+  add_foreign_key "receipts", "ledgers"
   add_foreign_key "receipts", "parties"
   add_foreign_key "receipts", "sales"
   add_foreign_key "sale_items", "sales"

@@ -19,8 +19,8 @@ class Sale < ApplicationRecord
   accepts_nested_attributes_for :receipts
   accepts_nested_attributes_for :sales_taxes
 
-  after_create :perform_calculations
-  after_update :recalculate_pending_amount
+  after_create :perform_calculations, :generate_invoice, :create_transactions
+  after_update :recalculate_pending_amount, :create_transactions
 
   rails_admin do
     show do
@@ -68,6 +68,11 @@ class Sale < ApplicationRecord
     self.terms_type == 'Days' ? "#{self.terms || 0} - Days" : self.terms_type
   end
 
+  def generate_invoice
+    rand_invoice = "000#{self.id}"
+    self.update_columns(invoice_number: rand_invoice)
+  end
+
   def perform_calculations
     # first calculate total amount
     sum_amount = sale_items.sum(:amount)
@@ -87,7 +92,7 @@ class Sale < ApplicationRecord
   end
 
   def calculate_brokerage
-    final_amount_including_tax = self.final_amount.to_f + self.tax_amount.to_f
+    final_amount_including_tax = self.final_amount.to_f
     brokerage_calculated = final_amount_including_tax * (broker_percentage.to_f / 100.0)
     self.update_column(:broker_amount, brokerage_calculated)
   end
@@ -100,12 +105,38 @@ class Sale < ApplicationRecord
     self.save
   end
 
+  def create_transactions
+    # Transaction for Party
+    Transaction.create(transaction_type: Transaction.transaction_type["Debit"], debit_amount: self.final_amount, transaction_date: self.sale_date, transnable: self.party, invoice_number: self.invoice_number)
+    # Transaction for Stock
+    # IMP: Check and change the final_amount that need to update
+    Transaction.create(transaction_type: Transaction.transaction_type["Credit"], credit_amount: self.final_amount, transaction_date: self.sale_date, transnable: Ledger.stock_ledger, invoice_number: self.invoice_number)
+    # Transaction for Broker
+    Transaction.create(transaction_type: Transaction.transaction_type["Credit"], credit_amount: self.broker_amount, transaction_date: self.sale_date, transnable: self.broker, invoice_number: self.invoice_number)
+  end
+
+  # if_final_amount_changed
+  def update_transactions
+    # Update Transaction for Party
+    party_transaction = Transaction.find_by(transaction_type: Transaction.transaction_type["Debit"], transnable: self.party, invoice_number: self.invoice_number)
+    party_transaction.update_columns(debit_amount: self.final_amount)
+    # Update Transaction for Stock
+    stock_transaction = Transaction.find_by(transaction_type: Transaction.transaction_type["Credit"], transnable: Ledger.stock_ledger, invoice_number: self.invoice_number)
+    stock_transaction.update_columns(credit_amount: self.final_amount)
+    # Update Transaction for Broker
+    broker_transaction = Transaction.find_by(transaction_type: Transaction.transaction_type["Credit"], transnable: self.broker, invoice_number: self.invoice_number)
+    broker_transaction.update_columns(credit_amount: self.broker_amount)
+  end
+
   def recalculate_pending_amount
     if saved_change_to_final_amount?
       update_pending_amount
+      calculate_brokerage
+      update_transactions
     end
     if saved_change_to_broker_percentage?
       calculate_brokerage
+      update_transactions
     end
   end
 
