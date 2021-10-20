@@ -92,17 +92,20 @@ class Purchase < ApplicationRecord
   end
 
   def create_transactions
+    '''
     # Transaction for Party
     Transaction.create(transaction_type: Transaction.transaction_type["Credit"], credit_amount: self.final_amount, transaction_date: self.purchase_date, transnable: self.party, invoice_number: self.invoice_number)
     # Transaction for Stock
     Transaction.create(transaction_type: Transaction.transaction_type["Debit"], debit_amount: self.final_amount, transaction_date: self.purchase_date, transnable: Ledger.stock_ledger, invoice_number: self.invoice_number)
     # Transaction for Broker
     Transaction.create(transaction_type: Transaction.transaction_type["Credit"], credit_amount: self.broker_amount, transaction_date: self.purchase_date, transnable: self.broker, invoice_number: self.invoice_number)
+    '''
   end
 
   # if_final_amount_changed
   def update_transactions
     # Update Transaction for Party
+    '''
     party_transaction = Transaction.find_by(transaction_type: Transaction.transaction_type["Credit"], transnable: self.party, invoice_number: self.invoice_number)
     party_transaction.update_columns(credit_amount: self.final_amount)
     # Update Transaction for Stock
@@ -111,6 +114,7 @@ class Purchase < ApplicationRecord
     # Update Transaction for Broker
     broker_transaction = Transaction.find_by(transaction_type: Transaction.transaction_type["Credit"], transnable: self.broker, invoice_number: self.invoice_number)
     broker_transaction.update_columns(credit_amount: self.broker_amount)
+    '''
   end
 
   def recalculate_pending_amount

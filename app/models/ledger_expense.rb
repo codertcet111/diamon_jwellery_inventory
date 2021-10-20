@@ -18,6 +18,7 @@ class LedgerExpense < ApplicationRecord
 
   rails_admin do
     navigation_label Proc.new { "Ledger" }
+    label "Ledger Expense / Bill Entries"
     edit do
       include_all_fields
       exclude_fields :ledger_expenses_taxes

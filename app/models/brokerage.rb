@@ -10,10 +10,12 @@ class Brokerage < ApplicationRecord
   accepts_nested_attributes_for :brokerages_taxes
 
   def create_transactions
+  	'''
   	# Transaction for Party
     Transaction.create(transaction_type: Transaction.transaction_type["Debit"], debit_amount: self.amount, transaction_date: self.payment_date, transnable: self.broker, invoice_number: (purchase || sale).invoice_number)
     # Transaction for Bank/Cash ledger
     Transaction.create(transaction_type: Transaction.transaction_type["Credit"], credit_amount: self.amount, transaction_date: self.payment_date, transnable: self.ledger, invoice_number: (purchase || sale).invoice_number)
+    '''
   end
 
   rails_admin do
