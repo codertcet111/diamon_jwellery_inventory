@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_19_170813) do
+ActiveRecord::Schema.define(version: 2021_10_20_143203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,10 +27,21 @@ ActiveRecord::Schema.define(version: 2021_10_19_170813) do
     t.bigint "sale_id"
     t.bigint "ledger_id"
     t.datetime "payment_date"
+    t.float "tax_amount"
+    t.float "final_amount"
     t.index ["broker_id"], name: "index_brokerages_on_broker_id"
     t.index ["ledger_id"], name: "index_brokerages_on_ledger_id"
     t.index ["purchase_id"], name: "index_brokerages_on_purchase_id"
     t.index ["sale_id"], name: "index_brokerages_on_sale_id"
+  end
+
+  create_table "brokerages_taxes", force: :cascade do |t|
+    t.bigint "brokerage_id"
+    t.bigint "tax_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["brokerage_id"], name: "index_brokerages_taxes_on_brokerage_id"
+    t.index ["tax_id"], name: "index_brokerages_taxes_on_tax_id"
   end
 
   create_table "brokers", force: :cascade do |t|
@@ -105,16 +116,25 @@ ActiveRecord::Schema.define(version: 2021_10_19_170813) do
   end
 
   create_table "ledger_expenses", force: :cascade do |t|
-    t.string "title"
     t.bigint "ledger_id"
     t.float "amount"
     t.text "notes"
-    t.text "payment_notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "payment_mode"
-    t.string "cheque_number"
+    t.string "invoice_number"
+    t.datetime "date"
+    t.float "final_amount"
+    t.float "tax_amount"
     t.index ["ledger_id"], name: "index_ledger_expenses_on_ledger_id"
+  end
+
+  create_table "ledger_expenses_taxes", force: :cascade do |t|
+    t.bigint "ledger_expense_id"
+    t.bigint "tax_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ledger_expense_id"], name: "index_ledger_expenses_taxes_on_ledger_expense_id"
+    t.index ["tax_id"], name: "index_ledger_expenses_taxes_on_tax_id"
   end
 
   create_table "ledger_groups", force: :cascade do |t|
@@ -442,8 +462,12 @@ ActiveRecord::Schema.define(version: 2021_10_19_170813) do
   add_foreign_key "brokerages", "ledgers"
   add_foreign_key "brokerages", "purchases"
   add_foreign_key "brokerages", "sales"
+  add_foreign_key "brokerages_taxes", "brokerages"
+  add_foreign_key "brokerages_taxes", "taxes"
   add_foreign_key "expenses", "stocks"
   add_foreign_key "ledger_expenses", "ledgers"
+  add_foreign_key "ledger_expenses_taxes", "ledger_expenses"
+  add_foreign_key "ledger_expenses_taxes", "taxes"
   add_foreign_key "ledgers", "ledger_groups"
   add_foreign_key "payments", "ledgers"
   add_foreign_key "payments", "parties"
