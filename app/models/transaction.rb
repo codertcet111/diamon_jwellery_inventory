@@ -1,5 +1,6 @@
 class Transaction < ApplicationRecord
   belongs_to :transnable, :polymorphic => true
+  belongs_to :entry_module, optional: true
   enum transaction_type: ["Debit","Credit"]
 
 
@@ -7,6 +8,7 @@ class Transaction < ApplicationRecord
     label 'Transaction'
     edit do
       include_all_fields
+      exclude_fields :entry_module
     end
   end
 

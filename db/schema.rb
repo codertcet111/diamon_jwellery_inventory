@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_20_143203) do
+ActiveRecord::Schema.define(version: 2021_10_20_145338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,14 @@ ActiveRecord::Schema.define(version: 2021_10_20_143203) do
     t.datetime "updated_at", null: false
     t.integer "ledger_1_id"
     t.integer "ledger_2_id"
+  end
+
+  create_table "entry_modules", force: :cascade do |t|
+    t.float "total_debit"
+    t.float "total_credit"
+    t.text "narration"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "expenses", force: :cascade do |t|
@@ -441,6 +449,8 @@ ActiveRecord::Schema.define(version: 2021_10_20_143203) do
     t.string "transnable_type"
     t.bigint "transnable_id"
     t.string "invoice_number"
+    t.bigint "entry_module_id"
+    t.index ["entry_module_id"], name: "index_transactions_on_entry_module_id"
     t.index ["transnable_type", "transnable_id"], name: "index_transactions_on_transnable_type_and_transnable_id"
   end
 
@@ -489,4 +499,5 @@ ActiveRecord::Schema.define(version: 2021_10_20_143203) do
   add_foreign_key "stock_sub_types", "stock_types"
   add_foreign_key "stocks", "purchases"
   add_foreign_key "stocks", "stock_pc_ranges"
+  add_foreign_key "transactions", "entry_modules"
 end

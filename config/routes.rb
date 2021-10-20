@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :entry_modules
   resources :transactions
   resources :brokerages
   resources :stock_pc_ranges
