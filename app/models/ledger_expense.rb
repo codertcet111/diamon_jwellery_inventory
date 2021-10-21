@@ -1,4 +1,5 @@
 class LedgerExpense < ApplicationRecord
+  include Invoicable
   enum payment_mode: [:cash,:cheque,:angadia,:rtgs_neft, :other]
   belongs_to :ledger
   has_many :ledger_expenses_taxes
@@ -14,6 +15,10 @@ class LedgerExpense < ApplicationRecord
       i_tax_amount += amount_eligible_for_tax * ( tax_per.to_f / 100.0)
     end
     self.update_column(:tax_amount, i_tax_amount.to_f)
+  end
+
+  def display_invoice_number
+    "Expense: #{self.invoice_number}"
   end
 
   rails_admin do

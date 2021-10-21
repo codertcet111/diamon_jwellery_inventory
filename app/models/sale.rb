@@ -1,5 +1,5 @@
 class Sale < ApplicationRecord
-
+  include Invoicable
   has_many :sale_items, inverse_of: :sale, dependent: :destroy
   has_many :receipts, inverse_of: :sale, dependent: :destroy
   belongs_to :party
@@ -62,6 +62,10 @@ class Sale < ApplicationRecord
     field :terms do
       label 'Terms (In Days)'
     end
+  end
+
+  def display_invoice_number
+    "Sale: #{self.invoice_number}"
   end
 
   def sales_terms

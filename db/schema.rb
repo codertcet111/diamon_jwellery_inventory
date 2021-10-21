@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_20_145338) do
+ActiveRecord::Schema.define(version: 2021_10_21_145052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -450,7 +450,11 @@ ActiveRecord::Schema.define(version: 2021_10_20_145338) do
     t.bigint "transnable_id"
     t.string "invoice_number"
     t.bigint "entry_module_id"
+    t.float "round_off_amount"
+    t.string "invoicable_type"
+    t.bigint "invoicable_id"
     t.index ["entry_module_id"], name: "index_transactions_on_entry_module_id"
+    t.index ["invoicable_type", "invoicable_id"], name: "index_transactions_on_invoicable_type_and_invoicable_id"
     t.index ["transnable_type", "transnable_id"], name: "index_transactions_on_transnable_type_and_transnable_id"
   end
 

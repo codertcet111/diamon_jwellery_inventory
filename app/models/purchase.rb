@@ -1,4 +1,5 @@
 class Purchase < ApplicationRecord
+  include Invoicable
   # NOTES: -> below
   # total_amount : amount without any calculation
   # discount_amount : Discount amount
@@ -50,6 +51,10 @@ class Purchase < ApplicationRecord
     exclude_fields :total_amount
     exclude_fields :brokerages
    end
+  end
+
+  def display_invoice_number
+    "Purchase: #{self.invoice_number}"
   end
 
   def purchase_terms
