@@ -1,7 +1,7 @@
 class Stock < ApplicationRecord
   belongs_to :purchase, optional: true, inverse_of: :stocks
   belongs_to :stock_sub_type
-  belongs_to :stock_pc_range, optional: true
+  belongs_to :stock_pc_range
   has_many :expenses
   has_many :stock_histories
   has_one :sale_item, inverse_of: :stock
@@ -29,7 +29,7 @@ class Stock < ApplicationRecord
   enum rough_origin: DIAMOND_ROUGH_ORIGIN
   enum heart_and_arrow: DIAMOND_HEAR_AND_ARROW
 
-  after_create :assign_stock_key, :set_defaults
+  after_create :assign_stock_key, :set_defaults, :update_stock_pc_range_carats
 
   enum state: { available: 0, in_lab: 1, in_factory: 2, out_of_memo: 3, business_process: 4, sold_out: 5 }
   # when state is changed from in factory to any then need to add weight loss
@@ -40,13 +40,33 @@ class Stock < ApplicationRecord
 
   accepts_nested_attributes_for :expenses
 
-  after_update :recalculate_purchase_final_amount
+  after_update :update_stock_pc_range_carats_if_carats_updated, :recalculate_purchase_final_amount
 
   scope :in_stock_all, -> { where("state not in (?)",Stock.states[:sold_out]) }
   scope :in_stock_loose_diamond, -> { in_stock_all.where(stock_sub_type_id: StockSubType.loose_diamond_id)}
   scope :in_stock_cut_polish_diamond, -> { in_stock_all.where(stock_sub_type_id: StockSubType.cut_and_polish_diamond_id)}
   scope :in_stock_jewellary, -> { in_stock_all.where("stock_sub_type_id IN (?)", StockSubType.jewellary_ids)}
 
+  def update_stock_pc_range_carats
+    pc_range = self.stock_pc_range
+    pc_range.purchase_stocks += self.carat
+    pc_range.balance_stocks += self.carat
+    pc_range.save
+  end
+
+  def update_stock_pc_range_carats_if_carats_updated
+    if saved_change_to_carat?
+      pc_range = self.stock_pc_range
+      # first reduce the existing stocks value from pc range 
+      pc_range.purchase_stocks -= carat_was.to_f
+      pc_range.balance_stocks -= carat_was.to_f
+      pc_range.save
+      # now add the updated stocks value
+      pc_range.purchase_stocks += self.carat
+      pc_range.balance_stocks += self.carat
+      pc_range.save
+    end
+  end
 
   def create_stock_history
     if self.persisted? && state_changed?

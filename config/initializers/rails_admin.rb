@@ -109,6 +109,18 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model 'StockPcRange' do
+    list do
+      scopes [nil, :in_stock_all, :out_of_stock]
+    end
+    show do
+      include_all_fields
+    end
+    edit do
+      include_all_fields
+    end
+  end
+
   config.model 'SaleItem' do
     edit do
       field :stock do

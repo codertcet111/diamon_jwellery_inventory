@@ -41,13 +41,13 @@ class Sale < ApplicationRecord
       # field :dollar_rate do
       #   required true
       # end
-      include_all_fields
       field :party do
         required true
       end
       field :sale_type do
         required true
       end
+      include_all_fields
       exclude_fields :pending_amount
       exclude_fields :receipts
       exclude_fields :tax_amount
@@ -57,6 +57,7 @@ class Sale < ApplicationRecord
       exclude_fields :invoice_number
       exclude_fields :invoice_date
       exclude_fields :brokerages
+      exclude_fields :transactions
     end
     include_all_fields
     field :terms do

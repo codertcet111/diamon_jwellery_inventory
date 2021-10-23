@@ -1,5 +1,10 @@
 class StockPcRange < ApplicationRecord
   has_many :stocks
+  has_many :sale_items
+  scope :in_stock_all, -> { where("balance_stocks > ?",0.0) }
+  scope :out_of_stock, -> { where("balance_stocks <= ?",0.0) }
+  after_create :intialize_values
+  # scope :in_stock_diamonds, -> { in_stock_all.where(stock_sub_type_id: StockSubType.loose_diamond_id)}
 
   rails_admin do
     include_all_fields
@@ -16,5 +21,11 @@ class StockPcRange < ApplicationRecord
       required false
     end
     exclude_fields :stocks
+    exclude_fields :sale_items
   end
+
+  def intialize_values
+    self.update_columns(purchase_stocks: purchase_stocks.to_f, sales_stocks: sales_stocks.to_f, balance_stocks: balance_stocks.to_f)
+  end
+
 end

@@ -50,6 +50,7 @@ class Purchase < ApplicationRecord
     exclude_fields :purchases_taxes
     exclude_fields :total_amount
     exclude_fields :brokerages
+    exclude_fields :transactions
    end
   end
 

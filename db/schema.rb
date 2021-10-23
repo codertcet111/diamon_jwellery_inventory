@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_21_145052) do
+ActiveRecord::Schema.define(version: 2021_10_23_031655) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -288,8 +288,12 @@ ActiveRecord::Schema.define(version: 2021_10_21_145052) do
     t.string "export_invoice_stock_description_name"
     t.float "rate_per_carat"
     t.text "notes"
+    t.bigint "stock_pc_range_id"
+    t.bigint "stock_sub_type_id"
     t.index ["sale_id"], name: "index_sale_items_on_sale_id"
     t.index ["stock_id"], name: "index_sale_items_on_stock_id"
+    t.index ["stock_pc_range_id"], name: "index_sale_items_on_stock_pc_range_id"
+    t.index ["stock_sub_type_id"], name: "index_sale_items_on_stock_sub_type_id"
   end
 
   create_table "sales", force: :cascade do |t|
@@ -347,6 +351,9 @@ ActiveRecord::Schema.define(version: 2021_10_21_145052) do
     t.float "max_value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "purchase_stocks"
+    t.float "sale_stocks"
+    t.float "balance_stocks"
   end
 
   create_table "stock_sub_types", force: :cascade do |t|
@@ -494,6 +501,8 @@ ActiveRecord::Schema.define(version: 2021_10_21_145052) do
   add_foreign_key "receipts", "parties"
   add_foreign_key "receipts", "sales"
   add_foreign_key "sale_items", "sales"
+  add_foreign_key "sale_items", "stock_pc_ranges"
+  add_foreign_key "sale_items", "stock_sub_types"
   add_foreign_key "sale_items", "stocks"
   add_foreign_key "sales", "brokers"
   add_foreign_key "sales", "parties"
