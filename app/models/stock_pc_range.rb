@@ -7,6 +7,7 @@ class StockPcRange < ApplicationRecord
   # scope :in_stock_diamonds, -> { in_stock_all.where(stock_sub_type_id: StockSubType.loose_diamond_id)}
 
   rails_admin do
+    navigation_label Proc.new { "S: Stock" }
     include_all_fields
     field :name do
       label 'Range'

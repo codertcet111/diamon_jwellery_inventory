@@ -6,7 +6,7 @@ class AddColumnsToBrokerage < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
-    add_column :brokerages, :tax_amount, :float
-    add_column :brokerages, :final_amount, :float
+    add_column :brokerages, :tax_amount, :float, default: 0.0
+    add_column :brokerages, :final_amount, :float, default: 0.0
   end
 end

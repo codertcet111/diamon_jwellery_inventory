@@ -77,6 +77,12 @@ RailsAdmin.config do |config|
   config.model 'SaleItem' do
     visible false
   end
+  config.model 'BrokeragesTax' do
+    visible false
+  end
+  config.model 'LedgerExpensesTax' do
+    visible false
+  end
   config.model 'Sale' do
     show do
       include_all_fields

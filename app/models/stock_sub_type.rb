@@ -16,4 +16,8 @@ class StockSubType < ApplicationRecord
     end
 
   end
+
+  rails_admin do
+    navigation_label Proc.new { "S: Stock" }
+  end
 end

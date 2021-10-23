@@ -18,7 +18,7 @@ class LedgerExpense < ApplicationRecord
   end
 
   def display_invoice_number
-    "Expense: #{self.invoice_number}"
+    "#{self.invoice_number}"
   end
 
   rails_admin do

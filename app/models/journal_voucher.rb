@@ -5,6 +5,7 @@ class JournalVoucher < ApplicationRecord
   belongs_to :party_2, :class_name => "Party", optional: true
 
   rails_admin do
+    navigation_label Proc.new { "B: Entry" }
     include_all_fields
     field :ledger_1 do
       label 'Ledger To'

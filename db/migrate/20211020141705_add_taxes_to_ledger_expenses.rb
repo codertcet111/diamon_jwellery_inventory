@@ -6,6 +6,6 @@ class AddTaxesToLedgerExpenses < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
-    add_column :ledger_expenses, :tax_amount, :float
+    add_column :ledger_expenses, :tax_amount, :float, default: 0.0
   end
 end

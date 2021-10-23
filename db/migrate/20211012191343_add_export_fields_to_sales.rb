@@ -6,7 +6,7 @@ class AddExportFieldsToSales < ActiveRecord::Migration[5.2]
   	add_column :sales, :port_of_discharge, :string
   	add_column :sales, :port_of_loading, :string
   	add_column :sales, :final_destination, :string
-  	add_column :sales, :export_invoice_sale_box_approx_weight_in_gram, :float
+  	add_column :sales, :export_invoice_sale_box_approx_weight_in_gram, :float, default: 0.0
   	add_column :sale_items, :export_invoice_stock_description_name, :string
   end
 end

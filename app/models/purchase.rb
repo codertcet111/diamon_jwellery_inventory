@@ -22,6 +22,7 @@ class Purchase < ApplicationRecord
   after_update :recalculate_pending_amount, :update_transactions
 
   rails_admin do
+    navigation_label Proc.new { "B: Entry" }
     show do
       exclude_fields :terms, :terms_type
       field :purchase_terms
@@ -55,7 +56,7 @@ class Purchase < ApplicationRecord
   end
 
   def display_invoice_number
-    "Purchase: #{self.invoice_number}"
+    "#{self.invoice_number}"
   end
 
   def purchase_terms
@@ -100,11 +101,11 @@ class Purchase < ApplicationRecord
   def create_transactions
     '''
     # Transaction for Party
-    Transaction.create(transaction_type: Transaction.transaction_type["Credit"], credit_amount: self.final_amount, transaction_date: self.purchase_date, transnable: self.party, invoice_number: self.invoice_number)
+    Transaction.create(transaction_type: Transaction.transaction_types["Credit"], credit_amount: self.final_amount, transaction_date: self.purchase_date, transnable: self.party, invoice_number: self.invoice_number)
     # Transaction for Stock
-    Transaction.create(transaction_type: Transaction.transaction_type["Debit"], debit_amount: self.final_amount, transaction_date: self.purchase_date, transnable: Ledger.stock_ledger, invoice_number: self.invoice_number)
+    Transaction.create(transaction_type: Transaction.transaction_types["Debit"], debit_amount: self.final_amount, transaction_date: self.purchase_date, transnable: Ledger.stock_ledger, invoice_number: self.invoice_number)
     # Transaction for Broker
-    Transaction.create(transaction_type: Transaction.transaction_type["Credit"], credit_amount: self.broker_amount, transaction_date: self.purchase_date, transnable: self.broker, invoice_number: self.invoice_number)
+    Transaction.create(transaction_type: Transaction.transaction_types["Credit"], credit_amount: self.broker_amount, transaction_date: self.purchase_date, transnable: self.broker, invoice_number: self.invoice_number)
     '''
   end
 
@@ -112,13 +113,13 @@ class Purchase < ApplicationRecord
   def update_transactions
     # Update Transaction for Party
     '''
-    party_transaction = Transaction.find_by(transaction_type: Transaction.transaction_type["Credit"], transnable: self.party, invoice_number: self.invoice_number)
+    party_transaction = Transaction.find_by(transaction_type: Transaction.transaction_types["Credit"], transnable: self.party, invoice_number: self.invoice_number)
     party_transaction.update_columns(credit_amount: self.final_amount)
     # Update Transaction for Stock
-    stock_transaction = Transaction.find_by(transaction_type: Transaction.transaction_type["Debit"], transnable: Ledger.stock_ledger, invoice_number: self.invoice_number)
+    stock_transaction = Transaction.find_by(transaction_type: Transaction.transaction_types["Debit"], transnable: Ledger.stock_ledger, invoice_number: self.invoice_number)
     stock_transaction.update_columns(debit_amount: self.final_amount)
     # Update Transaction for Broker
-    broker_transaction = Transaction.find_by(transaction_type: Transaction.transaction_type["Credit"], transnable: self.broker, invoice_number: self.invoice_number)
+    broker_transaction = Transaction.find_by(transaction_type: Transaction.transaction_types["Credit"], transnable: self.broker, invoice_number: self.invoice_number)
     broker_transaction.update_columns(credit_amount: self.broker_amount)
     '''
   end

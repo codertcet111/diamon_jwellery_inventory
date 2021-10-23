@@ -9,6 +9,7 @@ class Party < ApplicationRecord
   has_many :from_journal_vouchers, :class_name => "JournalVoucher", :foreign_key => "party_2_id"
 
   rails_admin do
+   navigation_label Proc.new { "Ledger" }
    edit do
     field :name, :string do
       required true

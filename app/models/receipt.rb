@@ -18,13 +18,14 @@ class Receipt < ApplicationRecord
   def create_transactions
     '''
     # Transaction for Party
-    Transaction.create(transaction_type: Transaction.transaction_type["Credit"], credit_amount: self.amount, transaction_date: self.date, transnable: self.party, invoice_number: self.sale.invoice_number)
+    Transaction.create(transaction_type: Transaction.transaction_types["Credit"], credit_amount: self.amount, transaction_date: self.date, transnable: self.party, invoice_number: self.sale.invoice_number)
     # Transaction for Bank/Cash ledger
-    Transaction.create(transaction_type: Transaction.transaction_type["Debit"], debit_amount: self.amount, transaction_date: self.date, transnable: self.ledger, invoice_number: self.sale.invoice_number)
+    Transaction.create(transaction_type: Transaction.transaction_types["Debit"], debit_amount: self.amount, transaction_date: self.date, transnable: self.ledger, invoice_number: self.sale.invoice_number)
     '''
   end
 
   rails_admin do
+    navigation_label Proc.new { "B: Entry" }
     label 'Receipt'
     edit do
       field :receipt_mode do

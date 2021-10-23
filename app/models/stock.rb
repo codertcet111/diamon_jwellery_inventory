@@ -115,6 +115,7 @@ class Stock < ApplicationRecord
   end
 
   rails_admin do
+    navigation_label Proc.new { "S: Stock" }
     include_all_fields
     field :stock_key do
       label 'Stock ID'

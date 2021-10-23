@@ -8,12 +8,13 @@ class Contra < ApplicationRecord
 
   def create_transactions
     # Transaction for ledger to (ledger_1)
-    Transaction.create(transaction_type: Transaction.transaction_type["Debit"], debit_amount: self.amount, transaction_date: self.date, transnable: self.ledger_1, invoice_number: self.id)
+    Transaction.create(transaction_type: Transaction.transaction_types["Debit"], debit_amount: self.amount, transaction_date: self.date, transnable: self.ledger_1, invoice_number: self.id)
     # Transaction for ledger from (ledger_2)
-    Transaction.create(transaction_type: Transaction.transaction_type["Credit"], credit_amount: self.amount, transaction_date: self.date, transnable: self.ledger_2, invoice_number: self.id)
+    Transaction.create(transaction_type: Transaction.transaction_types["Credit"], credit_amount: self.amount, transaction_date: self.date, transnable: self.ledger_2, invoice_number: self.id)
   end
 
   rails_admin do
+    navigation_label Proc.new { "B: Entry" }
     include_all_fields
     field :ledger_1 do
       label 'Ledger To'

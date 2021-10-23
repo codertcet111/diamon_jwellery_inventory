@@ -5,6 +5,7 @@ class Broker < ApplicationRecord
   has_many :brokerages
 
   rails_admin do
+    navigation_label Proc.new { "Ledger" }
     show do
       exclude_fields :address
       field :broker_address

@@ -14,7 +14,6 @@ class Ledger < ApplicationRecord
     show do
     	exclude_fields :address
     	field :ledger_address
-      exclude_fields :transactions
       exclude_fields :payments
       exclude_fields :receipts
     end
@@ -26,11 +25,19 @@ class Ledger < ApplicationRecord
       exclude_fields :transactions
       exclude_fields :payments
       exclude_fields :receipts
+      exclude_fields :to_contras
+      exclude_fields :from_contras
+      exclude_fields :to_journal_vouchers
+      exclude_fields :from_journal_vouchers
     end
     edit do
       exclude_fields :transactions
       exclude_fields :payments
       exclude_fields :receipts
+      exclude_fields :to_contras
+      exclude_fields :from_contras
+      exclude_fields :to_journal_vouchers
+      exclude_fields :from_journal_vouchers
     end
   end
 

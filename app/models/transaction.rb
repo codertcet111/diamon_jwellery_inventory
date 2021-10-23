@@ -1,11 +1,12 @@
 class Transaction < ApplicationRecord
   belongs_to :transnable, :polymorphic => true
-  belongs_to :invoicable, :polymorphic => true
+  belongs_to :invoicable, :polymorphic => true, optional: true
   belongs_to :entry_module, optional: true
   enum transaction_type: ["Debit","Credit"]
   after_save :save_invoice_number
 
   rails_admin do
+    navigation_label Proc.new { "B: Entry" }
     label 'Transaction'
     show do
       include_all_fields
@@ -31,7 +32,6 @@ class Transaction < ApplicationRecord
       exclude_fields :invoice_number
       field :invoicable do
         label "Invoice"
-        required true
       end
       field :transnable do
         label "Ledger"
@@ -41,10 +41,10 @@ class Transaction < ApplicationRecord
   end
 
   def save_invoice_number
-    self.update_columns(invoice_number: self.invoicable.invoice_number)
+    self.update_columns(invoice_number: self.invoicable.invoice_number) unless invoice_number
   end
 
   def amount
-    self.transaction_type == Transaction.transaction_type["Debit"] ? self.debit_amount : self.credit_amount
+    self.transaction_type == Transaction.transaction_types["Debit"] ? self.debit_amount : self.credit_amount
   end
 end

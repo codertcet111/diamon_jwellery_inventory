@@ -7,4 +7,8 @@ class EntryModule < ApplicationRecord
     # total_debit == total_credit
     # errors.add(:base, "Total debit and credit should be same")
   end
+  rails_admin do
+  	navigation_label Proc.new { "B: Entry" }
+  	label "Entry Module (Account's entry)"
+  end
 end
