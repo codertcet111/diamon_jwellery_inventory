@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_23_133441) do
+ActiveRecord::Schema.define(version: 2021_10_23_135431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,8 +94,6 @@ ActiveRecord::Schema.define(version: 2021_10_23_133441) do
   end
 
   create_table "entry_modules", force: :cascade do |t|
-    t.float "total_debit"
-    t.float "total_credit"
     t.text "narration"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -393,9 +391,9 @@ ActiveRecord::Schema.define(version: 2021_10_23_133441) do
 
   create_table "stocks", force: :cascade do |t|
     t.string "stock_key"
-    t.integer "shape", default: 0
-    t.integer "color", default: 0
-    t.integer "clarity", default: 0
+    t.integer "shape"
+    t.integer "color"
+    t.integer "clarity"
     t.float "carat", default: 0.0
     t.float "weight", default: 0.0
     t.float "rap", default: 0.0
@@ -409,26 +407,26 @@ ActiveRecord::Schema.define(version: 2021_10_23_133441) do
     t.integer "state", default: 0
     t.decimal "amount", precision: 15, scale: 4
     t.bigint "stock_sub_type_id", default: 0
-    t.integer "color_shades", default: 0
-    t.integer "fancy_color", default: 0
-    t.integer "color_intensity", default: 0
-    t.integer "color_overtone", default: 0
-    t.integer "flouresence", default: 0
-    t.integer "lab", default: 0
-    t.integer "cut", default: 0
-    t.integer "polish", default: 0
-    t.integer "symmetry", default: 0
-    t.integer "black_table_inclusion", default: 0
-    t.integer "black_crown_inclusion", default: 0
-    t.integer "white_table_inclusion", default: 0
-    t.integer "white_crown_inclusion", default: 0
-    t.integer "milky_inclusion", default: 0
-    t.integer "open_table_inclusion", default: 0
-    t.integer "open_crown_inclusion", default: 0
-    t.integer "open_pavilion_inclusion", default: 0
-    t.integer "eye_clean_inclusion", default: 0
-    t.integer "rough_origin", default: 0
-    t.integer "heart_and_arrow", default: 0
+    t.integer "color_shades"
+    t.integer "fancy_color"
+    t.integer "color_intensity"
+    t.integer "color_overtone"
+    t.integer "flouresence"
+    t.integer "lab"
+    t.integer "cut"
+    t.integer "polish"
+    t.integer "symmetry"
+    t.integer "black_table_inclusion"
+    t.integer "black_crown_inclusion"
+    t.integer "white_table_inclusion"
+    t.integer "white_crown_inclusion"
+    t.integer "milky_inclusion"
+    t.integer "open_table_inclusion"
+    t.integer "open_crown_inclusion"
+    t.integer "open_pavilion_inclusion"
+    t.integer "eye_clean_inclusion"
+    t.integer "rough_origin"
+    t.integer "heart_and_arrow"
     t.string "rapnet_id"
     t.string "rapnet_dollar"
     t.string "rapnet_discount_percentage"

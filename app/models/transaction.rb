@@ -31,6 +31,7 @@ class Transaction < ApplicationRecord
       include_all_fields
       exclude_fields :entry_module
       exclude_fields :invoice_number
+      exclude_fields :closing_balance
       field :invoicable do
         label "Invoice"
       end
@@ -47,16 +48,16 @@ class Transaction < ApplicationRecord
 
   def update_closing_balance
     last_transaction = Transaction.where(transnable: self.transnable).where('transaction_date < ?', self.transaction_date).order(:transaction_date).last
-    closing_balance_amt = last_transaction.closing_balance.to_d + debit_amount - credit_amount
+    closing_balance_amt = last_transaction.try(:closing_balance).to_f.to_d + debit_amount.to_d - credit_amount.to_d
     self.update_columns(closing_balance: closing_balance_amt)
-    self.transnable.update_columns(closing_balance: closing_balance_amt)
+    self.transnable.update_columns(balance_amount: closing_balance_amt)
     if Transaction.where(transnable: self.transnable).where('transaction_date > ?', self.transaction_date).exists?
       sync_closing_balance_amount
     end
   end
 
   def sync_closing_balance_amount
-    Transaction.where(transnable: self.transnable).where('transaction_date >= ?', self.transaction_date).order(:transaction_date).each do |t|
+    Transaction.where(transnable: self.transnable).where('transaction_date > ?', self.transaction_date).order(:transaction_date).each do |t|
       t.update_closing_balance
     end
   end
