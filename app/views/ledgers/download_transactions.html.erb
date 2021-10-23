@@ -1,0 +1,48 @@
+<header class="clearfix">
+<!-- <div id="logo">
+  <img src="logo.png"/>
+</div> -->
+<h3><%= @company.name %> Ledger Transactions: <%= @ledger.name %></h3>
+<p>Transaction From: <%= @start_date %>  To  <%= @end_date %></p>
+<p>Opening Balance: <%= @opening_balance %></p>
+<table>
+  <tr>
+    <th>Sr. No.</th>
+    <th>Date</th>
+    <th>Narration</th>
+    <th>Invoice Number</th>
+    <th>Debit Amount</th>
+    <th>Credit Amount</th>
+    <th>Closing Balance</th>
+  </tr>
+  <% @transactions.each_with_index do |t, i| %>
+    <tr>
+      <td><%= i + 1 %></td>
+      <td><%= t.transaction_date %></td>
+      <td><%= t.entry_module.narration %></td>
+      <td><%= t.debit_amount %></td>
+      <td><%= t.credit_amount %></td>
+      <td><%= t.closing_balance %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p>STATEMENT SUMMARY :-</p>
+<table>
+  <tr>
+    <th>Opening Balance</th>
+    <th>Debit Count</th>
+    <th>Credit Count</th>
+    <th>Debits</th>
+    <th>Credits</th>
+    <th>Closing Balance</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td><%= @debit_counts %></td>
+    <td><%= @credit_counts %></td>
+    <td><%= @total_debits %></td>
+    <td><%= @total_credits %></td>
+    <td></td>
+  </tr>
+</table>

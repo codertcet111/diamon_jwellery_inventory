@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_23_090213) do
+ActiveRecord::Schema.define(version: 2021_10_23_133441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(version: 2021_10_23_090213) do
     t.bigint "sale_id"
     t.bigint "ledger_id"
     t.datetime "payment_date"
-    t.float "tax_amount"
-    t.float "final_amount"
+    t.float "tax_amount", default: 0.0
+    t.float "final_amount", default: 0.0
     t.index ["broker_id"], name: "index_brokerages_on_broker_id"
     t.index ["ledger_id"], name: "index_brokerages_on_ledger_id"
     t.index ["purchase_id"], name: "index_brokerages_on_purchase_id"
@@ -62,8 +62,8 @@ ActiveRecord::Schema.define(version: 2021_10_23_090213) do
     t.string "pin_code"
     t.string "state"
     t.string "country"
-    t.float "balance_amount"
-    t.float "opening_amount"
+    t.float "balance_amount", default: 0.0
+    t.float "opening_amount", default: 0.0
   end
 
   create_table "company_details", force: :cascade do |t|
@@ -107,8 +107,14 @@ ActiveRecord::Schema.define(version: 2021_10_23_090213) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "stock_id"
-    t.float "weight_loss"
+    t.float "weight_loss", default: 0.0
     t.index ["stock_id"], name: "index_expenses_on_stock_id"
+  end
+
+  create_table "financial_years", force: :cascade do |t|
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string "name"
   end
 
   create_table "journal_vouchers", force: :cascade do |t|
@@ -131,8 +137,8 @@ ActiveRecord::Schema.define(version: 2021_10_23_090213) do
     t.datetime "updated_at", null: false
     t.string "invoice_number"
     t.datetime "date"
-    t.float "final_amount"
-    t.float "tax_amount"
+    t.float "final_amount", default: 0.0
+    t.float "tax_amount", default: 0.0
     t.index ["ledger_id"], name: "index_ledger_expenses_on_ledger_id"
   end
 
@@ -143,6 +149,16 @@ ActiveRecord::Schema.define(version: 2021_10_23_090213) do
     t.datetime "updated_at", null: false
     t.index ["ledger_expense_id"], name: "index_ledger_expenses_taxes_on_ledger_expense_id"
     t.index ["tax_id"], name: "index_ledger_expenses_taxes_on_tax_id"
+  end
+
+  create_table "ledger_financial_records", force: :cascade do |t|
+    t.decimal "opening_balance"
+    t.decimal "closing_balance"
+    t.bigint "financial_year_id"
+    t.string "ledgerable_type"
+    t.bigint "ledgerable_id"
+    t.index ["financial_year_id"], name: "index_ledger_financial_records_on_financial_year_id"
+    t.index ["ledgerable_type", "ledgerable_id"], name: "index_lfr_on_ledgerable_type_and_ledgerable_id"
   end
 
   create_table "ledger_groups", force: :cascade do |t|
@@ -167,8 +183,8 @@ ActiveRecord::Schema.define(version: 2021_10_23_090213) do
     t.string "state"
     t.string "country"
     t.string "city"
-    t.float "balance_amount"
-    t.float "opening_amount"
+    t.float "balance_amount", default: 0.0
+    t.float "opening_amount", default: 0.0
     t.index ["ledger_group_id"], name: "index_ledgers_on_ledger_group_id"
   end
 
@@ -192,8 +208,8 @@ ActiveRecord::Schema.define(version: 2021_10_23_090213) do
     t.string "country"
     t.string "place_of_supply"
     t.integer "party_type"
-    t.float "balance_amount"
-    t.float "opening_amount"
+    t.float "balance_amount", default: 0.0
+    t.float "opening_amount", default: 0.0
   end
 
   create_table "payments", force: :cascade do |t|
@@ -228,13 +244,13 @@ ActiveRecord::Schema.define(version: 2021_10_23_090213) do
     t.decimal "pending_amount", precision: 15, scale: 4, default: "0.0"
     t.string "invoice_number"
     t.datetime "invoice_date"
-    t.float "tax_amount"
-    t.float "total_amount"
+    t.float "tax_amount", default: 0.0
+    t.float "total_amount", default: 0.0
     t.integer "terms_type"
-    t.float "final_amount"
-    t.float "discount_amount"
-    t.float "broker_percentage"
-    t.float "broker_amount"
+    t.float "final_amount", default: 0.0
+    t.float "discount_amount", default: 0.0
+    t.float "broker_percentage", default: 0.0
+    t.float "broker_amount", default: 0.0
     t.boolean "is_payment_completed", default: false
     t.float "brokerage_paid_amount", default: 0.0
     t.boolean "is_brokerage_paid", default: false
@@ -288,7 +304,7 @@ ActiveRecord::Schema.define(version: 2021_10_23_090213) do
     t.bigint "stock_id", null: false
     t.bigint "sale_id", null: false
     t.string "export_invoice_stock_description_name"
-    t.float "rate_per_carat"
+    t.float "rate_per_carat", default: 0.0
     t.text "notes"
     t.bigint "stock_pc_range_id"
     t.bigint "stock_sub_type_id"
@@ -313,10 +329,10 @@ ActiveRecord::Schema.define(version: 2021_10_23_090213) do
     t.string "invoice_number"
     t.datetime "invoice_date"
     t.integer "sale_type"
-    t.float "tax_amount"
-    t.float "total_amount"
-    t.float "discount_amount"
-    t.float "final_amount"
+    t.float "tax_amount", default: 0.0
+    t.float "total_amount", default: 0.0
+    t.float "discount_amount", default: 0.0
+    t.float "final_amount", default: 0.0
     t.integer "terms_type"
     t.string "pre_carriage_by"
     t.string "place_of_receipt_by_pre_carrier"
@@ -324,7 +340,7 @@ ActiveRecord::Schema.define(version: 2021_10_23_090213) do
     t.string "port_of_discharge"
     t.string "port_of_loading"
     t.string "final_destination"
-    t.float "export_invoice_sale_box_approx_weight_in_gram"
+    t.float "export_invoice_sale_box_approx_weight_in_gram", default: 0.0
     t.boolean "is_payment_completed", default: false
     t.float "brokerage_paid_amount", default: 0.0
     t.boolean "is_brokerage_paid", default: false
@@ -355,9 +371,9 @@ ActiveRecord::Schema.define(version: 2021_10_23_090213) do
     t.float "max_value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.float "purchase_stocks"
-    t.float "sale_stocks"
-    t.float "balance_stocks"
+    t.float "purchase_stocks", default: 0.0
+    t.float "sale_stocks", default: 0.0
+    t.float "balance_stocks", default: 0.0
   end
 
   create_table "stock_sub_types", force: :cascade do |t|
@@ -377,42 +393,42 @@ ActiveRecord::Schema.define(version: 2021_10_23_090213) do
 
   create_table "stocks", force: :cascade do |t|
     t.string "stock_key"
-    t.integer "shape"
-    t.integer "color"
-    t.integer "clarity"
-    t.float "carat"
-    t.float "weight"
-    t.float "rap"
-    t.float "discount_percentage"
-    t.float "additional_disc_1"
-    t.float "additional_disc_2"
-    t.float "additional_disc_3"
+    t.integer "shape", default: 0
+    t.integer "color", default: 0
+    t.integer "clarity", default: 0
+    t.float "carat", default: 0.0
+    t.float "weight", default: 0.0
+    t.float "rap", default: 0.0
+    t.float "discount_percentage", default: 0.0
+    t.float "additional_disc_1", default: 0.0
+    t.float "additional_disc_2", default: 0.0
+    t.float "additional_disc_3", default: 0.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "purchase_id", null: false
     t.integer "state", default: 0
     t.decimal "amount", precision: 15, scale: 4
-    t.bigint "stock_sub_type_id"
-    t.integer "color_shades"
-    t.integer "fancy_color"
-    t.integer "color_intensity"
-    t.integer "color_overtone"
-    t.integer "flouresence"
-    t.integer "lab"
-    t.integer "cut"
-    t.integer "polish"
-    t.integer "symmetry"
-    t.integer "black_table_inclusion"
-    t.integer "black_crown_inclusion"
-    t.integer "white_table_inclusion"
-    t.integer "white_crown_inclusion"
-    t.integer "milky_inclusion"
-    t.integer "open_table_inclusion"
-    t.integer "open_crown_inclusion"
-    t.integer "open_pavilion_inclusion"
-    t.integer "eye_clean_inclusion"
-    t.integer "rough_origin"
-    t.integer "heart_and_arrow"
+    t.bigint "stock_sub_type_id", default: 0
+    t.integer "color_shades", default: 0
+    t.integer "fancy_color", default: 0
+    t.integer "color_intensity", default: 0
+    t.integer "color_overtone", default: 0
+    t.integer "flouresence", default: 0
+    t.integer "lab", default: 0
+    t.integer "cut", default: 0
+    t.integer "polish", default: 0
+    t.integer "symmetry", default: 0
+    t.integer "black_table_inclusion", default: 0
+    t.integer "black_crown_inclusion", default: 0
+    t.integer "white_table_inclusion", default: 0
+    t.integer "white_crown_inclusion", default: 0
+    t.integer "milky_inclusion", default: 0
+    t.integer "open_table_inclusion", default: 0
+    t.integer "open_crown_inclusion", default: 0
+    t.integer "open_pavilion_inclusion", default: 0
+    t.integer "eye_clean_inclusion", default: 0
+    t.integer "rough_origin", default: 0
+    t.integer "heart_and_arrow", default: 0
     t.string "rapnet_id"
     t.string "rapnet_dollar"
     t.string "rapnet_discount_percentage"
@@ -428,10 +444,10 @@ ActiveRecord::Schema.define(version: 2021_10_23_090213) do
     t.string "BIS"
     t.string "WIC"
     t.string "col_tinge"
-    t.float "loose_total_caret"
-    t.float "loose_selection_carat"
-    t.float "loose_rejection_carat"
-    t.float "rate_per_caret"
+    t.float "loose_total_caret", default: 0.0
+    t.float "loose_selection_carat", default: 0.0
+    t.float "loose_rejection_carat", default: 0.0
+    t.float "rate_per_caret", default: 0.0
     t.string "title"
     t.text "notes"
     t.string "certificate_number"
@@ -461,9 +477,10 @@ ActiveRecord::Schema.define(version: 2021_10_23_090213) do
     t.bigint "transnable_id"
     t.string "invoice_number"
     t.bigint "entry_module_id"
-    t.float "round_off_amount"
+    t.float "round_off_amount", default: 0.0
     t.string "invoicable_type"
     t.bigint "invoicable_id"
+    t.decimal "closing_balance"
     t.index ["entry_module_id"], name: "index_transactions_on_entry_module_id"
     t.index ["invoicable_type", "invoicable_id"], name: "index_transactions_on_invoicable_type_and_invoicable_id"
     t.index ["transnable_type", "transnable_id"], name: "index_transactions_on_transnable_type_and_transnable_id"
@@ -493,6 +510,7 @@ ActiveRecord::Schema.define(version: 2021_10_23_090213) do
   add_foreign_key "ledger_expenses", "ledgers"
   add_foreign_key "ledger_expenses_taxes", "ledger_expenses"
   add_foreign_key "ledger_expenses_taxes", "taxes"
+  add_foreign_key "ledger_financial_records", "financial_years"
   add_foreign_key "ledgers", "ledger_groups"
   add_foreign_key "payments", "ledgers"
   add_foreign_key "payments", "parties"

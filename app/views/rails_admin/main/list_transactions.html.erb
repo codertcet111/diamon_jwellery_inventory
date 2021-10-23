@@ -1,0 +1,9 @@
+<%= form_tag("/ledgers/#{@object.id}/download_transactions", method: :get) do %>
+  Start Date - <%= datetime_field_tag :start_date %>
+  <br>
+  <br>
+  End Date - <%= datetime_field_tag :end_date %>
+  <br>
+  <br>
+  <%= submit_tag("Download Transactions") %>
+<% end %>

@@ -1,0 +1,3 @@
+class FinancialYear < ApplicationRecord
+
+end

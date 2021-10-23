@@ -3,7 +3,6 @@ class StockPcRange < ApplicationRecord
   has_many :sale_items
   scope :in_stock_all, -> { where("balance_stocks > ?",0.0) }
   scope :out_of_stock, -> { where("balance_stocks <= ?",0.0) }
-  after_create :intialize_values
   # scope :in_stock_diamonds, -> { in_stock_all.where(stock_sub_type_id: StockSubType.loose_diamond_id)}
 
   rails_admin do
@@ -20,6 +19,11 @@ class StockPcRange < ApplicationRecord
         label 'Balance Stocks (Cr)'
       end
     end
+    edit do
+      include_all_fields
+      exclude_fields :stocks
+      exclude_fields :sale_items 
+    end
     field :name do
       label 'Range'
       required true
@@ -34,10 +38,6 @@ class StockPcRange < ApplicationRecord
     end
     exclude_fields :stocks
     exclude_fields :sale_items
-  end
-
-  def intialize_values
-    self.update_columns(purchase_stocks: purchase_stocks.to_f, sales_stocks: sales_stocks.to_f, balance_stocks: balance_stocks.to_f)
   end
 
 end

@@ -50,7 +50,11 @@ RailsAdmin.config do |config|
       link_icon 'icon-download'
       action_name 'download_purchase_invoice_btn'
     end
-
+    member :list_transactions do
+      only ['Ledger']
+      i18n_key :Transaction
+      action_name 'list_transactions'
+    end
     ## With an audit adapter, you can add:
     # history_index
     # history_show

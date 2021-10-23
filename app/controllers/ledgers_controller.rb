@@ -1,5 +1,5 @@
 class LedgersController < ApplicationController
-  before_action :set_ledger, only: %i[ show edit update destroy ]
+  before_action :set_ledger, only: %i[ show edit update destroy download_transactions ]
 
   # GET /ledgers or /ledgers.json
   def index
@@ -53,6 +53,22 @@ class LedgersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to ledgers_url, notice: "Ledger was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  def download_transactions
+    @transactions = @ledger.transactions
+    @debit_counts = @transactions.where.not(debit_amount: nil).count
+    @credit_counts = @transactions.where.not(credit_amount: nil).count
+    @total_debits = @transactions.sum(:debit_amount)
+    @total_credits = @transactions.sum(:credit_amount)
+    request.format = :pdf
+    respond_to  do |format|
+      format.html
+      format.pdf do
+        render template: 'ledgers/download_transactions.html.erb',
+        pdf: "Ledger_Transactions_#{@ledger.name}"
+      end
     end
   end
 

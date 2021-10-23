@@ -37,3 +37,7 @@ en:
         menu: 'Download Invoice'
         title: 'Download Invoice'
         breadcrumb: 'Download Invoice'
+      Transaction:
+        menu: 'List Transaction'
+        title: 'List Transaction'
+        breadcrumb: 'List Transaction'
