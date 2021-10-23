@@ -1,5 +1,5 @@
 class BrokeragesController < ApplicationController
-  before_action :set_brokerage, only: %i[ show edit update destroy ]
+  before_action :set_brokerage, only: %i[ show edit update destroy]
 
   # GET /brokerages or /brokerages.json
   def index

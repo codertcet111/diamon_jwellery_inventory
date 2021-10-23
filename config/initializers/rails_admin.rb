@@ -44,14 +44,14 @@ RailsAdmin.config do |config|
       link_icon 'icon-download'
       action_name 'download_sale_invoice_btn'
     end
-    member :download_purchase_invoice_btn do
-      only ['Purchase']
-      i18n_key :Invoice
-      link_icon 'icon-download'
-      action_name 'download_purchase_invoice_btn'
-    end
+    # member :download_purchase_invoice_btn do
+    #   only ['Purchase']
+    #   i18n_key :Invoice
+    #   link_icon 'icon-download'
+    #   action_name 'download_purchase_invoice_btn'
+    # end
     member :list_transactions do
-      only ['Ledger']
+      only ['Ledger','Party','Broker']
       i18n_key :Transaction
       action_name 'list_transactions'
     end

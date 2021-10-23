@@ -1,5 +1,5 @@
 class BrokersController < ApplicationController
-  before_action :set_broker, only: [:show, :edit, :update, :destroy]
+  before_action :set_broker, only: [:show, :edit, :update, :destroy, :download_transactions]
 
   # GET /brokers
   # GET /brokers.json
@@ -58,6 +58,27 @@ class BrokersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to brokers_url, notice: 'Broker was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def download_transactions
+    @company = CompanyDetail.first
+    @ledger = @broker
+    @transactions = @ledger.transactions.where("transaction_date >= ? and transaction_date <= ?", params[:start_date].to_datetime, params[:end_date].to_datetime).order(:transaction_date)
+    @debit_counts = @transactions.where.not(debit_amount: nil).count
+    @credit_counts = @transactions.where.not(credit_amount: nil).count
+    @total_debits = @transactions.sum(:debit_amount)
+    @total_credits = @transactions.sum(:credit_amount)
+    @final_closing_balance = @transactions.last.closing_balance
+    last_txn = @ledger.transactions.where('transaction_date < ?', params[:start_date].to_time).order(:transaction_date).last
+    @initial_openning_balance = last_txn.present? ? last_txn.closing_balance : 0.0
+    request.format = :pdf
+    respond_to  do |format|
+      format.html
+      format.pdf do
+        render template: 'ledgers/download_transactions.html.erb',
+        pdf: "Ledger_Transactions_#{@ledger.name}"
+      end
     end
   end
 

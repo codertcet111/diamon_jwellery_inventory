@@ -1,4 +1,5 @@
-<%= form_tag("/ledgers/#{@object.id}/download_transactions", method: :get) do %>
+<% ledger_type = @object.class.to_s.downcase.pluralize %>
+<%= form_tag("/#{ledger_type}/#{@object.id}/download_transactions", method: :get) do %>
   Start Date - <%= datetime_field_tag :start_date %>
   <br>
   <br>

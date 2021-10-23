@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   post '/purchase/:id/download_purchase_invoice' => 'purchases#download_purchase_invoice'
   post '/sale/:id/download_sale_invoice' => 'sales#download_sale_invoice'
   get '/ledgers/:id/download_transactions' => 'ledgers#download_transactions'
+  get '/parties/:id/download_transactions' => 'parties#download_transactions'
+  get '/brokers/:id/download_transactions' => 'brokers#download_transactions'
   get '/stock_details/:stock_id' => 'info#stock_details'
   get '/sell_item_amount' => 'info#sell_item_amount'
   root 'rails_admin/main#dashboard'
