@@ -31,7 +31,7 @@ RailsAdmin.config do |config|
     dashboard                     # mandatory
     index                         # mandatory
     new do
-      except ['Stock', 'SaleItem']
+      except ['Stock', 'SaleItem','Transaction']
     end
     export
     bulk_delete
@@ -71,16 +71,13 @@ RailsAdmin.config do |config|
   config.model 'PurchasesTax' do
     visible false
   end
-  config.model 'SaleItem' do
-    visible false
-  end
-  config.model 'SaleItem' do
-    visible false
-  end
   config.model 'BrokeragesTax' do
     visible false
   end
   config.model 'LedgerExpensesTax' do
+    visible false
+  end
+  config.model 'JournalVoucher' do
     visible false
   end
   config.model 'Sale' do

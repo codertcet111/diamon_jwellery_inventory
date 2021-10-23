@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_23_031655) do
+ActiveRecord::Schema.define(version: 2021_10_23_090213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -236,6 +236,8 @@ ActiveRecord::Schema.define(version: 2021_10_23_031655) do
     t.float "broker_percentage"
     t.float "broker_amount"
     t.boolean "is_payment_completed", default: false
+    t.float "brokerage_paid_amount", default: 0.0
+    t.boolean "is_brokerage_paid", default: false
     t.index ["broker_id"], name: "index_purchases_on_broker_id"
     t.index ["party_id"], name: "index_purchases_on_party_id"
   end
@@ -324,6 +326,8 @@ ActiveRecord::Schema.define(version: 2021_10_23_031655) do
     t.string "final_destination"
     t.float "export_invoice_sale_box_approx_weight_in_gram"
     t.boolean "is_payment_completed", default: false
+    t.float "brokerage_paid_amount", default: 0.0
+    t.boolean "is_brokerage_paid", default: false
     t.index ["broker_id"], name: "index_sales_on_broker_id"
     t.index ["party_id"], name: "index_sales_on_party_id"
   end

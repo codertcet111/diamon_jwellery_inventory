@@ -40,6 +40,9 @@ class Receipt < ApplicationRecord
       field :party do
         required true
       end
+      field :ledger do
+        label "To Ledger (Bank / Cash)"
+      end
       # field :sale do
       #   required true
       # end

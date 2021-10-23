@@ -8,7 +8,18 @@ class StockPcRange < ApplicationRecord
 
   rails_admin do
     navigation_label Proc.new { "S: Stock" }
-    include_all_fields
+    list do
+      include_all_fields
+      field :purchase_stocks do
+        label 'Purchase Stocks (Cr)'
+      end
+      field :sale_stocks do
+        label 'Sale Stocks (Cr)'
+      end
+      field :balance_stocks do
+        label 'Balance Stocks (Cr)'
+      end
+    end
     field :name do
       label 'Range'
       required true

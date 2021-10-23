@@ -14,7 +14,7 @@ class LedgerExpense < ApplicationRecord
       tax_per = i_tax.tax_percentage rescue 0
       i_tax_amount += amount_eligible_for_tax * ( tax_per.to_f / 100.0)
     end
-    self.update_column(:tax_amount, i_tax_amount.to_f)
+    self.update_columns(tax_amount: i_tax_amount.to_f, final_amount: (self.amount.to_f + i_tax_amount.to_f))
   end
 
   def display_invoice_number
@@ -27,6 +27,7 @@ class LedgerExpense < ApplicationRecord
     edit do
       include_all_fields
       exclude_fields :ledger_expenses_taxes
+      exclude_fields :transactions
     end
   end
 end
