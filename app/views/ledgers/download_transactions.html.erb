@@ -20,7 +20,7 @@
     <tr>
       <td><%= i + 1 %></td>
       <td><%= t.transaction_date.to_date %></td>
-      <td><%= t.entry_module.narration %></td>
+      <td><%= "#{t.entry_module.narration}<br>#{t.notes}".html_safe %></td>
       <td><%= t.invoice_number %></td>
       <td><%= t.debit_amount %></td>
       <td><%= t.credit_amount %></td>
