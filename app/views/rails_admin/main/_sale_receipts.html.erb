@@ -10,7 +10,7 @@ table, th, td {
   padding: 5px;
 }
 </style>
-<% sold_stocks = sale.sale_items.sum(:amount) %>
+<% sold_stocks = sale.final_amount %>
 <b>Sum of all Sale Items amount, Rs. <%= sold_stocks %></b>
 <br>
 <% total = 0 %>

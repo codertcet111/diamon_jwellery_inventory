@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Entry Modules</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Total debit</th>
+      <th>Total credit</th>
+      <th>Narration</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @entry_modules.each do |entry_module| %>
+      <tr>
+        <td><%= entry_module.total_debit %></td>
+        <td><%= entry_module.total_credit %></td>
+        <td><%= entry_module.narration %></td>
+        <td><%= link_to 'Show', entry_module %></td>
+        <td><%= link_to 'Edit', edit_entry_module_path(entry_module) %></td>
+        <td><%= link_to 'Destroy', entry_module, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Entry Module', new_entry_module_path %>

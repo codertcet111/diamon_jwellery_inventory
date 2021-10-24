@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @journal_voucher.amount %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @journal_voucher.date %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @journal_voucher.notes %>
+</p>
+
+<%= link_to 'Edit', edit_journal_voucher_path(@journal_voucher) %> |
+<%= link_to 'Back', journal_vouchers_path %>

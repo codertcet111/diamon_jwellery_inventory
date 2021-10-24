@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @stock_sub_type.name %>
+</p>
+
+<p>
+  <strong>Weight unit:</strong>
+  <%= @stock_sub_type.weight_unit %>
+</p>
+
+<p>
+  <strong>Stock type:</strong>
+  <%= @stock_sub_type.stock_type %>
+</p>
+
+<%= link_to 'Edit', edit_stock_sub_type_path(@stock_sub_type) %> |
+<%= link_to 'Back', stock_sub_types_path %>

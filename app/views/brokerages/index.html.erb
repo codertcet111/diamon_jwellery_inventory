@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Brokerages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Amount</th>
+      <th>Payment mode</th>
+      <th>Cheque number</th>
+      <th>Broker</th>
+      <th>Notes</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @brokerages.each do |brokerage| %>
+      <tr>
+        <td><%= brokerage.amount %></td>
+        <td><%= brokerage.payment_mode %></td>
+        <td><%= brokerage.cheque_number %></td>
+        <td><%= brokerage.broker %></td>
+        <td><%= brokerage.notes %></td>
+        <td><%= link_to 'Show', brokerage %></td>
+        <td><%= link_to 'Edit', edit_brokerage_path(brokerage) %></td>
+        <td><%= link_to 'Destroy', brokerage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Brokerage', new_brokerage_path %>

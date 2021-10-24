@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Total debit:</strong>
+  <%= @entry_module.total_debit %>
+</p>
+
+<p>
+  <strong>Total credit:</strong>
+  <%= @entry_module.total_credit %>
+</p>
+
+<p>
+  <strong>Narration:</strong>
+  <%= @entry_module.narration %>
+</p>
+
+<%= link_to 'Edit', edit_entry_module_path(@entry_module) %> |
+<%= link_to 'Back', entry_modules_path %>

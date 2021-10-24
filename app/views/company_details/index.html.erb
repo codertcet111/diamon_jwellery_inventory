@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Company Details</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Gst</th>
+      <th>Address</th>
+      <th>Pan card</th>
+      <th>Adhaar</th>
+      <th>Mobile number</th>
+      <th>Qbc no</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @company_details.each do |company_detail| %>
+      <tr>
+        <td><%= company_detail.name %></td>
+        <td><%= company_detail.gst %></td>
+        <td><%= company_detail.address %></td>
+        <td><%= company_detail.pan_card %></td>
+        <td><%= company_detail.adhaar %></td>
+        <td><%= company_detail.mobile_number %></td>
+        <td><%= company_detail.qbc_no %></td>
+        <td><%= link_to 'Show', company_detail %></td>
+        <td><%= link_to 'Edit', edit_company_detail_path(company_detail) %></td>
+        <td><%= link_to 'Destroy', company_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Company Detail', new_company_detail_path %>

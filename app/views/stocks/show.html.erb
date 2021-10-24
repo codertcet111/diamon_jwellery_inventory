@@ -60,5 +60,10 @@
   <%= @stock.state %>
 </p>
 
+<p>
+  <strong>Stock type:</strong>
+  <%= @stock.stock_sub_type.name %>
+</p>
+
 <%= link_to 'Edit', edit_stock_path(@stock) %> |
 <%= link_to 'Back', stocks_path %>

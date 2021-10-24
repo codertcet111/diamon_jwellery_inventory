@@ -78,8 +78,8 @@ development:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
-production:
-  <<: *default
-  database: aggrawal_sales_purchase_production
-  username: aggrawalSalesPurchase
-  password: <%= ENV['AGGRAWALSALESPURCHASE_DATABASE_PASSWORD'] %>
+# production:
+#   <<: *default
+#   database: aggrawal_sales_purchase_production
+#   username: aggrawalSalesPurchase
+#   password: <%= ENV['AGGRAWALSALESPURCHASE_DATABASE_PASSWORD'] %>

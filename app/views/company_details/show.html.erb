@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @company_detail.name %>
+</p>
+
+<p>
+  <strong>Gst:</strong>
+  <%= @company_detail.gst %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @company_detail.address %>
+</p>
+
+<p>
+  <strong>Pan card:</strong>
+  <%= @company_detail.pan_card %>
+</p>
+
+<p>
+  <strong>Adhaar:</strong>
+  <%= @company_detail.adhaar %>
+</p>
+
+<p>
+  <strong>Mobile number:</strong>
+  <%= @company_detail.mobile_number %>
+</p>
+
+<p>
+  <strong>Qbc no:</strong>
+  <%= @company_detail.qbc_no %>
+</p>
+
+<%= link_to 'Edit', edit_company_detail_path(@company_detail) %> |
+<%= link_to 'Back', company_details_path %>

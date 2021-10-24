@@ -1,0 +1,282 @@
+  <header class="clearfix">
+  <!-- <div id="logo">
+    <img src="logo.png"/>
+  </div> -->
+  <h3><%= @company.name %> Sale Invoice 00<%= @sale.id %></h3>
+  <!-- Right hand side -->
+  <div class="clearfix" id="company">
+    <div><span>INVOICE: </span>LS/000<%= @sale.id %>/<%= @sale.current_financial_year %></div>
+    <div><span>Date: </span><%= @sale.sale_date.to_date %></div>
+    <div><span>Payment Terms: </span><%= @sale.sales_terms || '' %></div>
+	<div><span>Other Ref: </span></div>
+  </div>
+  <!-- Left hand side (Party detail) -->
+  <div id="project">
+    <div>
+      <p style="margin-left: 20px"><bold>To,</bold></p>
+      <p style="margin-left: 20px"><%= @sale.party.party_address %></p>
+    </div>
+    <br>
+    <div>
+      <span>State:</span>
+      <%= @sale.party.state %>
+    </div>
+    <div>
+      <span>Country:</span>
+      <%= @sale.party.country %>
+    </div>
+    <div>
+      <span>GST No:</span>
+      <%= @sale.party.gst_no%>
+    </div>
+    <div>
+      <span>PAN No:</span>
+      <%= @sale.party.pan_no%>
+    </div>
+    <div>
+      <span>Place of Supply:</span>
+      <%= @sale.party.place_of_supply%>
+    </div>
+  </div>
+</header>
+<main>
+  <table>
+    <thead>
+      <tr>
+        <th class="service">Number</th>
+        <th class="desc">DESCRIPTION OF GOODS</th>
+        <th>HSN CODE</th>
+        <th>QTY</th>
+        <th>Rate pr <%= @sale.sale_items.first.stock.stock_sub_type.name.downcase.include?('diamond') ? 'Cts' : 'Gram' %> (Rs.)</th>
+        <th>Amount (Rs.)</th>
+      </tr>
+    </thead>
+    <tbody>
+    	<% @sale.sale_items.each.with_index(1) do |sale_item, i_index| %>
+    		<% if sale_item.stock.stock_sub_type.name.downcase.include?('polish') %>
+	    		<tr>
+			        <td class=""><%= i_index %></td>
+			        <td class="desc"><%= sale_item.stock.stock_sub_type.name %></td>
+			        <td class="unit"><%= "71023910" %></td>
+			        <td class="qty"><%= sale_item.carat %></td>
+			        <td class="qty"><%= sale_item.stock.rate_per_caret %></td>
+			        <td class="total"><%= sale_item.amount %></td>
+			    </tr>
+		    <% elsif sale_item.stock.stock_sub_type.name.downcase.include?('loose') %>
+			    <tr>
+			        <td class=""><%= i_index %></td>
+			        <td class="desc"><%= sale_item.stock.stock_sub_type.name %></td>
+			        <td class="unit"><%= "71023910" %></td>
+			        <td class="qty"><%= sale_item.carat %></td>
+			        <td class="qty"><%= sale_item.stock.rate_per_caret %></td>
+			        <td class="total"><%= sale_item.amount %></td>
+			    </tr>
+		    <% else %>
+		    <!-- This is for jewellary -->
+			    <tr>
+			        <td class=""><%= i_index %></td>
+			        <td class="desc"><%= sale_item.stock.stock_sub_type.name %></td>
+			        <td class="unit"><%= "71023910" %></td>
+			        <td class="qty"><%= sale_item.weight (gram) %></td>
+			        <td class="qty"><%= sale_item.stock.rate_per_caret %></td>
+			        <td class="total"><%= sale_item.amount %></td>
+			    </tr>
+		    <% end %>
+    	<% end %>
+      <tr>
+        <td colspan="5">Total Value</td>
+        <td class="total">Rs. <%= @sale.total_amount %></td>
+      </tr>
+      <tr>
+        <td colspan="5">Less: Discount / Abatement</td>
+        <td class="total">Rs. <%= @sale.discount_amount %></td>
+      </tr>
+      <% @sale.taxes.each do |tax| %>
+      	<tr>
+	      <td colspan="5"><%= tax.name %> @ <%= tax.tax_percentage %>%</td>
+	      <td class="total">Rs. <%= (@sale.amount_taxable * ( tax.tax_percentage.to_f / 100.0)) %></td>
+	    </tr>
+      <% end %>
+      <tr>
+        <td colspan="5">TOTAL Amount After Tax</td>
+        <td class="total">Rs. <%= @sale.final_amount %></td>
+      </tr>
+      <br>
+      <tr>
+        <td colspan="5">Total Amount of Invoice</td>
+        <td class="total">Rs. <%= @sale.final_amount %></td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="notices">
+  	<div class="clearfix" id="project_1">
+  		<p><h2>Our Details: </h2><%= @company.bank_address_detail.to_s.gsub(/\n/, '<br/>').html_safe %></p>
+  		<p>Bank Acc No: <%= @company.bank_account_number %></p>
+  		<p>RTGS No: <%= @company.rtgs_code %></p>
+  		<p>GSTIN: <%= @company.gst %></p>
+  		<p>PAN: <%= @company.pan_card %></p>
+  		<p>Terms And Conditions</p>
+  		<%= @company.terms_and_condition.html_safe %>
+  	</div>
+  	<div id="company_1">
+  		<p>For Rio Diam</p>
+  		<br>
+  		<br>
+  		<p>PROPRIETOR.</p>
+  		<p><%= @company.proprietor_name %></p>
+  	</div>
+  </div>
+</main>
+<footer>
+  Rio Diam
+</footer>
+
+<style type="text/css"> 
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+a {
+  color: #5D6975;
+  text-decoration: underline;
+}
+
+body {
+  position: relative;
+  /*width: 21cm;  
+  height: 29.7cm; */
+  margin: 0 auto; 
+  color: #001028;
+  background: #FFFFFF; 
+  font-family: Arial, sans-serif; 
+  font-size: 15px; 
+  font-family: Arial;
+}
+
+header {
+  padding: 10px 0;
+  margin-bottom: 30px;
+}
+
+#logo {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#logo img {
+  width: 90px;
+}
+
+h3 {
+  border-top: 1px solid  #5D6975;
+  border-bottom: 1px solid  #5D6975;
+  color: #5D6975;
+  font-size: 2.0em;
+  line-height: 1.4em;
+  font-weight: normal;
+  text-align: center;
+  margin: 0 0 20px 0;
+  background: url(dimension.png);
+}
+
+#project, #project_1 {
+  float: left;
+}
+
+#project span, #project_1 span {
+  color: #5D6975;
+  text-align: left;
+  width: 82px;
+  margin-right: 10px;
+  display: inline-block;
+}
+
+#company span, #company_1 span {
+  color: #5D6975;
+  text-align: left;
+  width: 200px;
+  /*margin-right: 10px;*/
+  display: inline-block;
+}
+
+#company,#company_1  {
+  float: right;
+  /*text-align: right;*/
+}
+
+#project div,
+#company div, #project_1 div,
+#company_1 div,  {
+  white-space: nowrap;        
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 20px;
+}
+
+table tr:nth-child(2n-1) td {
+  background: #F5F5F5;
+}
+
+table th,
+table td {
+  text-align: center;
+}
+
+table th {
+  padding: 5px 20px;
+  color: #5D6975;
+  border-bottom: 1px solid #C1CED9;
+  white-space: nowrap;        
+  font-weight: normal;
+}
+
+table .service,
+table .desc {
+  text-align: center;
+}
+
+table td {
+  padding: 20px;
+  text-align: right;
+}
+
+table td.service,
+table td.desc {
+  vertical-align: top;
+}
+
+table td.unit,
+table td.qty,
+table td.total {
+  font-size: 1.2em;
+  text-align: center;
+}
+
+table td.grand {
+  border-top: 1px solid #5D6975;;
+}
+
+#notices .notice {
+  color: #5D6975;
+  font-size: 1.2em;
+}
+
+footer {
+  color: #5D6975;
+  width: 100%;
+  height: 30px;
+  position: absolute;
+  bottom: 0;
+  border-top: 1px solid #C1CED9;
+  padding: 8px 0;
+  text-align: center;
+}
+
+</style> 

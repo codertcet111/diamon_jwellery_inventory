@@ -1,0 +1,52 @@
+<%= form_with(model: company_detail, local: true) do |form| %>
+  <% if company_detail.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(company_detail.errors.count, "error") %> prohibited this company_detail from being saved:</h2>
+
+      <ul>
+      <% company_detail.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :gst %>
+    <%= form.text_field :gst %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address %>
+    <%= form.text_area :address %>
+  </div>
+
+  <div class="field">
+    <%= form.label :pan_card %>
+    <%= form.text_field :pan_card %>
+  </div>
+
+  <div class="field">
+    <%= form.label :adhaar %>
+    <%= form.text_field :adhaar %>
+  </div>
+
+  <div class="field">
+    <%= form.label :mobile_number %>
+    <%= form.text_field :mobile_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :qbc_no %>
+    <%= form.text_field :qbc_no %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

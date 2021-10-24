@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @stock_pc_range.name %>
+</p>
+
+<p>
+  <strong>Min value:</strong>
+  <%= @stock_pc_range.min_value %>
+</p>
+
+<p>
+  <strong>Max value:</strong>
+  <%= @stock_pc_range.max_value %>
+</p>
+
+<%= link_to 'Edit', edit_stock_pc_range_path(@stock_pc_range) %> |
+<%= link_to 'Back', stock_pc_ranges_path %>

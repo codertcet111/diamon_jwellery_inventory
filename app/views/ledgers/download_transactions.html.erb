@@ -1,0 +1,79 @@
+<header class="clearfix">
+<!-- <div id="logo">
+  <img src="logo.png"/>
+</div> -->
+<h2 class="center"><%= @company.name %></h2>
+<h3>Ledger Transactions: <%= @ledger.name %></h3>
+<p>Transaction From: <b><%= params[:start_date].to_date %></b> To  <b><%= params[:end_date].to_date %></b></p>
+<p>Opening Balance: <%= @initial_openning_balance %></p>
+<table id="transactions">
+  <tr>
+    <th>Sr. No.</th>
+    <th>Date</th>
+    <th>Narration</th>
+    <th>Invoice Number</th>
+    <th>Debit Amount</th>
+    <th>Credit Amount</th>
+    <th>Closing Balance</th>
+  </tr>
+  <% @transactions.each_with_index do |t, i| %>
+    <tr>
+      <td><%= i + 1 %></td>
+      <td><%= t.transaction_date.to_date %></td>
+      <td><%= "#{t.entry_module.narration}<br>#{t.notes}".html_safe %></td>
+      <td><%= t.invoice_number %></td>
+      <td><%= t.debit_amount %></td>
+      <td><%= t.credit_amount %></td>
+      <td><%= t.closing_balance %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><b>STATEMENT SUMMARY :-</b></p>
+<table id="transactions">
+  <tr>
+    <th>Opening Balance</th>
+    <th>Debit Count</th>
+    <th>Credit Count</th>
+    <th>Debits</th>
+    <th>Credits</th>
+    <th>Closing Balance</th>
+  </tr>
+  <tr>
+    <td><%= @initial_openning_balance %></td>
+    <td><%= @debit_counts %></td>
+    <td><%= @credit_counts %></td>
+    <td><%= @total_debits %></td>
+    <td><%= @total_credits %></td>
+    <td><%= @final_closing_balance %></td>
+  </tr>
+</table>
+
+<style>
+#transactions {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#transactions td, #transactions th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#transactions tr:nth-child(even){background-color: #f2f2f2;}
+
+#transactions tr:hover {background-color: #ddd;}
+
+#transactions th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+
+.center{
+  text-align: center;
+}
+</style>

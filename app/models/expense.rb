@@ -3,6 +3,8 @@ class Expense < ApplicationRecord
   enum expense_type: [:factory, :lab, :angadia, :miscellaneous]
 
   rails_admin do
+    navigation_label Proc.new { "S: Stock" }
+    label 'Stock Expenses'
     field :expense_type do
       required true
     end

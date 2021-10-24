@@ -1,5 +1,5 @@
 class PurchasesController < ApplicationController
-  before_action :set_purchase, only: [:show, :edit, :update, :destroy]
+  before_action :set_purchase, only: [:show, :edit, :update, :destroy, :download_purchase_invoice]
 
   # GET /purchases
   # GET /purchases.json
@@ -58,6 +58,17 @@ class PurchasesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to purchases_url, notice: 'Purchase was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def download_purchase_invoice
+    request.format = :pdf
+    respond_to  do |format|
+      format.html
+      format.pdf do
+        render template: 'purchases/download_purchase_invoice.html.erb',
+        pdf: "Purchase_Invoice_#{@purchase.id}"
+      end
     end
   end
 

@@ -1,0 +1,9 @@
+<p>
+  <strong>Invoice:</strong>
+  <%= @object %>
+</p>
+<% if @object.sale_type == 'LCR' %>
+	<%= link_to 'Download Invoice', "/sale/#{@object.id}/download_sale_invoice", method: :pdf %>
+<% else %>
+	<p>No invoice for export sales</p>
+<% end %>

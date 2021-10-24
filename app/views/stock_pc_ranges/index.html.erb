@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Stock Pc Ranges</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Min value</th>
+      <th>Max value</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @stock_pc_ranges.each do |stock_pc_range| %>
+      <tr>
+        <td><%= stock_pc_range.name %></td>
+        <td><%= stock_pc_range.min_value %></td>
+        <td><%= stock_pc_range.max_value %></td>
+        <td><%= link_to 'Show', stock_pc_range %></td>
+        <td><%= link_to 'Edit', edit_stock_pc_range_path(stock_pc_range) %></td>
+        <td><%= link_to 'Destroy', stock_pc_range, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Stock Pc Range', new_stock_pc_range_path %>

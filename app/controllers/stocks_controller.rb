@@ -69,6 +69,6 @@ class StocksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def stock_params
-      params.require(:stock).permit(:stockId, :shape, :color, :clarity, :carat, :weight, :Rap, :discount_percentage, :additional_disc_1, :additional_disc_2, :additional_disc_3, :state)
+      params.require(:stock).permit(:stockId, :shape, :color, :clarity, :carat, :weight, :Rap, :discount_percentage, :additional_disc_1, :additional_disc_2, :additional_disc_3, :state, :stock_sub_type_id)
     end
 end

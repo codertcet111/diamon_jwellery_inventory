@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @brokerage.amount %>
+</p>
+
+<p>
+  <strong>Payment mode:</strong>
+  <%= @brokerage.payment_mode %>
+</p>
+
+<p>
+  <strong>Cheque number:</strong>
+  <%= @brokerage.cheque_number %>
+</p>
+
+<p>
+  <strong>Broker:</strong>
+  <%= @brokerage.broker %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @brokerage.notes %>
+</p>
+
+<%= link_to 'Edit', edit_brokerage_path(@brokerage) %> |
+<%= link_to 'Back', brokerages_path %>

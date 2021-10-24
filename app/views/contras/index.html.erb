@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Contras</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Amount</th>
+      <th>Date</th>
+      <th>Notes</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @contras.each do |contra| %>
+      <tr>
+        <td><%= contra.amount %></td>
+        <td><%= contra.date %></td>
+        <td><%= contra.notes %></td>
+        <td><%= link_to 'Show', contra %></td>
+        <td><%= link_to 'Edit', edit_contra_path(contra) %></td>
+        <td><%= link_to 'Destroy', contra, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Contra', new_contra_path %>

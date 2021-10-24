@@ -1,0 +1,32 @@
+<%= form_with(model: contra, local: true) do |form| %>
+  <% if contra.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(contra.errors.count, "error") %> prohibited this contra from being saved:</h2>
+
+      <ul>
+      <% contra.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :amount %>
+    <%= form.text_field :amount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.datetime_select :date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :notes %>
+    <%= form.text_area :notes %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

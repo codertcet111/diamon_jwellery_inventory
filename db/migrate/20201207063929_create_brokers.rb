@@ -1,8 +1,8 @@
 class CreateBrokers < ActiveRecord::Migration[5.2]
   def change
     create_table :brokers do |t|
-      t.string :name, null: false
-      t.string :mobile, null: false
+      t.string :name
+      t.string :mobile
       t.string :qbc
       t.text :address
       t.string :reference_1

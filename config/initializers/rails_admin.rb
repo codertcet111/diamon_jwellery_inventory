@@ -22,19 +22,39 @@ RailsAdmin.config do |config|
   ## == Gravatar integration ==
   ## To disable Gravatar integration in Navigation Bar set to false
   # config.show_gravatar = true
+
+  config.browser_validations = false
+
+  config.label_methods.unshift(:display_invoice_number)
   config.sidescroll = {num_frozen_columns: 0}
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory
     new do
-      except ['Stock', 'SaleItem']
+      except ['Stock', 'SaleItem','Transaction']
     end
     export
     bulk_delete
     show
     edit
     delete
-
+    member :download_sale_invoice_btn do
+      only ['Sale']
+      i18n_key :Invoice
+      link_icon 'icon-download'
+      action_name 'download_sale_invoice_btn'
+    end
+    # member :download_purchase_invoice_btn do
+    #   only ['Purchase']
+    #   i18n_key :Invoice
+    #   link_icon 'icon-download'
+    #   action_name 'download_purchase_invoice_btn'
+    # end
+    member :list_transactions do
+      only ['Ledger','Party','Broker']
+      i18n_key :Transaction
+      action_name 'list_transactions'
+    end
     ## With an audit adapter, you can add:
     # history_index
     # history_show
@@ -49,6 +69,21 @@ RailsAdmin.config do |config|
       end
     end
   end
+  config.model 'SalesTax' do
+    visible false
+  end
+  config.model 'PurchasesTax' do
+    visible false
+  end
+  config.model 'BrokeragesTax' do
+    visible false
+  end
+  config.model 'LedgerExpensesTax' do
+    visible false
+  end
+  config.model 'JournalVoucher' do
+    visible false
+  end
   config.model 'Sale' do
     show do
       include_all_fields
@@ -60,6 +95,9 @@ RailsAdmin.config do |config|
     end
   end
   config.model 'Stock' do
+    list do
+      scopes [nil, :in_stock_all, :in_stock_loose_diamond, :in_stock_cut_polish_diamond, :in_stock_jewellary]
+    end
     show do
       # render do
       #   bindings[:view].render :partial => "rails_admin/main/_stock_detail", :locals => {:self => self}
@@ -75,6 +113,21 @@ RailsAdmin.config do |config|
           bindings[:view].render partial: 'stock_histories', locals: {stock: bindings[:object]}
         end
       end
+    end
+    edit do
+      include_fields :stock_sub_type, :title, :stock_pc_range, :rate_per_caret, :loose_total_caret, :loose_selection_carat, :loose_rejection_carat, :discount_percentage, :additional_disc_1, :additional_disc_2, :additional_disc_3, :carat, :amount, :weight, :rap, :state, :shape, :color, :clarity, :certificate_number, :color_shades, :fancy_color, :color_intensity, :color_overtone, :flouresence, :lab, :cut, :polish, :symmetry, :black_table_inclusion, :black_crown_inclusion, :white_table_inclusion, :white_crown_inclusion, :milky_inclusion, :open_table_inclusion, :open_crown_inclusion, :open_pavilion_inclusion, :eye_clean_inclusion, :rough_origin, :heart_and_arrow, :max, :min, :hgt_height, :tbl_table, :td_percentage, :hAndA, :BIC, :BIS, :WIC, :col_tinge, :rapnet_id, :rapnet_dollar, :rapnet_discount_percentage, :rapnet_price_after_disc, :rapnet_amount_dollar_after_disc, :notes, :image_url
+    end
+  end
+
+  config.model 'StockPcRange' do
+    list do
+      scopes [nil, :in_stock_all, :out_of_stock]
+    end
+    show do
+      include_all_fields
+    end
+    edit do
+      include_all_fields
     end
   end
 
@@ -95,12 +148,13 @@ RailsAdmin.config do |config|
       field :carat do
         partial 'carat'
       end
-      field :rap do
-        partial 'rap'
-      end
+      # field :rap do
+      #   partial 'rap'
+      # end
       include_all_fields
       field :amount do
         partial 'amount'
+        required true
       end
     end
   end
