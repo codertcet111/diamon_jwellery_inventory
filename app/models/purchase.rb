@@ -14,11 +14,11 @@ class Purchase < ApplicationRecord
   has_many :brokerages
 
   enum terms_type: ["Days","COD","Advance"]
-  accepts_nested_attributes_for :stocks
-  accepts_nested_attributes_for :payments
-  accepts_nested_attributes_for :purchases_taxes
+  accepts_nested_attributes_for :stocks, allow_destroy: :true
+  accepts_nested_attributes_for :payments, allow_destroy: :true
+  accepts_nested_attributes_for :purchases_taxes, allow_destroy: :true
 
-  after_create :perform_calculations, :create_transactions
+  after_commit :perform_calculations, :create_transactions, on: :create
   after_update :recalculate_pending_amount, :update_transactions
 
   rails_admin do

@@ -15,11 +15,11 @@ class Sale < ApplicationRecord
   # discount_amount : Discount amount
   # tax amount : tax amount on (total_amount - discount_amount)
   # final amount : after applying all disc, tax
-  accepts_nested_attributes_for :sale_items
-  accepts_nested_attributes_for :receipts
-  accepts_nested_attributes_for :sales_taxes
+  accepts_nested_attributes_for :sale_items, allow_destroy: :true
+  accepts_nested_attributes_for :receipts, allow_destroy: :true
+  accepts_nested_attributes_for :sales_taxes, allow_destroy: :true
 
-  after_create :perform_calculations, :generate_invoice, :create_transactions
+  after_commit :perform_calculations, :generate_invoice, :create_transactions, on: :create
   after_update :recalculate_pending_amount, :create_transactions
 
   rails_admin do

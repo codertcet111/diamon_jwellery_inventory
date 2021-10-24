@@ -29,7 +29,7 @@ class Stock < ApplicationRecord
   enum rough_origin: DIAMOND_ROUGH_ORIGIN
   enum heart_and_arrow: DIAMOND_HEAR_AND_ARROW
 
-  after_create :assign_stock_key, :set_defaults, :update_stock_pc_range_carats
+  after_commit :assign_stock_key, :set_defaults, :update_stock_pc_range_carats, on: :create
 
   enum state: { available: 0, in_lab: 1, in_factory: 2, out_of_memo: 3, business_process: 4, sold_out: 5 }
   # when state is changed from in factory to any then need to add weight loss
@@ -38,7 +38,7 @@ class Stock < ApplicationRecord
 
   before_create :stock_entire_re_calculation
 
-  accepts_nested_attributes_for :expenses
+  accepts_nested_attributes_for :expenses, allow_destroy: :true
 
   after_update :update_stock_pc_range_carats_if_carats_updated, :recalculate_purchase_final_amount
 

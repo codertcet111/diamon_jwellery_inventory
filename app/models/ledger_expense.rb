@@ -4,8 +4,8 @@ class LedgerExpense < ApplicationRecord
   belongs_to :ledger
   has_many :ledger_expenses_taxes
   has_many :taxes, through: :ledger_expenses_taxes
-  accepts_nested_attributes_for :ledger_expenses_taxes
-  after_create :calculate_tax
+  accepts_nested_attributes_for :ledger_expenses_taxes, allow_destroy: :true
+  after_commit :calculate_tax, on: :create
 
   def calculate_tax
     amount_eligible_for_tax = self.amount

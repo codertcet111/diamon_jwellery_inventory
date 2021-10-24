@@ -4,10 +4,10 @@ class Brokerage < ApplicationRecord
   belongs_to :broker
   belongs_to :ledger
   enum payment_mode: [:cash,:cheque,:angadia,:rtgs_neft, :other]
-  after_create :create_transactions, :update_sale_or_purchase
+  after_commit :create_transactions, :update_sale_or_purchase, on: :create
   has_many :brokerages_taxes
   has_many :taxes, through: :brokerages_taxes
-  accepts_nested_attributes_for :brokerages_taxes
+  accepts_nested_attributes_for :brokerages_taxes, allow_destroy: :true
 
   def create_transactions
   	'''

@@ -7,6 +7,7 @@ class Party < ApplicationRecord
   enum party_type: ["Sundry Debitor", "Sundry Creditor"]
   has_many :to_journal_vouchers, :class_name => "JournalVoucher", :foreign_key => "party_1_id"
   has_many :from_journal_vouchers, :class_name => "JournalVoucher", :foreign_key => "party_2_id"
+  after_commit :create_financial_year_record, on: :create
 
   rails_admin do
    navigation_label Proc.new { "Ledger" }
@@ -51,6 +52,11 @@ class Party < ApplicationRecord
         label 'Party Address'
       end
     end
+  end
+
+  def create_financial_year_record
+    current_year = FinancialYear.order(:start_date).last
+    LedgerFinancialRecord.find_or_create_by(financial_year: current_year, ledgerable: self, opening_balance: 0.0, closing_balance: 0.0)
   end
 
   def party_address_short

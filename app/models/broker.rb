@@ -3,6 +3,7 @@ class Broker < ApplicationRecord
   has_many :purchases
   has_many :sales
   has_many :brokerages
+  after_commit :create_financial_year_record, on: :create
 
   rails_admin do
     navigation_label Proc.new { "Ledger" }
@@ -31,6 +32,11 @@ class Broker < ApplicationRecord
     exclude_fields :brokerages
     exclude_fields :transactions
    end
+  end
+
+  def create_financial_year_record
+    current_year = FinancialYear.order(:start_date).last
+    LedgerFinancialRecord.find_or_create_by(financial_year: current_year, ledgerable: self, opening_balance: 0.0, closing_balance: 0.0)
   end
 
   def broker_address_short

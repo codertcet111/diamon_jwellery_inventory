@@ -7,6 +7,7 @@ class Ledger < ApplicationRecord
   has_many :from_journal_vouchers, :class_name => "JournalVoucher", :foreign_key => "ledger_2_id"
   has_many :payments
   has_many :receipts
+  after_commit :create_financial_year_record, on: :create
   STOCK_LEDGER_NAME = "Stock Ledger"
 
   rails_admin do
@@ -39,6 +40,11 @@ class Ledger < ApplicationRecord
       exclude_fields :to_journal_vouchers
       exclude_fields :from_journal_vouchers
     end
+  end
+
+  def create_financial_year_record
+    current_year = FinancialYear.order(:start_date).last
+    LedgerFinancialRecord.find_or_create_by(financial_year: current_year, ledgerable: self, opening_balance: 0.0, closing_balance: 0.0)
   end
 
   def self.stock_ledger

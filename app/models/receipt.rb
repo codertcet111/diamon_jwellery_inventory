@@ -6,8 +6,8 @@ class Receipt < ApplicationRecord
 
   enum receipt_mode: [:cash,:cheque,:angadia,:rtgs_neft, :other]
 
-  after_commit :update_pending_amount
-  after_create :create_transactions
+  after_commit :update_pending_amount, on: :create
+  after_commit :create_transactions, on: :create
 
   def update_pending_amount
     if sale

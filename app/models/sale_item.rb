@@ -5,8 +5,8 @@ class SaleItem < ApplicationRecord
   belongs_to :stock_pc_range
   belongs_to :stock_sub_type, optional: true
   before_create :copy_stock_property, :stock_entire_re_calculation
-  after_create :mark_stock_sold, :update_stock_pc_range_carats
-  after_update :update_stock_pc_range_carats_if_carats_updated, :recalculate_sales_final_amount
+  after_commit :mark_stock_sold, :update_stock_pc_range_carats, on: :create
+  after_commit :update_stock_pc_range_carats_if_carats_updated, :recalculate_sales_final_amount, on: :update
 
   enum shape: DIAMOND_SHAPES
   enum color: DIAMOND_COLORS

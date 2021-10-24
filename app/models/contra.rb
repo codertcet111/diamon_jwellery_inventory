@@ -4,7 +4,7 @@ class Contra < ApplicationRecord
   # ledger from means, credit
   belongs_to :ledger_1, :class_name => "Ledger"
   belongs_to :ledger_2, :class_name => "Ledger"
-  after_create :create_transactions
+  after_commit :create_transactions, on: :create
 
   def create_transactions
     # Transaction for ledger to (ledger_1)
