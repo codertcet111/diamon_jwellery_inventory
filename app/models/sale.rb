@@ -22,6 +22,8 @@ class Sale < ApplicationRecord
   after_commit :perform_calculations, :generate_invoice, :create_transactions, on: :create
   after_update :recalculate_pending_amount, :create_transactions
 
+  DEFAULT_BROKERAGE_PERC = 0.50
+  
   rails_admin do
     navigation_label Proc.new { "B: Entry" }
     show do

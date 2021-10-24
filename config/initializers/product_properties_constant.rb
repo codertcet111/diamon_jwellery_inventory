@@ -1,6 +1,6 @@
 STOCK_STATES = ['Available', 'InLab', 'Repairing', 'Sold_out']
 DIAMOND_SHAPES = ["ROUND","PRINCESS","PEAR","HEART","OVAL","MARQUISE","EMERALD","RADIANT","CUSHION","CUSHION MBR","OTHER"]
-DIAMOND_CLARITY = ["LC","FL","IF","VVS1","VVS2","VS1","VS2","SI1","SI2","SI2-","SI3","I1","I2","I3"]
+DIAMOND_CLARITY = ["LC","FL","IF","VVS1","VVS2","VS1","VS2","SI1","SI2","SI2-","SI3","I1","I2","I3","IVVS2","IVVS"]
 DIAMOND_COLORS = ["D","E","F","G","H","I","J","K","L","M","N","O-P","Q-R","W-X","Y-Z"]
 DIAMOND_ACTIVE_STATES = ["Available","Business Process","New","In Lab"]
 DIAMOND_COLOR_SHADES = ["WH","YL","NV","BRN1","BRN2","BRN3","GREY","GRN","PINK_PINK","FANCY_FANCY","TYPE IIA","GRE"]

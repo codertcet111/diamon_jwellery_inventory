@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_23_135431) do
+ActiveRecord::Schema.define(version: 2021_10_24_170324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -451,6 +451,7 @@ ActiveRecord::Schema.define(version: 2021_10_23_135431) do
     t.string "certificate_number"
     t.text "image_url"
     t.bigint "stock_pc_range_id"
+    t.string "purity"
     t.index ["purchase_id"], name: "index_stocks_on_purchase_id"
     t.index ["stock_pc_range_id"], name: "index_stocks_on_stock_pc_range_id"
     t.index ["stock_sub_type_id"], name: "index_stocks_on_stock_sub_type_id"
