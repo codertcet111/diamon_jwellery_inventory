@@ -18,7 +18,7 @@ class Purchase < ApplicationRecord
   accepts_nested_attributes_for :payments, allow_destroy: :true
   accepts_nested_attributes_for :purchases_taxes, allow_destroy: :true
 
-  after_commit :perform_calculations, :create_transactions, on: :create
+  after_commit :perform_calculations, :create_transactions, :calculate_due_date, on: :create
   after_update :recalculate_pending_amount, :update_transactions
 
   rails_admin do
@@ -53,6 +53,20 @@ class Purchase < ApplicationRecord
     exclude_fields :brokerages
     exclude_fields :transactions
    end
+  end
+
+  def overdue_days
+    if !self.is_payment_completed && self.due_date < DateTime.now.to_date
+      (DateTime.now.to_date - self.due_date).to_i rescue 0
+    else
+      0
+    end
+  end
+
+  def calculate_due_date
+    if self.terms_type == "Days"
+      self.update_columns(due_date: (DateTime.now + self.terms.days))
+    end
   end
 
   def display_invoice_number
@@ -90,7 +104,9 @@ class Purchase < ApplicationRecord
     total_paid = self.payments.sum(:amount) rescue 0.0
     i_pending_amount = [(final_amount.to_d - total_paid.to_d), 0].max
     self.pending_amount = i_pending_amount
-    self.is_payment_completed = i_pending_amount.to_f <= 0.0
+    payment_completed = i_pending_amount.to_f <= 0.0
+    self.is_payment_completed = payment_completed
+    self.due_date = nil if payment_completed
     self.save
   end
 
