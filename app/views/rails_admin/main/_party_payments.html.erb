@@ -1,0 +1,5 @@
+<% payments_count = party.payments.count %>
+<b>Total Payments Count:</b> <%= payments_count %>
+<br>
+<% total_payment = party.payments.sum(:amount) %>
+<b>Total Payment Done:</b> Rs. <%= total_payment %>

@@ -69,6 +69,31 @@ RailsAdmin.config do |config|
       end
     end
   end
+  config.model 'Party' do
+    show do
+      include_all_fields
+      field :purchases do
+        pretty_value do
+          bindings[:view].render partial: 'party_purchases', locals: {party: bindings[:object]}
+        end
+      end
+      field :sales do
+        pretty_value do
+          bindings[:view].render partial: 'party_sales', locals: {party: bindings[:object]}
+        end
+      end
+      field :payments do
+        pretty_value do
+          bindings[:view].render partial: 'party_payments', locals: {party: bindings[:object]}
+        end
+      end
+      field :receipts do
+        pretty_value do
+          bindings[:view].render partial: 'party_receipts', locals: {party: bindings[:object]}
+        end
+      end
+    end
+  end
   config.model 'SalesTax' do
     visible false
   end

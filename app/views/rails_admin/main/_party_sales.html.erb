@@ -1,0 +1,10 @@
+<% sales_count = party.sales.count %>
+<b>Total Sales Count:</b> <%= sales_count %>
+<br>
+<% final_amount = party.sales.sum(:final_amount) %>
+<% outstanding_amount = party.sales.sum(:pending_amount) %>
+<b>Total Sales Amount:</b> Rs. <%= final_amount %>
+<br>
+<b>Total Outstanding Amount (To Collect):</b> Rs. <%= outstanding_amount %>
+<br>
+<%#= link_to 'Show All Sales', "/admin/sale?model_name=sale&party=#{party.id}" %>

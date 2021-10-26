@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_26_153309) do
+ActiveRecord::Schema.define(version: 2021_10_26_172719) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -332,7 +332,6 @@ ActiveRecord::Schema.define(version: 2021_10_26_153309) do
     t.integer "sale_type"
     t.float "tax_amount", default: 0.0
     t.float "total_amount", default: 0.0
-    t.float "discount_amount", default: 0.0
     t.float "final_amount", default: 0.0
     t.integer "terms_type"
     t.string "pre_carriage_by"

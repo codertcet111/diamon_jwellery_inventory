@@ -1,0 +1,10 @@
+<% purchases_count = party.purchases.count %>
+<b>Total Purchases Count:</b> <%= purchases_count %>
+<br>
+<% final_amount = party.purchases.sum(:final_amount) %>
+<% outstanding_amount = party.purchases.sum(:pending_amount) %>
+<b>Total Purchases Amount:</b> Rs. <%= final_amount %>
+<br>
+<b>Total Outstanding Amount (To Pay):</b> Rs. <%= outstanding_amount %>
+<br>
+<%#= link_to 'Show All Purchases', "/admin/purchase?model_name=purchase&f[party][62420][o]=is&f[party][62420][v]=#{party.id}" %>

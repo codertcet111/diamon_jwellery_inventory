@@ -60,6 +60,10 @@ class SaleItem < ApplicationRecord
         label 'Stock Range'
         required true
       end
+      field :stock_sub_type do
+        label 'Stock Sub Type'
+        required true
+      end
       field :amount do
         required true
       end
@@ -90,10 +94,6 @@ class SaleItem < ApplicationRecord
           sale_item = bindings[:object]
           proc { |scope| Stock.where.not(state: 5) }
         end
-      end
-      field :stock_pc_range do
-        label 'Stock Range'
-        required true
       end
       field :sale do
         required true

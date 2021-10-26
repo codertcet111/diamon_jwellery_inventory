@@ -1,0 +1,5 @@
+<% receipts_count = party.receipts.count %>
+<b>Total Receipts Count:</b> <%= receipts_count %>
+<br>
+<% total_receipts = party.receipts.sum(:amount) %>
+<b>Total Receipts:</b> Rs. <%= total_receipts %>
