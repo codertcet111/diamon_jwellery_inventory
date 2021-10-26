@@ -8,6 +8,7 @@ class Receipt < ApplicationRecord
 
   after_commit :update_pending_amount, on: :create
   after_commit :create_transactions, on: :create
+  after_commit :update_callbacks, on: :update
 
   def update_pending_amount
     if sale
@@ -55,6 +56,12 @@ class Receipt < ApplicationRecord
     include_all_fields
     field :ledger do
       label "To Ledger"
+    end
+  end
+
+  def update_callbacks
+    if saved_change_to_sale_id?
+      self.sale.update_pending_amount
     end
   end
 

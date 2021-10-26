@@ -13,6 +13,7 @@ class SaleItem < ApplicationRecord
   enum clarity: DIAMOND_CLARITY
 
   def update_stock_pc_range_carats
+    byebug
     #ToDO: carat is not saving hence check why?
     pc_range = self.stock_pc_range
     pc_range.sale_stocks += self.carat

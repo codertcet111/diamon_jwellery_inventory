@@ -131,33 +131,33 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model 'SaleItem' do
-    edit do
-      field :stock do
-        inline_edit false
-      end
-      field :shape do
-        partial 'shape'
-      end
-      field :color do
-        partial 'color'
-      end
-      field :clarity do
-        partial 'clarity'
-      end
-      field :carat do
-        partial 'carat'
-      end
-      # field :rap do
-      #   partial 'rap'
+  # config.model 'SaleItem' do
+    # edit do
+      # field :stock do
+      #   inline_edit false
       # end
-      include_all_fields
-      field :amount do
-        partial 'amount'
-        required true
-      end
-    end
-  end
+      # field :shape do
+      #   partial 'shape'
+      # end
+      # field :color do
+      #   partial 'color'
+      # end
+      # field :clarity do
+      #   partial 'clarity'
+      # end
+      # field :carat do
+      #   partial 'carat'
+      # end
+      # # field :rap do
+      # #   partial 'rap'
+      # # end
+      # include_all_fields
+      # field :amount do
+      #   partial 'amount'
+      #   required true
+      # end
+    # end
+  # end
 
   config.authorize_with do
     authenticate_or_request_with_http_basic('Login required') do |username, password|
