@@ -57,8 +57,8 @@ task :setup do
   command %[touch "#{fetch(:shared_path)}/config/database.yml"]
   comment  %{"Be sure to edit #{fetch(:shared_path)}/config/database.yml"}
 
-  # command %[touch "#{fetch(:shared_path)}/config/secrets.yml"]
-  # comment %{"Be sure to edit #{fetch(:shared_path)}/config/secrets.yml"}
+  command %[touch "#{fetch(:shared_path)}/config/secrets.yml"]
+  comment %{"Be sure to edit #{fetch(:shared_path)}/config/secrets.yml"}
 
   command %[touch "#{fetch(:shared_path)}/config/unicorn.rb"]
   comment %{"Be sure to edit #{fetch(:shared_path)}/config/unicorn.rb"}
@@ -85,6 +85,7 @@ task :deploy do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
+    invoke :'rails:db_migrate'
     invoke :'deploy:cleanup'
 
     on :launch do
