@@ -54,6 +54,12 @@ class Sale < ApplicationRecord
       field :sale_type do
         required true
       end
+      field :broker_percentage do
+        label 'Broker Percentage (%)'
+      end
+      field :broker_amount do
+        label 'Broker Amount'
+      end
       include_all_fields
       exclude_fields :pending_amount
       exclude_fields :receipts

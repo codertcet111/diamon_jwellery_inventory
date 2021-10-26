@@ -19,7 +19,7 @@ class Purchase < ApplicationRecord
   accepts_nested_attributes_for :purchases_taxes, allow_destroy: :true
 
   after_commit :perform_calculations, :generate_invoice_if_not, :create_transactions, :calculate_due_date, on: :create
-  after_update :recalculate_pending_amount, :update_transactions
+  after_update :recalculate_pending_amount
 
   rails_admin do
     #the below active is to keep nested form open default
@@ -45,6 +45,12 @@ class Purchase < ApplicationRecord
     field :terms_type do
       label 'Terms Type (Days / COD / Advance)'
     end
+    field :broker_percentage do
+        label 'Broker Percentage (%)'
+      end
+      field :broker_amount do
+        label 'Broker Amount'
+      end
     include_all_fields
     field :party do
       required true

@@ -4,7 +4,7 @@ class Payment < ApplicationRecord
   belongs_to :ledger
   enum payment_mode: [:cash,:cheque,:angadia,:rtgs_neft, :other]
 
-  after_commit :update_pending_amount, on: :create
+  after_commit :update_pending_amount
   after_commit :create_transactions, on: :create
 
   def name

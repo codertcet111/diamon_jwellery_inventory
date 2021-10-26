@@ -13,7 +13,6 @@ class SaleItem < ApplicationRecord
   enum clarity: DIAMOND_CLARITY
 
   def update_stock_pc_range_carats
-    byebug
     #ToDO: carat is not saving hence check why?
     pc_range = self.stock_pc_range
     pc_range.sale_stocks += self.carat
@@ -64,11 +63,19 @@ class SaleItem < ApplicationRecord
         label 'Stock Sub Type'
         required true
       end
+      field :stock do
+        required false
+        associated_collection_scope do
+          sale_item = bindings[:object]
+          proc { |scope| Stock.where.not(state: 5) }
+        end
+      end
       field :amount do
         required true
       end
       field :rate_per_carat do
         label 'Rate per Carat (Rs.)'
+        required true
       end
       field :discount_percentage do
         label 'Discount (%)'
@@ -87,13 +94,6 @@ class SaleItem < ApplicationRecord
       end
       field :amount do
         label "Total Amount (Rs.) (* Final Amount)"
-      end
-      field :stock do
-        required false
-        associated_collection_scope do
-          sale_item = bindings[:object]
-          proc { |scope| Stock.where.not(state: 5) }
-        end
       end
       field :sale do
         required true

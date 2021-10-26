@@ -10,7 +10,9 @@ table, th, td {
   padding: 5px;
 }
 </style>
-<% need_to_pay = purchase.stocks.sum(:amount) %>
+<% total_carats = purchase.stocks.sum(:carat) %>
+<b>Total Carats Purchased <%= total_carats %> Carats</b><br>
+<% need_to_pay = purchase.final_amount %>
 <b>Sum of all stocks amount, Rs. <%= need_to_pay %></b>
 <br>
 <% total = 0 %>

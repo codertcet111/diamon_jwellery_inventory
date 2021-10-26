@@ -10,6 +10,8 @@ table, th, td {
   padding: 5px;
 }
 </style>
+<% total_carats = sale.sale_items.sum(:carat) %>
+<b>Total Carats Sold <%= total_carats %> Carats</b><br>
 <% sold_stocks = sale.final_amount %>
 <b>Sum of all Sale Items amount, Rs. <%= sold_stocks %></b>
 <br>

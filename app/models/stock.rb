@@ -155,6 +155,7 @@ class Stock < ApplicationRecord
       end
       field :rate_per_caret do
         label "Diamond Rate/Carat (*)"
+        required true
       end
       field :loose_total_caret do
         label "Loose diamond Total Carats"
