@@ -21,6 +21,10 @@ class EntryModule < ApplicationRecord
   end
   rails_admin do
   	navigation_label Proc.new { "B: Entry" }
+    #the below active is to keep nested form open default
+    configure :transactions do
+      active true
+    end
   	label "Entry Module (Account's entry)"
   end
 end

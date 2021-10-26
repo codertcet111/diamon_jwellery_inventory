@@ -18,10 +18,14 @@ class Purchase < ApplicationRecord
   accepts_nested_attributes_for :payments, allow_destroy: :true
   accepts_nested_attributes_for :purchases_taxes, allow_destroy: :true
 
-  after_commit :perform_calculations, :create_transactions, :calculate_due_date, on: :create
+  after_commit :perform_calculations, :generate_invoice_if_not, :create_transactions, :calculate_due_date, on: :create
   after_update :recalculate_pending_amount, :update_transactions
 
   rails_admin do
+    #the below active is to keep nested form open default
+    configure :stocks do
+      active true
+    end
     navigation_label Proc.new { "B: Entry" }
     show do
       exclude_fields :terms, :terms_type
@@ -112,6 +116,10 @@ class Purchase < ApplicationRecord
 
   def amount_taxable
     self.total_amount.to_f - discount_amount.to_f
+  end
+
+  def generate_invoice_if_not
+    self.update_columns(invoice_number: "Purchase_00#{self.id}") unless self.invoice_number
   end
 
   def create_transactions

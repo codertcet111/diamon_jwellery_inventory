@@ -26,6 +26,10 @@ class Sale < ApplicationRecord
   
   rails_admin do
     navigation_label Proc.new { "B: Entry" }
+    #the below active is to keep nested form open default
+    configure :sale_items do
+      active true
+    end
     show do
       exclude_fields :terms, :terms_type
       field :sales_terms
