@@ -9,7 +9,7 @@ class Sale < ApplicationRecord
   has_many :brokerages
   enum sale_type: ['LCR', 'Export']
   enum terms_type: ["Days","COD","Advance"]
-  # enum gst_type: ['CGST & SGST','ISGT']
+  # enum gst_type: ['CGST & SGST','ISGT'].
   # NOTES: -> below
   # total_amount : amount without any calculation
   # discount_amount : Discount amount
