@@ -41,7 +41,6 @@ class Transaction < ApplicationRecord
       include_all_fields
       exclude_fields :entry_module
       exclude_fields :invoice_number
-      exclude_fields :closing_balance
       field :invoicable do
         label "Invoice"
       end
