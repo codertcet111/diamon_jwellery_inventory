@@ -88,7 +88,7 @@ class Sale < ApplicationRecord
 
   def calculate_due_date
     if self.terms_type == "Days"
-      self.update_columns(due_date: (DateTime.now + self.terms.days))
+      self.update_columns(due_date: (self.sale_date + self.terms.days))
     end
   end
 
