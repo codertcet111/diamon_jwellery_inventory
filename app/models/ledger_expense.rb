@@ -5,7 +5,8 @@ class LedgerExpense < ApplicationRecord
   has_many :ledger_expenses_taxes
   has_many :taxes, through: :ledger_expenses_taxes
   accepts_nested_attributes_for :ledger_expenses_taxes, allow_destroy: :true
-  after_commit :calculate_tax, on: :create
+  after_commit :calculate_tax, :generate_invoice_if_not, on: :create
+
 
   def calculate_tax
     amount_eligible_for_tax = self.amount
@@ -19,6 +20,10 @@ class LedgerExpense < ApplicationRecord
 
   def display_invoice_number
     "#{self.invoice_number}"
+  end
+
+  def generate_invoice_if_not
+    self.update_columns(invoice_number: "Expense_00#{self.id}") unless self.invoice_number
   end
 
   rails_admin do
