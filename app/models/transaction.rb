@@ -57,7 +57,8 @@ class Transaction < ApplicationRecord
 
   def update_closing_balance
     last_transaction = Transaction.where(transnable: self.transnable).where('transaction_date < ?', self.transaction_date).order(:transaction_date).last
-    closing_balance_amt = last_transaction.try(:closing_balance).to_f.to_d + debit_amount.to_d - credit_amount.to_d
+    last_closing_balance = last_transaction ? last_transaction.try(:closing_balance).to_f : self.transnable.opening_amount.to_f
+    closing_balance_amt = last_closing_balance.to_d + debit_amount.to_d - credit_amount.to_d
     self.update_columns(closing_balance: closing_balance_amt)
     self.transnable.update_columns(balance_amount: closing_balance_amt)
     if Transaction.where(transnable: self.transnable).where('transaction_date > ?', self.transaction_date).exists?
