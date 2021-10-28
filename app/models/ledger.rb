@@ -44,7 +44,7 @@ class Ledger < ApplicationRecord
 
   def create_financial_year_record
     current_year = FinancialYear.order(:start_date).last
-    LedgerFinancialRecord.find_or_create_by(financial_year: current_year, ledgerable: self, opening_balance: 0.0, closing_balance: 0.0)
+    LedgerFinancialRecord.find_or_create_by(financial_year: current_year, ledgerable: self, opening_balance: self.opening_balance.to_f, closing_balance: 0.0)
   end
 
   def self.stock_ledger
