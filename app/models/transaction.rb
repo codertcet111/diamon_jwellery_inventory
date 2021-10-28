@@ -41,6 +41,7 @@ class Transaction < ApplicationRecord
       include_all_fields
       exclude_fields :entry_module
       exclude_fields :invoice_number
+      exclude_fields :closing_balance
       field :invoicable do
         label "Invoice"
       end
@@ -51,7 +52,7 @@ class Transaction < ApplicationRecord
   end
 
   def save_invoice_number
-    self.update_columns(invoice_number: self.invoicable.invoice_number) unless invoice_number
+    self.update_columns(invoice_number: self.invoicable.invoice_number) if invoice_number.nil? && self.invoicable
   end
 
   def update_closing_balance
