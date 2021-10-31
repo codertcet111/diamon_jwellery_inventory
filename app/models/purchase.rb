@@ -26,7 +26,7 @@ class Purchase < ApplicationRecord
     configure :stocks do
       active true
     end
-    navigation_label Proc.new { "B: Entry" }
+    navigation_label Proc.new { "I: Inventory Managment" }
     show do
       exclude_fields :terms, :terms_type
       field :purchase_terms
@@ -65,11 +65,15 @@ class Purchase < ApplicationRecord
    end
   end
 
-  def overdue_days
-    if !self.is_payment_completed && self.due_date < DateTime.now.to_date
+  after_find do |purchase|
+    purchase.overdue_days = purchase.get_overdue_days
+  end
+
+  def get_overdue_days
+    if !self.is_payment_completed && self.due_date &&  self.due_date < DateTime.now.to_date
       (DateTime.now.to_date - self.due_date).to_i rescue 0
     else
-      0
+      nil
     end
   end
 

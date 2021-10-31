@@ -29,7 +29,7 @@ class Brokerage < ApplicationRecord
   end
 
   rails_admin do
-    navigation_label Proc.new { "B: Entry" }
+    navigation_label Proc.new { "I: Inventory Managment" }
   	include_all_fields
     field :ledger do
       label "From Ledger"

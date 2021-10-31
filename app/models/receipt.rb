@@ -26,7 +26,7 @@ class Receipt < ApplicationRecord
   end
 
   rails_admin do
-    navigation_label Proc.new { "B: Entry" }
+    navigation_label Proc.new { "I: Inventory Managment" }
     label 'Receipt'
     edit do
       field :receipt_mode do

@@ -25,7 +25,7 @@ class Sale < ApplicationRecord
   DEFAULT_BROKERAGE_PERC = 0.50
   
   rails_admin do
-    navigation_label Proc.new { "B: Entry" }
+    navigation_label Proc.new { "I: Inventory Managment" }
     #the below active is to keep nested form open default
     configure :sale_items do
       active true
@@ -78,11 +78,15 @@ class Sale < ApplicationRecord
     end
   end
 
-  def overdue_days
-    if !self.is_payment_completed && self.due_date < DateTime.now.to_date
+  after_find do |sale|
+    sale.overdue_days = sale.get_overdue_days
+  end
+
+  def get_overdue_days
+    if !self.is_payment_completed && self.due_date && self.due_date < DateTime.now.to_date
       (DateTime.now.to_date - self.due_date).to_i rescue 0
     else
-      0
+      nil
     end
   end
 

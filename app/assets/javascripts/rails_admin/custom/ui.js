@@ -1,43 +1,86 @@
 //= require_tree .
 
-$(document).ready(function() {
-  $(document.body).on('change', '#payment_payment_mode', function() {
-    var selected = $('#payment_payment_mode option:selected').html();
-    if (selected.toLowerCase().includes('angadia')) {
-      $('#payment_party_come_field').fadeIn("slow");
-      $('#payment_pc_acc_name_field').fadeIn("slow");
-      $('#payment_party_paid_field').fadeIn("slow");
-      $('#payment_pp_acc_name_field').fadeIn("slow");
-    } else {
-      $('#payment_party_come_field').fadeOut("slow");
-      $('#payment_pc_acc_name_field').fadeOut("slow");
-      $('#payment_party_paid_field').fadeOut("slow");
-      $('#payment_pp_acc_name_field').fadeOut("slow");
-    }
-  });
+// $(document).ready(function() {
+//   $(document.body).on('change', '#payment_payment_mode', function() {
+//     var selected = $('#payment_payment_mode option:selected').html();
+//     if (selected.toLowerCase().includes('angadia')) {
+//       $('#payment_party_come_field').fadeIn("slow");
+//       $('#payment_pc_acc_name_field').fadeIn("slow");
+//       $('#payment_party_paid_field').fadeIn("slow");
+//       $('#payment_pp_acc_name_field').fadeIn("slow");
+//     } else {
+//       $('#payment_party_come_field').fadeOut("slow");
+//       $('#payment_pc_acc_name_field').fadeOut("slow");
+//       $('#payment_party_paid_field').fadeOut("slow");
+//       $('#payment_pp_acc_name_field').fadeOut("slow");
+//     }
+//   });
 
-  $(document.body).on('change', '#receipt_receipt_mode', function() {
-    var selected = $('#receipt_receipt_mode option:selected').html();
-    if (selected.toLowerCase().includes('angadia')) {
-      $('#receipt_party_come_field').fadeIn("slow");
-      $('#receipt_pc_acc_name_field').fadeIn("slow");
-      $('#receipt_party_paid_field').fadeIn("slow");
-      $('#receipt_pp_acc_name_field').fadeIn("slow");
-    } else {
-      $('#receipt_party_come_field').fadeOut("slow");
-      $('#receipt_pc_acc_name_field').fadeOut("slow");
-      $('#receipt_party_paid_field').fadeOut("slow");
-      $('#receipt_pp_acc_name_field').fadeOut("slow");
-    }
-  });
+//   $(document.body).on('change', '#receipt_receipt_mode', function() {
+//     var selected = $('#receipt_receipt_mode option:selected').html();
+//     if (selected.toLowerCase().includes('angadia')) {
+//       $('#receipt_party_come_field').fadeIn("slow");
+//       $('#receipt_pc_acc_name_field').fadeIn("slow");
+//       $('#receipt_party_paid_field').fadeIn("slow");
+//       $('#receipt_pp_acc_name_field').fadeIn("slow");
+//     } else {
+//       $('#receipt_party_come_field').fadeOut("slow");
+//       $('#receipt_pc_acc_name_field').fadeOut("slow");
+//       $('#receipt_party_paid_field').fadeOut("slow");
+//       $('#receipt_pp_acc_name_field').fadeOut("slow");
+//     }
+//   });
 
-  // const stock_type_dropdowns = document.querySelectorAll('[id$="_stock_sub_type_id"]')
-  // for (const stock_type_dropdown of stock_type_dropdowns) {
-  //   stock_type_dropdown.addEventListener('change', function(event) {
-  //     console.log(self)      
-  //   })
-  // }
+//   // $("button[name='_save']").click(function(){
+//   //   var response = confirm("CONFIRM FOR SAVE!");
+//   //   if(response){
+//   //     return true;
+//   //   }
+//   //   return false;
+//   // });
+
+//   // const stock_type_dropdowns = document.querySelectorAll('[id$="_stock_sub_type_id"]')
+//   // for (const stock_type_dropdown of stock_type_dropdowns) {
+//   //   stock_type_dropdown.addEventListener('change', function(event) {
+//   //     console.log(self)      
+//   //   })
+//   // }
 
 
   
-});
+// });
+
+// $(document).ready(function(){
+//   $("button[name='_save']").click(function(){
+//     var response = confirm("CONFIRM FOR SAVE!");
+//     if(response){
+//       return true;
+//     }
+//     return false;
+//   });
+//   $("button[name='_add_another']").click(function(){
+//     var response = confirm("CONFIRM FOR SAVE!");
+//     if(response){
+//       return true;
+//     }
+//     return false;
+//   });
+//   $("button[name='_add_edit']").click(function(){
+//     var response = confirm("CONFIRM FOR SAVE!");
+//     if(response){
+//       return true;
+//     }
+//     return false;
+//   });
+// });
+
+// var confirm_form = function(){
+//   $("button[name='_save']").click(function(){
+//     var response = confirm("CONFIRM FOR SAVE!");
+//     if(response){
+//       return true;
+//     }
+//     return false;
+//   });
+// };
+// $(document).on("page:load ready", confirm_form);

@@ -14,7 +14,7 @@ class Contra < ApplicationRecord
   end
 
   rails_admin do
-    navigation_label Proc.new { "B: Entry" }
+    navigation_label Proc.new { "B: Accounts Entry" }
     include_all_fields
     field :ledger_1 do
       label 'Ledger To'

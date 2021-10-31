@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_26_204701) do
+ActiveRecord::Schema.define(version: 2021_10_31_054638) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -254,6 +254,7 @@ ActiveRecord::Schema.define(version: 2021_10_26_204701) do
     t.date "due_date"
     t.text "notes"
     t.integer "overdue_days"
+    t.date "package_received_date"
     t.index ["broker_id"], name: "index_purchases_on_broker_id"
     t.index ["party_id"], name: "index_purchases_on_party_id"
   end

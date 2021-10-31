@@ -17,7 +17,7 @@ class Transaction < ApplicationRecord
   # end
 
   rails_admin do
-    navigation_label Proc.new { "B: Entry" }
+    navigation_label Proc.new { "B: Accounts Entry" }
     label 'Transaction'
     show do
       include_all_fields
