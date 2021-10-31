@@ -105,7 +105,7 @@ class Sale < ApplicationRecord
   end
 
   def generate_invoice
-    rand_invoice = "000#{self.id}"
+    rand_invoice = "sale_000#{self.id}"
     self.update_columns(invoice_number: rand_invoice)
   end
 
@@ -122,7 +122,8 @@ class Sale < ApplicationRecord
     end
     self.update_column(:tax_amount, i_tax_amount)
     i_final_amount = (sum_amount - discount_amount) + i_tax_amount
-    self.update_column(:final_amount, i_final_amount)
+    round_off = (i_final_amount.round.to_d - i_final_amount.to_d).round(2)
+    self.update_columns(final_amount: i_final_amount.round,round_off_amount: round_off)
     self.update_pending_amount
     self.calculate_brokerage
   end
@@ -130,7 +131,7 @@ class Sale < ApplicationRecord
   def calculate_brokerage
     final_amount_including_tax = self.final_amount.to_f
     brokerage_calculated = final_amount_including_tax * (broker_percentage.to_f / 100.0)
-    self.update_column(:broker_amount, brokerage_calculated)
+    self.update_column(:broker_amount, brokerage_calculated.round)
   end
 
   def update_pending_amount

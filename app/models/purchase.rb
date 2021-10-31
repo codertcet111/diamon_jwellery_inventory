@@ -103,7 +103,8 @@ class Purchase < ApplicationRecord
     end
     self.update_column(:tax_amount, i_tax_amount.to_f)
     i_final_amount = (sum_amount.to_f - discount_amount.to_f) + i_tax_amount.to_f
-    self.update_column(:final_amount, i_final_amount)
+    round_off = (i_final_amount.round.to_d - i_final_amount.to_d).round(2)
+    self.update_columns(final_amount: i_final_amount.round,round_off_amount: round_off)
     self.update_pending_amount
     self.calculate_brokerage
   end
@@ -111,7 +112,7 @@ class Purchase < ApplicationRecord
   def calculate_brokerage
     final_amount_including_tax = self.final_amount.to_f
     brokerage_calculated = final_amount_including_tax * (broker_percentage.to_f / 100.0)
-    self.update_column(:broker_amount, brokerage_calculated)
+    self.update_column(:broker_amount, brokerage_calculated.round)
   end
 
   def update_pending_amount
