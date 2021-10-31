@@ -63,9 +63,9 @@ class LedgersController < ApplicationController
     @credit_counts = @transactions.where.not(credit_amount: nil).count
     @total_debits = @transactions.sum(:debit_amount)
     @total_credits = @transactions.sum(:credit_amount)
-    @final_closing_balance = @transactions.last.closing_balance
     last_txn = @ledger.transactions.where('transaction_date < ?', params[:start_date].to_time).order(:transaction_date).last
     @initial_openning_balance = last_txn.present? ? last_txn.closing_balance : 0.0
+    @final_closing_balance = @transactions.last.present? ? @transactions.last.closing_balance : @initial_openning_balance
     request.format = :pdf
     respond_to  do |format|
       format.html
