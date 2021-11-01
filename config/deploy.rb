@@ -94,19 +94,14 @@ task :deploy do
         command %{mkdir -p tmp/}
         command %{touch tmp/restart.txt}
         command %[chmod +x #{fetch(:current_path)}/config/unicorn_init.sh]
+        invoke :'whenever:clear'
+        invoke :'whenever:write'
       end
     end
   end
 
   # you can use `run :local` to run tasks on local machine before of after the deploy scripts
   # run(:local){ say 'done' }
-end
-
-desc "Run cronjob"
-task :update_whenever do
-  set :domain, fetch(:domain)
-  invoke :'whenever:clear'
-  invoke :'whenever:write'
 end
 
 namespace :whenever do
