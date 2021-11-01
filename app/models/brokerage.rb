@@ -10,12 +10,10 @@ class Brokerage < ApplicationRecord
   accepts_nested_attributes_for :brokerages_taxes, allow_destroy: :true
 
   def create_transactions
-  	'''
   	# Transaction for Party
-    Transaction.create(transaction_type: Transaction.transaction_types["Debit"], debit_amount: self.amount, transaction_date: self.payment_date, transnable: self.broker, invoice_number: (purchase || sale).invoice_number)
+    Transaction.create(transaction_type: Transaction.transaction_types["Debit"], debit_amount: self.amount, transaction_date: self.payment_date, transnable: self.broker, invoice_number: (purchase || sale).try(:invoice_number))
     # Transaction for Bank/Cash ledger
-    Transaction.create(transaction_type: Transaction.transaction_types["Credit"], credit_amount: self.amount, transaction_date: self.payment_date, transnable: self.ledger, invoice_number: (purchase || sale).invoice_number)
-    '''
+    Transaction.create(transaction_type: Transaction.transaction_types["Credit"], credit_amount: self.amount, transaction_date: self.payment_date, transnable: Ledger.cash_ledger, invoice_number: (purchase || sale).try(:invoice_number))
   end
 
   def update_sale_or_purchase

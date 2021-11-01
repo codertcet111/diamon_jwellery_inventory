@@ -8,7 +8,8 @@ class Ledger < ApplicationRecord
   has_many :payments
   has_many :receipts
   after_commit :create_financial_year_record, on: :create
-  STOCK_LEDGER_NAME = "Stock Ledger"
+  STOCK_LEDGER_NAME = "STOCK LEDGER"
+  CASH_LEDGER_NAME = "CASH ON HAND"
 
   rails_admin do
     navigation_label Proc.new { "Ledger" }
@@ -40,6 +41,10 @@ class Ledger < ApplicationRecord
       exclude_fields :to_journal_vouchers
       exclude_fields :from_journal_vouchers
     end
+  end
+
+  def self.cash_ledger
+    Ledger.find_or_create_by_name(CASH_LEDGER_NAME)
   end
 
   def create_financial_year_record

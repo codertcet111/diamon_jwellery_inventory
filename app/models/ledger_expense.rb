@@ -5,8 +5,14 @@ class LedgerExpense < ApplicationRecord
   has_many :ledger_expenses_taxes
   has_many :taxes, through: :ledger_expenses_taxes
   accepts_nested_attributes_for :ledger_expenses_taxes, allow_destroy: :true
-  after_commit :calculate_tax, :generate_invoice_if_not, on: :create
+  after_commit :calculate_tax, :generate_invoice_if_not, :create_transactions, on: :create
 
+  def create_transactions
+    # Transaction for ledger
+    Transaction.create(transaction_type: Transaction.transaction_types["Debit"], debit_amount: self.amount, transaction_date: self.payment_date, transnable: self.ledger, invoice_number: self.invoice_number)
+    # Transaction for Bank/Cash ledger
+    Transaction.create(transaction_type: Transaction.transaction_types["Credit"], credit_amount: self.amount, transaction_date: self.payment_date, transnable: Ledger.cash_ledger, invoice_number: self.invoice_number)
+  end
 
   def calculate_tax
     amount_eligible_for_tax = self.amount
