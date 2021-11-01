@@ -5,6 +5,7 @@ class Transaction < ApplicationRecord
   enum transaction_type: ["Debit","Credit"]
   after_save :save_invoice_number
   after_save :update_closing_balance
+  after_destroy :update_closing_balance
   # before_save :mark_transaction_remove
 
 
@@ -59,7 +60,7 @@ class Transaction < ApplicationRecord
     last_transaction = Transaction.where(transnable: self.transnable).where('transaction_date < ?', self.transaction_date).order(:transaction_date).last
     last_closing_balance = last_transaction ? last_transaction.try(:closing_balance).to_f : self.transnable.opening_amount.to_f
     closing_balance_amt = last_closing_balance.to_d + debit_amount.to_d - credit_amount.to_d
-    self.update_columns(closing_balance: closing_balance_amt)
+    self.update_columns(closing_balance: closing_balance_amt) unless self.destroyed?
     self.transnable.update_columns(balance_amount: closing_balance_amt)
     if Transaction.where(transnable: self.transnable).where('transaction_date > ?', self.transaction_date).exists?
       sync_closing_balance_amount
