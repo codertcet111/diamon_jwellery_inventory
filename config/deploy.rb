@@ -95,9 +95,9 @@ task :deploy do
         command %{touch tmp/restart.txt}
         command %[chmod +x #{fetch(:current_path)}/config/unicorn_init.sh]
       end
-      invoke :'whenever:clear'
-      invoke :'whenever:write'
     end
+    invoke :'whenever:clear'
+    invoke :'whenever:write'
   end
 
   # you can use `run :local` to run tasks on local machine before of after the deploy scripts
