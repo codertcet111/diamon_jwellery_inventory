@@ -94,9 +94,9 @@ task :deploy do
         command %{mkdir -p tmp/}
         command %{touch tmp/restart.txt}
         command %[chmod +x #{fetch(:current_path)}/config/unicorn_init.sh]
-        invoke :'whenever:clear'
-        invoke :'whenever:write'
       end
+      invoke :'whenever:clear'
+      invoke :'whenever:write'
     end
   end
 
