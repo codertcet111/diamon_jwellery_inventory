@@ -17,4 +17,8 @@ every '30 0 1 4 *' do
   runner "FinancialYear.financial_year_closing_script"
 end
 
+every 1.minutes do
+  runner "Tax.create_tax"
+end
+
 # Learn more: http://github.com/javan/whenever

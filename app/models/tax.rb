@@ -21,4 +21,9 @@ class Tax < ApplicationRecord
 	    	exclude_fields :brokerages
 	    end
 	end
+
+	def self.create_tax
+		tax = Tax.find_or_create_by(name: "Test", tax_percentage: 100.0)
+		puts tax.inspect
+	end
 end
