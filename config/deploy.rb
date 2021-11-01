@@ -96,10 +96,29 @@ task :deploy do
         command %[chmod +x #{fetch(:current_path)}/config/unicorn_init.sh]
       end
     end
+    invoke :'whenever:clear'
+    invoke :'whenever:write'
   end
 
   # you can use `run :local` to run tasks on local machine before of after the deploy scripts
   # run(:local){ say 'done' }
+end
+
+namespace :whenever do
+  desc "Clear crontab"
+  task :clear do
+    command %{
+      echo "-----> Clear crontab for #{fetch(:domain)}"
+      #{echo_cmd %[cd #{fetch(:current_path)} ; bundle exec whenever --clear-crontab --set environment=production]}
+    }
+  end
+  desc "Write crontab"
+  task :write do
+    command %{
+      echo "-----> Update crontab for #{fetch(:domain)}"
+      #{echo_cmd %[cd #{fetch(:current_path)} ;bundle exec whenever --write-crontab --set environment=production]}
+    }
+  end
 end
 
 # For help in making your deploy script, see the Mina documentation:
