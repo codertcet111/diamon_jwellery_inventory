@@ -3,7 +3,7 @@ class Transaction < ApplicationRecord
   belongs_to :invoicable, :polymorphic => true, optional: true
   belongs_to :entry_module, optional: true
   enum transaction_type: ["Debit","Credit"]
-  after_save :save_invoice_number
+  after_create :save_invoice_number
   after_save :update_closing_balance
   # before_save :mark_transaction_remove
 

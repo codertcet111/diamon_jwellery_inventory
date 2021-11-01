@@ -18,9 +18,9 @@ class Receipt < ApplicationRecord
 
   def create_transactions
     # Transaction for Party
-    Transaction.create(transaction_type: Transaction.transaction_types["Credit"], credit_amount: self.amount, transaction_date: self.date, transnable: self.party, invoice_number: self.sale.try(:invoice_number))
+    Transaction.create(transaction_type: Transaction.transaction_types["Credit"], credit_amount: self.amount, transaction_date: self.date, transnable: self.party, invoice_number: self.sale.try(:invoice_number), invoicable: self.sale)
     # Transaction for Bank/Cash ledger
-    Transaction.create(transaction_type: Transaction.transaction_types["Debit"], debit_amount: self.amount, transaction_date: self.date, transnable: Ledger.cash_ledger, invoice_number: self.sale.try(:invoice_number))
+    Transaction.create(transaction_type: Transaction.transaction_types["Debit"], debit_amount: self.amount, transaction_date: self.date, transnable: Ledger.cash_ledger, invoice_number: self.sale.try(:invoice_number), invoicable: self.sale)
   end
 
   rails_admin do
