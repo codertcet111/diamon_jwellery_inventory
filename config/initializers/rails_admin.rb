@@ -97,6 +97,9 @@ RailsAdmin.config do |config|
   config.model 'SalesTax' do
     visible false
   end
+  config.model 'Contra' do
+    visible false
+  end
   config.model 'PurchasesTax' do
     visible false
   end

@@ -8,7 +8,8 @@ class Receipt < ApplicationRecord
 
   after_commit :update_pending_amount
   after_commit :create_transactions, on: :create
-  after_commit :update_callbacks, on: :update
+  after_destroy :update_pending_amount
+  # after_commit :update_callbacks, on: :update Already covered in update_pending_amount
 
   def update_pending_amount
     if sale

@@ -6,6 +6,7 @@ class Payment < ApplicationRecord
 
   after_commit :update_pending_amount
   after_commit :create_transactions, on: :create
+  after_destroy :update_pending_amount
 
   def name
     "Payment: " + amount.to_s
