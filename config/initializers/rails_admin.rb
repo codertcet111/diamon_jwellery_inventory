@@ -31,7 +31,7 @@ RailsAdmin.config do |config|
     dashboard                     # mandatory
     index                         # mandatory
     new do
-      except ['Stock', 'SaleItem','Transaction']
+      except ['Stock', 'SaleItem']
     end
     export
     bulk_delete
