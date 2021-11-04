@@ -70,6 +70,9 @@ RailsAdmin.config do |config|
     end
   end
   config.model 'Party' do
+    list do
+      scopes [nil, :sales_outstanding_parties, :purchase_outstanding_parties]
+    end
     show do
       include_all_fields
       field :purchases do
