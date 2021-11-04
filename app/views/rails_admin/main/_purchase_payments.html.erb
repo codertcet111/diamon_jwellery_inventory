@@ -32,7 +32,7 @@ table, th, td {
   <tbody>
     <% purchase.payments.each do |payment| %>
     <tr>
-      <td><%= payment.payment_mode.capitalize %></td>
+      <td><%= payment.payment_mode.capitalize rescue 'CASH' %></td>
       <td><b>Rs <%= payment.amount.to_s %></b></td>
       <td><%= payment.date&.strftime('%d %b %Y %l:%M %p')%></td>
       <td><%= payment.party_come %></td>

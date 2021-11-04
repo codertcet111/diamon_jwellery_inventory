@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_31_114006) do
+ActiveRecord::Schema.define(version: 2021_11_04_094416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -222,7 +222,7 @@ ActiveRecord::Schema.define(version: 2021_10_31_114006) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "party_id", null: false
-    t.bigint "purchase_id", null: false
+    t.bigint "purchase_id"
     t.string "cheque_number"
     t.bigint "ledger_id"
     t.index ["ledger_id"], name: "index_payments_on_ledger_id"
@@ -254,9 +254,9 @@ ActiveRecord::Schema.define(version: 2021_10_31_114006) do
     t.date "due_date"
     t.text "notes"
     t.integer "overdue_days"
-    t.decimal "discount_amount"
     t.date "package_received_date"
     t.string "round_off_amount"
+    t.decimal "discount_amount"
     t.index ["broker_id"], name: "index_purchases_on_broker_id"
     t.index ["party_id"], name: "index_purchases_on_party_id"
   end
@@ -335,6 +335,7 @@ ActiveRecord::Schema.define(version: 2021_10_31_114006) do
     t.integer "sale_type"
     t.float "tax_amount", default: 0.0
     t.float "total_amount", default: 0.0
+    t.float "discount_amount", default: 0.0
     t.float "final_amount", default: 0.0
     t.integer "terms_type"
     t.string "pre_carriage_by"
@@ -350,7 +351,6 @@ ActiveRecord::Schema.define(version: 2021_10_31_114006) do
     t.date "due_date"
     t.text "notes"
     t.integer "overdue_days"
-    t.decimal "discount_amount"
     t.string "round_off_amount"
     t.index ["broker_id"], name: "index_sales_on_broker_id"
     t.index ["party_id"], name: "index_sales_on_party_id"
