@@ -10,6 +10,7 @@ class Ledger < ApplicationRecord
   after_commit :create_financial_year_record, on: :create
   STOCK_LEDGER_NAME = "STOCK LEDGER"
   CASH_LEDGER_NAME = "CASH ON HAND"
+  CASH_LEDGER_NAME_1 = "CASH LEDGER"
 
   rails_admin do
     navigation_label Proc.new { "Ledger" }
@@ -44,7 +45,7 @@ class Ledger < ApplicationRecord
   end
 
   def self.cash_ledger
-    Ledger.find_or_create_by_name(CASH_LEDGER_NAME)
+    Ledger.find_by(name: CASH_LEDGER_NAME) || Ledger.find_by(name: CASH_LEDGER_NAME_1)
   end
 
   def create_financial_year_record

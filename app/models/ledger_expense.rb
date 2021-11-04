@@ -9,9 +9,9 @@ class LedgerExpense < ApplicationRecord
 
   def create_transactions
     # Transaction for ledger
-    Transaction.create(transaction_type: Transaction.transaction_types["Debit"], debit_amount: self.amount, transaction_date: self.payment_date, transnable: self.ledger, invoice_number: self.invoice_number, invoicable: self)
+    Transaction.create(transaction_type: Transaction.transaction_types["Debit"], debit_amount: self.amount, transaction_date: self.date, transnable: self.ledger, invoice_number: self.invoice_number, invoicable: self)
     # Transaction for Bank/Cash ledger
-    Transaction.create(transaction_type: Transaction.transaction_types["Credit"], credit_amount: self.amount, transaction_date: self.payment_date, transnable: Ledger.cash_ledger, invoice_number: self.invoice_number, invoicable: self)
+    Transaction.create(transaction_type: Transaction.transaction_types["Credit"], credit_amount: self.amount, transaction_date: self.date, transnable: Ledger.cash_ledger, invoice_number: self.invoice_number, invoicable: self)
   end
 
   def calculate_tax
