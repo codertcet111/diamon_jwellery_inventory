@@ -9,8 +9,15 @@ class Party < ApplicationRecord
   has_many :from_journal_vouchers, :class_name => "JournalVoucher", :foreign_key => "party_2_id"
   after_commit :create_financial_year_record, on: :create
 
+  scope :sales_outstanding_parties, -> { where(party_type: "Sundry Debitor").joins(:sales).group(:id).having('sum(sales.pending_amount) > 0.0') }
+  scope :purchase_outstanding_parties, -> { where(party_type: "Sundry Creditor").joins(:purchases).group(:id).having('sum(purchases.pending_amount) > 0.0') }
+
   rails_admin do
    navigation_label Proc.new { "Ledger" }
+   list do
+    field :outstanding_total
+    include_all_fields
+   end
    edit do
     field :name, :string do
       required true
@@ -52,6 +59,12 @@ class Party < ApplicationRecord
         label 'Party Address'
       end
     end
+  end
+
+  def outstanding_total
+    purchases_pending = self.purchases.sum(:pending_amount) rescue 0.0
+    sales_pending = self.sales.sum(:pending_amount) rescue 0.0
+    purchases_pending + sales_pending
   end
 
   def create_financial_year_record
