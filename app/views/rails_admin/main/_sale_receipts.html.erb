@@ -32,7 +32,7 @@ table, th, td {
   <tbody>
     <% sale.receipts.each do |receipt| %>
     <tr>
-      <td><%= receipt.receipt_mode.capitalize %></td>
+      <td><%= receipt.receipt_mode.capitalize rescue "CASH" %></td>
       <td><b>Rs <%= receipt.amount.to_s %></b></td>
       <td><%= receipt.date&.strftime('%d %b %Y %l:%M %p')%></td>
       <td><%= receipt.party_come %></td>

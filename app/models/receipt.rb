@@ -2,7 +2,7 @@ class Receipt < ApplicationRecord
 
   belongs_to :party, inverse_of: :receipts
   belongs_to :sale, inverse_of: :receipts, optional: true
-  belongs_to :ledger
+  belongs_to :ledger, optional: true
 
   enum receipt_mode: [:cash,:cheque,:angadia,:rtgs_neft, :other]
 
@@ -28,9 +28,9 @@ class Receipt < ApplicationRecord
     navigation_label Proc.new { "I: Inventory Managment" }
     label 'Receipt'
     edit do
-      field :receipt_mode do
-        required true
-      end
+      # field :receipt_mode do
+      #   required true
+      # end
       field :date do
         required true
       end
@@ -40,9 +40,9 @@ class Receipt < ApplicationRecord
       field :party do
         required true
       end
-      field :ledger do
-        label "To Ledger (Bank / Cash)"
-      end
+      # field :ledger do
+      #   label "To Ledger (Bank / Cash)"
+      # end
       # field :sale do
       #   required true
       # end
@@ -51,6 +51,8 @@ class Receipt < ApplicationRecord
       exclude_fields :pc_acc_name
       exclude_fields :party_paid
       exclude_fields :pp_acc_name
+      exclude_fields :receipt_mode
+      exclude_fields :ledger
     end
     include_all_fields
     field :ledger do
