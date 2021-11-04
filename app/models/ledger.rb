@@ -9,6 +9,9 @@ class Ledger < ApplicationRecord
   has_many :receipts
   after_commit :create_financial_year_record, on: :create
   STOCK_LEDGER_NAME = "Stock Ledger"
+  # STOCK_LEDGER_NAME = "STOCK LEDGER"
+  CASH_LEDGER_NAME = "CASH ON HAND"
+  CASH_LEDGER_NAME_1 = "CASH LEDGER"
 
   rails_admin do
     navigation_label Proc.new { "Ledger" }
@@ -42,13 +45,17 @@ class Ledger < ApplicationRecord
     end
   end
 
+  def self.cash_ledger
+    Ledger.find_by(name: CASH_LEDGER_NAME) || Ledger.find_by(name: CASH_LEDGER_NAME_1)
+  end
+
   def create_financial_year_record
     current_year = FinancialYear.order(:start_date).last
-    LedgerFinancialRecord.find_or_create_by(financial_year: current_year, ledgerable: self, opening_balance: self.opening_balance.to_f, closing_balance: 0.0)
+    LedgerFinancialRecord.find_or_create_by(financial_year: current_year, ledgerable: self, opening_balance: self.opening_amount.to_f, closing_balance: 0.0)
   end
 
   def self.stock_ledger
-    Ledger.find_or_create_by_name(STOCK_LEDGER_NAME)
+    Ledger.find_by(name: STOCK_LEDGER_NAME)
   end
 
   def ledger_address_short

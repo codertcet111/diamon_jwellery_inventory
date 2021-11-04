@@ -13,7 +13,7 @@ class Payment < ApplicationRecord
   end
 
   def update_pending_amount
-    self.purchase.update_pending_amount
+    self.purchase.update_pending_amount if self.purchase
   end
 
   def create_transactions
@@ -41,7 +41,6 @@ class Payment < ApplicationRecord
       required true
     end
     field :purchase do
-      required true
       inline_add false
       inline_edit false
     end
