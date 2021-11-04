@@ -56,20 +56,20 @@ class Transaction < ApplicationRecord
     self.update_columns(invoice_number: self.invoicable.invoice_number) if invoice_number.nil? && self.invoicable
   end
 
-  def update_closing_balance
+  def update_closing_balance(call_recursion=true)
     last_transaction = Transaction.where(transnable: self.transnable).where('transaction_date < ?', self.transaction_date).order(:transaction_date).last
     last_closing_balance = last_transaction ? last_transaction.try(:closing_balance).to_f : self.transnable.opening_amount.to_f
     closing_balance_amt = last_closing_balance.to_d + debit_amount.to_d - credit_amount.to_d
     self.update_columns(closing_balance: closing_balance_amt) unless self.destroyed?
     self.transnable.update_columns(balance_amount: closing_balance_amt)
-    if Transaction.where(transnable: self.transnable).where('transaction_date > ?', self.transaction_date).exists?
+    if call_recursion && Transaction.where(transnable: self.transnable).where('transaction_date > ?', self.transaction_date).exists?
       sync_closing_balance_amount
     end
   end
 
   def sync_closing_balance_amount
     Transaction.where(transnable: self.transnable).where('transaction_date > ?', self.transaction_date).order(:transaction_date).each do |t|
-      t.update_closing_balance
+      t.update_closing_balance(false)
     end
   end
 
