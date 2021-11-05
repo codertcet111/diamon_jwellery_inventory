@@ -14,6 +14,11 @@ class Party < ApplicationRecord
 
   rails_admin do
    navigation_label Proc.new { "Ledger" }
+   configure :outstanding_total do
+    formatted_value do
+      value
+    end
+   end
    list do
     field :outstanding_total
     include_all_fields
