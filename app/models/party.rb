@@ -19,10 +19,6 @@ class Party < ApplicationRecord
       value
     end
    end
-   list do
-    field :outstanding_total
-    include_all_fields
-   end
    edit do
     field :name, :string do
       required true
@@ -47,6 +43,7 @@ class Party < ApplicationRecord
     exclude_fields :transactions
     exclude_fields :to_journal_vouchers
     exclude_fields :from_journal_vouchers
+    exclude_fields :outstanding_total
    end
     show do
       exclude_fields :address
@@ -56,10 +53,12 @@ class Party < ApplicationRecord
       exclude_fields :from_journal_vouchers
     end
     list do
+      field :outstanding_total
       exclude_fields :address
       exclude_fields :transactions
       exclude_fields :to_journal_vouchers
       exclude_fields :from_journal_vouchers
+      include_all_fields
       field :party_address_short do
         label 'Party Address'
       end
