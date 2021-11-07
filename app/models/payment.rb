@@ -5,6 +5,7 @@ class Payment < ApplicationRecord
   enum payment_mode: [:cash,:cheque,:angadia,:rtgs_neft, :other]
 
   after_commit :update_pending_amount
+  after_update :update_prev_pending_amount
   after_commit :create_transactions, on: :create
   after_destroy :update_pending_amount
 
@@ -14,6 +15,15 @@ class Payment < ApplicationRecord
 
   def update_pending_amount
     self.purchase.update_pending_amount if self.purchase
+  end
+
+  def update_prev_pending_amount
+    if saved_change_to_purchase_id?
+      prev_purchase_id = previous_changes[:purchase_id][0] rescue nil
+      if prev_purchase = Purchase.where(id: prev_purchase_id).last  
+        prev_purchase.update_pending_amount
+      end
+    end
   end
 
   def create_transactions
