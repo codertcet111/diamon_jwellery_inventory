@@ -7,6 +7,7 @@ class Receipt < ApplicationRecord
   enum receipt_mode: [:cash,:cheque,:angadia,:rtgs_neft, :other]
 
   after_commit :update_pending_amount
+  after_update :update_prev_pending_amount
   after_commit :create_transactions, on: :create
   after_destroy :update_pending_amount
   # after_commit :update_callbacks, on: :update Already covered in update_pending_amount
@@ -14,6 +15,15 @@ class Receipt < ApplicationRecord
   def update_pending_amount
     if sale
       self.sale.update_pending_amount
+    end
+  end
+
+  def update_prev_pending_amount
+    if saved_change_to_sale_id?
+      prev_sale_id = previous_changes[:sale_id][0] rescue nil
+      if prev_sale = Sale.where(id: prev_sale_id).last  
+        prev_sale.update_pending_amount
+      end
     end
   end
 
