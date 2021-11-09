@@ -40,7 +40,9 @@ class Stock < ApplicationRecord
 
   accepts_nested_attributes_for :expenses, allow_destroy: :true
 
-  after_update :update_stock_pc_range_carats_if_carats_updated, :recalculate_purchase_final_amount
+  before_update :update_stock_pc_range_carats_if_carats_updated
+
+  after_update :recalculate_purchase_final_amount
 
   scope :in_stock_all, -> { where("state not in (?)",Stock.states[:sold_out]) }
   scope :in_stock_loose_diamond, -> { in_stock_all.where(stock_sub_type_id: StockSubType.loose_diamond_id)}
@@ -55,12 +57,13 @@ class Stock < ApplicationRecord
   end
 
   def update_stock_pc_range_carats_if_carats_updated
-    if saved_change_to_carat?
+    if carat_changed?
       pc_range = self.stock_pc_range.reload
       # first reduce the existing stocks value from pc range 
       pc_range.purchase_stocks -= carat_was.to_f
       pc_range.balance_stocks -= carat_was.to_f
       pc_range.save
+      pc_range.reload
       # now add the updated stocks value
       pc_range.purchase_stocks += self.carat
       pc_range.balance_stocks += self.carat

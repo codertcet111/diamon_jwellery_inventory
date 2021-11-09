@@ -20,7 +20,7 @@ class Sale < ApplicationRecord
   accepts_nested_attributes_for :sales_taxes, allow_destroy: :true
 
   after_commit :perform_calculations, :generate_invoice, :create_transactions, :calculate_due_date, on: :create
-  after_update :recalculate_pending_amount, :create_transactions
+  after_update :perform_calculations#, :recalculate_pending_amount, :create_transactions
 
   DEFAULT_BROKERAGE_PERC = 0.50
   
@@ -140,11 +140,9 @@ class Sale < ApplicationRecord
   def update_pending_amount
     total_paid = self.receipts.sum(:amount) rescue 0.0
     i_pending_amount = [(final_amount.to_d - total_paid.to_d), 0].max
-    self.pending_amount = i_pending_amount
-    payment_completed = i_pending_amount.to_f <= 0.0
-    self.is_payment_completed = payment_completed
-    self.due_date = nil if payment_completed
-    self.save
+    i_payment_completed = i_pending_amount.to_f <= 0.0
+    i_due_date = nil if i_payment_completed
+    self.update_columns(pending_amount: i_pending_amount, is_payment_completed: i_payment_completed, due_date: i_due_date)
   end
 
   def create_transactions

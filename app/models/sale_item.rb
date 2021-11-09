@@ -6,7 +6,8 @@ class SaleItem < ApplicationRecord
   belongs_to :stock_sub_type, optional: true
   before_create :copy_stock_property, :stock_entire_re_calculation
   after_commit :mark_stock_sold, :update_stock_pc_range_carats, on: :create
-  after_commit :update_stock_pc_range_carats_if_carats_updated, :recalculate_sales_final_amount, on: :update
+  before_update :update_stock_pc_range_carats_if_carats_updated
+  after_commit :recalculate_sales_final_amount, on: :update
 
   enum shape: DIAMOND_SHAPES
   enum color: DIAMOND_COLORS
@@ -20,12 +21,13 @@ class SaleItem < ApplicationRecord
   end
 
   def update_stock_pc_range_carats_if_carats_updated
-    if saved_change_to_carat?
+    if carat_changed?
       pc_range = self.stock_pc_range.reload
       # first reduce the existing stocks value from pc range 
       pc_range.sale_stocks -= carat_was.to_f
       pc_range.balance_stocks += carat_was.to_f
       pc_range.save
+      pc_range.reload
       # now add the updated stocks value
       pc_range.sale_stocks += self.carat.to_f
       pc_range.balance_stocks -= self.carat.to_f

@@ -19,7 +19,7 @@ class Purchase < ApplicationRecord
   accepts_nested_attributes_for :purchases_taxes, allow_destroy: :true
 
   after_commit :perform_calculations, :generate_invoice_if_not, :create_transactions, :calculate_due_date, on: :create
-  after_update :recalculate_pending_amount
+  after_update :perform_calculations#, :recalculate_pending_amount
 
   rails_admin do
     #the below active is to keep nested form open default
@@ -121,11 +121,9 @@ class Purchase < ApplicationRecord
   def update_pending_amount
     total_paid = self.payments.sum(:amount) rescue 0.0
     i_pending_amount = [(final_amount.to_d - total_paid.to_d), 0].max
-    self.pending_amount = i_pending_amount
-    payment_completed = i_pending_amount.to_f <= 0.0
-    self.is_payment_completed = payment_completed
-    self.due_date = nil if payment_completed
-    self.save
+    i_payment_completed = i_pending_amount.to_f <= 0.0
+    i_due_date = nil if i_payment_completed
+    self.update_columns(pending_amount: i_pending_amount, is_payment_completed: i_payment_completed, due_date: i_due_date)
   end
 
   def amount_taxable
