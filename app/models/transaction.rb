@@ -34,6 +34,14 @@ class Transaction < ApplicationRecord
       field :transnable do
         label "Ledger"
       end
+      field :transnable_type do
+        label "Ledger Type"
+        filterable true
+      end
+      field :transnable_id do
+        label "Ledger ID"
+        filterable true
+      end
       field :invoicable do
         label "Against (Purchase/Sale/Expense)"
       end
