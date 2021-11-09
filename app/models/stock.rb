@@ -121,6 +121,9 @@ class Stock < ApplicationRecord
       label 'Stock ID'
     end
     edit do
+      fields do
+        help " <br>".html_safe
+      end
       # field :shape do
       #   required true
       # end

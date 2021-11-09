@@ -23,5 +23,10 @@ class JournalVoucher < ApplicationRecord
       label 'Party From'
       required false
     end
+    edit do
+      fields do
+        help " <br>".html_safe
+      end
+    end
   end
 end

@@ -36,6 +36,9 @@ class LedgerExpense < ApplicationRecord
     navigation_label Proc.new { "Ledger" }
     label "Ledger Expense / Bill Entries"
     edit do
+      fields do
+        help " <br>".html_safe
+      end
       include_all_fields
       exclude_fields :ledger_expenses_taxes
       exclude_fields :transactions
