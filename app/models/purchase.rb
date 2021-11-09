@@ -130,7 +130,7 @@ class Purchase < ApplicationRecord
   end
 
   def generate_invoice_if_not
-    self.update_columns(invoice_number: "Purchase_00#{self.id}") unless self.invoice_number
+    self.update_columns(invoice_number: "Purchase_00#{rand(100001)}_#{self.id}") unless self.invoice_number
   end
 
   def create_transactions

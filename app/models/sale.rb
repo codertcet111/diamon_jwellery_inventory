@@ -105,8 +105,8 @@ class Sale < ApplicationRecord
   end
 
   def generate_invoice
-    rand_invoice = "sale_000#{self.id}"
-    self.update_columns(invoice_number: rand_invoice)
+    rand_invoice = "sale_00#{rand(100001)}_#{self.id}"
+    self.update_columns(invoice_number: rand_invoice) unless self.invoice_number
   end
 
   def perform_calculations

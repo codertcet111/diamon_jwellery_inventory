@@ -54,7 +54,7 @@ class Ledger < ApplicationRecord
   end
 
   def self.stock_ledger
-    Ledger.find_or_create_by_name(STOCK_LEDGER_NAME)
+    Ledger.find_by(name: STOCK_LEDGER_NAME)
   end
 
   def ledger_address_short
