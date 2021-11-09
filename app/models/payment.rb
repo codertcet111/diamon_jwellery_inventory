@@ -55,6 +55,11 @@ class Payment < ApplicationRecord
     field :ledger do
       label "From Ledger"
     end
+    edit do
+      fields do
+        help " <br>".html_safe
+      end
+    end
     exclude_fields :party_come
     exclude_fields :pc_acc_name
     exclude_fields :party_paid

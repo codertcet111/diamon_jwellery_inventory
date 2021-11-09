@@ -37,6 +37,9 @@ class SaleItem < ApplicationRecord
   rails_admin do
     navigation_label Proc.new { "I: Inventory Managment" }  
     edit do
+      fields do
+        help " <br>".html_safe
+      end
       # field :shape do
       #   required true
       # end

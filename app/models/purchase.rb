@@ -36,6 +36,9 @@ class Purchase < ApplicationRecord
       field :purchase_terms
     end
    edit do
+    fields do
+        help " <br>".html_safe
+      end
     field :purchase_date do
       required true
     end

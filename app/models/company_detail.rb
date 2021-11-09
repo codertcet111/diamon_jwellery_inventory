@@ -29,6 +29,11 @@ class CompanyDetail < ApplicationRecord
         label 'Company Address'
       end
     end
+    edit do
+      fields do
+        help " <br>".html_safe
+      end
+    end
   end
 
   def company_address_short

@@ -20,6 +20,9 @@ class Broker < ApplicationRecord
       end
     end
    edit do
+    fields do
+      help " <br>".html_safe
+    end
     field :name, :string do
       required true
     end

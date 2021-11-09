@@ -24,5 +24,10 @@ class Contra < ApplicationRecord
       label 'Ledger From'
       required true
     end
+    edit do 
+      fields do
+        help " <br>".html_safe
+      end
+    end
   end
 end

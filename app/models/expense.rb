@@ -17,5 +17,10 @@ class Expense < ApplicationRecord
       inline_add false
       inline_edit false
     end
+    edit do
+      fields do
+        help " <br>".html_safe
+      end
+    end
   end
 end

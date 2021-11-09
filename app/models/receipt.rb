@@ -41,6 +41,9 @@ class Receipt < ApplicationRecord
       # field :receipt_mode do
       #   required true
       # end
+      fields do
+        help " <br>".html_safe
+      end
       field :date do
         required true
       end

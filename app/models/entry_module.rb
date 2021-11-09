@@ -25,6 +25,11 @@ class EntryModule < ApplicationRecord
     configure :transactions do
       active true
     end
+    edit do
+      fields do
+        help " <br>".html_safe
+      end
+    end
   	label "Entry Module (Account's entry)"
   end
 end

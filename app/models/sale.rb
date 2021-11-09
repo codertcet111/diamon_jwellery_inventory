@@ -39,6 +39,9 @@ class Sale < ApplicationRecord
       field :sales_terms
     end
     edit do
+      fields do
+        help " <br>".html_safe
+      end
       field :sale_date do
         required true
       end

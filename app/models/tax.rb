@@ -11,6 +11,9 @@ class Tax < ApplicationRecord
 	rails_admin do
 		navigation_label Proc.new { "Tax" }
 	    edit do
+	    	fields do
+	        help " <br>".html_safe
+        end
 	    	exclude_fields :purchases
 	    	exclude_fields :sales_taxes
 	    	exclude_fields :purchases_taxes

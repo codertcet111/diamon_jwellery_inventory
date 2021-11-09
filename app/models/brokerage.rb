@@ -34,6 +34,9 @@ class Brokerage < ApplicationRecord
       label "From Ledger"
     end
     edit do
+      fields do
+        help " <br>".html_safe
+      end
     	exclude_fields :brokerages_taxes
     end
   end

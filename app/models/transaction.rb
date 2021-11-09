@@ -39,6 +39,9 @@ class Transaction < ApplicationRecord
       end
     end
     edit do
+      fields do
+        help " <br>".html_safe
+      end
       include_all_fields
       exclude_fields :entry_module
       exclude_fields :invoice_number

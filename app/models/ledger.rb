@@ -34,6 +34,9 @@ class Ledger < ApplicationRecord
       exclude_fields :from_journal_vouchers
     end
     edit do
+      fields do
+        help " <br>".html_safe
+      end
       exclude_fields :transactions
       exclude_fields :payments
       exclude_fields :receipts
