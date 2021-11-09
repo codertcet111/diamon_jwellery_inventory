@@ -59,13 +59,13 @@ class Payment < ApplicationRecord
       fields do
         help " <br>".html_safe
       end
+      exclude_fields :party_come
+      exclude_fields :pc_acc_name
+      exclude_fields :party_paid
+      exclude_fields :pp_acc_name
+      exclude_fields :ledger
+      exclude_fields :payment_mode
     end
-    exclude_fields :party_come
-    exclude_fields :pc_acc_name
-    exclude_fields :party_paid
-    exclude_fields :pp_acc_name
-    exclude_fields :ledger
-    exclude_fields :payment_mode
   end
 
 end
