@@ -19,6 +19,26 @@ class Party < ApplicationRecord
       value
     end
    end
+   configure :total_payments_made do
+    formatted_value do
+      value
+    end
+   end
+   configure :total_received_amount do
+    formatted_value do
+      value
+    end
+   end
+   configure :total_purchases_amount do
+    formatted_value do
+      value
+    end
+   end
+   configure :total_sales_amount do
+    formatted_value do
+      value
+    end
+   end
    edit do
     field :name, :string do
       required true
@@ -44,6 +64,10 @@ class Party < ApplicationRecord
     exclude_fields :to_journal_vouchers
     exclude_fields :from_journal_vouchers
     exclude_fields :outstanding_total
+    exclude_fields :total_payments_made
+    exclude_fields :total_received_amount
+    exclude_fields :total_purchases_amount
+    exclude_fields :total_sales_amount
    end
     show do
       exclude_fields :address
@@ -54,6 +78,10 @@ class Party < ApplicationRecord
     end
     list do
       field :outstanding_total
+      field :total_purchases_amount
+      field :total_payments_made
+      field :total_sales_amount
+      field :total_received_amount
       exclude_fields :address
       exclude_fields :transactions
       exclude_fields :to_journal_vouchers
@@ -69,6 +97,22 @@ class Party < ApplicationRecord
     purchases_pending = self.purchases.sum(:pending_amount) rescue 0.0
     sales_pending = self.sales.sum(:pending_amount) rescue 0.0
     purchases_pending + sales_pending
+  end
+
+  def total_payments_made
+    self.payments.sum(:amount) rescue 0.0
+  end
+
+  def total_received_amount
+    self.receipts.sum(:amount) rescue 0.0
+  end
+
+  def total_purchases_amount
+    self.purchases.sum(:final_amount) rescue 0.0
+  end
+
+  def total_sales_amount
+    self.sales.sum(:final_amount) rescue 0.0
   end
 
   def create_financial_year_record
