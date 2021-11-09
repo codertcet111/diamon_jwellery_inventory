@@ -13,8 +13,7 @@ class SaleItem < ApplicationRecord
   enum clarity: DIAMOND_CLARITY
 
   def update_stock_pc_range_carats
-    #ToDO: carat is not saving hence check why?
-    pc_range = self.stock_pc_range
+    pc_range = self.stock_pc_range.reload
     pc_range.sale_stocks += self.carat
     pc_range.balance_stocks -= self.carat
     pc_range.save
@@ -22,7 +21,7 @@ class SaleItem < ApplicationRecord
 
   def update_stock_pc_range_carats_if_carats_updated
     if saved_change_to_carat?
-      pc_range = self.stock_pc_range
+      pc_range = self.stock_pc_range.reload
       # first reduce the existing stocks value from pc range 
       pc_range.sale_stocks -= carat_was.to_f
       pc_range.balance_stocks += carat_was.to_f
@@ -36,7 +35,7 @@ class SaleItem < ApplicationRecord
 
 
   rails_admin do
-    navigation_label Proc.new { "I: Inventory Managment" }
+    navigation_label Proc.new { "I: Inventory Managment" }  
     edit do
       # field :shape do
       #   required true

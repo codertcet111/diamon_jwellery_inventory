@@ -48,7 +48,7 @@ class Stock < ApplicationRecord
   scope :in_stock_jewellary, -> { in_stock_all.where("stock_sub_type_id IN (?)", StockSubType.jewellary_ids)}
 
   def update_stock_pc_range_carats
-    pc_range = self.stock_pc_range
+    pc_range = self.stock_pc_range.reload
     pc_range.purchase_stocks += self.carat
     pc_range.balance_stocks += self.carat
     pc_range.save
@@ -56,7 +56,7 @@ class Stock < ApplicationRecord
 
   def update_stock_pc_range_carats_if_carats_updated
     if saved_change_to_carat?
-      pc_range = self.stock_pc_range
+      pc_range = self.stock_pc_range.reload
       # first reduce the existing stocks value from pc range 
       pc_range.purchase_stocks -= carat_was.to_f
       pc_range.balance_stocks -= carat_was.to_f
