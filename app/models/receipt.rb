@@ -40,9 +40,6 @@ class Receipt < ApplicationRecord
     navigation_label Proc.new { "I: Inventory Managment" }
     label 'Receipt'
     edit do
-      fields do
-        help " <br>".html_safe
-      end
       field :receipt_mode do
         required true
       end
@@ -62,6 +59,9 @@ class Receipt < ApplicationRecord
       #   required true
       # end
       include_all_fields
+      fields do
+        help " <br>".html_safe
+      end
       exclude_fields :party_come
       exclude_fields :pc_acc_name
       exclude_fields :party_paid

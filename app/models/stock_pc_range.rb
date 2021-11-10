@@ -20,10 +20,10 @@ class StockPcRange < ApplicationRecord
       end
     end
     edit do
+      include_all_fields
       fields do
         help " <br>".html_safe
       end
-      include_all_fields
       exclude_fields :stocks
       exclude_fields :sale_items 
     end

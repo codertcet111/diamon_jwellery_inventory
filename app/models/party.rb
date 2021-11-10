@@ -40,9 +40,6 @@ class Party < ApplicationRecord
     end
    end
    edit do
-    fields do
-        help " <br>".html_safe
-      end
     field :name, :string do
       required true
     end
@@ -59,6 +56,9 @@ class Party < ApplicationRecord
     # field :pan_no do
     #   required true
     # end
+    fields do
+      help " <br>".html_safe
+    end
     exclude_fields :sales
     exclude_fields :receipts
     exclude_fields :purchases

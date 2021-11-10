@@ -20,9 +20,6 @@ class Broker < ApplicationRecord
       end
     end
    edit do
-    fields do
-      help " <br>".html_safe
-    end
     field :name, :string do
       required true
     end
@@ -30,6 +27,9 @@ class Broker < ApplicationRecord
       required true
     end
     include_all_fields
+    fields do
+      help " <br>".html_safe
+    end
     exclude_fields :sales
     exclude_fields :purchases
     exclude_fields :brokerages
