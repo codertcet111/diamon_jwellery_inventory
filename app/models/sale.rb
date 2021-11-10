@@ -39,9 +39,6 @@ class Sale < ApplicationRecord
       field :sales_terms
     end
     edit do
-      fields do
-        help " <br>".html_safe
-      end
       field :sale_date do
         required true
       end
@@ -64,6 +61,9 @@ class Sale < ApplicationRecord
         label 'Broker Amount'
       end
       include_all_fields
+      fields do
+        help " <br>".html_safe
+      end
       exclude_fields :pending_amount
       exclude_fields :receipts
       exclude_fields :tax_amount

@@ -124,9 +124,6 @@ class Stock < ApplicationRecord
       label 'Stock ID'
     end
     edit do
-      fields do
-        help " <br>".html_safe
-      end
       # field :shape do
       #   required true
       # end
@@ -189,6 +186,9 @@ class Stock < ApplicationRecord
       end
       field :carat do
         label "Total Carat (Final)"
+      end
+      fields do
+        help " <br>".html_safe
       end
     end
   end
