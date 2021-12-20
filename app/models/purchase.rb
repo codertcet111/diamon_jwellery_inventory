@@ -23,6 +23,9 @@ class Purchase < ApplicationRecord
 
   rails_admin do
     #the below active is to keep nested form open default
+    configure :purchase_date, :date do
+      strftime_format '%d-%m-%Y'
+    end
     configure :stocks do
       active true
     end
